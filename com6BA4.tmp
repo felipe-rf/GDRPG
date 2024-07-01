@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://dxtkg3gd1p2fw"]
+
+[ext_resource type="PackedScene" uid="uid://b36ts5maohabp" path="res://ActionMenu.tscn" id="1_40fe4"]
+[ext_resource type="PackedScene" uid="uid://b4jbsl1xp5ms2" path="res://turn_queue.tscn" id="2_ouiy5"]
+[ext_resource type="PackedScene" uid="uid://6ab4sw7cvmq3" path="res://player_unit.tscn" id="3_44ysu"]
+
+[node name="CombatScene" type="Node2D"]
+
+[node name="ActionMenu" parent="." instance=ExtResource("1_40fe4")]
+
+[node name="TurnQueue" parent="." instance=ExtResource("2_ouiy5")]
+
+[node name="PlayerUnit" parent="TurnQueue" instance=ExtResource("3_44ysu")]
+base_health = 20
+base_attack = 5
+base_speed = 10
+base_defense = 5
+base_precision = 10
+unit_name = "lol"
+
+[node name="PlayerUnit2" parent="TurnQueue" instance=ExtResource("3_44ysu")]
+base_health = 20
+base_attack = 5
+base_speed = 20
+base_defense = 5
+base_precision = 10
+unit_name = "punis"

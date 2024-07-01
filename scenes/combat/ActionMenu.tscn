@@ -1,0 +1,137 @@
+[gd_scene load_steps=7 format=3 uid="uid://b36ts5maohabp"]
+
+[ext_resource type="Script" path="res://scripts/menus/ActionMenu.gd" id="1_dieak"]
+[ext_resource type="Theme" uid="uid://7f715063sed8" path="res://assets/sprites/gui/panel.tres" id="1_twjxi"]
+[ext_resource type="Script" path="res://scripts/menus/MenuItem.gd" id="3_7o6io"]
+[ext_resource type="PackedScene" uid="uid://c5e0w4cg1ke0m" path="res://scenes/combat/menu_cursor.tscn" id="3_y3s34"]
+[ext_resource type="Texture2D" uid="uid://cdnodtbv7hjs5" path="res://assets/sprites/gui/cursor.png" id="5_7nnkj"]
+[ext_resource type="Script" path="res://scripts/UnitCursor.gd" id="6_sm4mi"]
+
+[node name="ActionMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -42.0
+offset_top = -6.0
+offset_right = -42.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dieak")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 285.0
+offset_right = 698.0
+offset_bottom = 376.0
+theme = ExtResource("1_twjxi")
+
+[node name="GridContainer" type="GridContainer" parent="Panel"]
+layout_mode = 0
+offset_left = 222.0
+offset_top = 13.0
+offset_right = 427.0
+offset_bottom = 63.0
+theme_override_constants/h_separation = 100
+columns = 2
+
+[node name="Attack" type="Label" parent="Panel/GridContainer"]
+layout_mode = 2
+text = "ATTACK"
+script = ExtResource("3_7o6io")
+
+[node name="Spell" type="Label" parent="Panel/GridContainer"]
+layout_mode = 2
+text = "SPELL"
+script = ExtResource("3_7o6io")
+
+[node name="Item" type="Label" parent="Panel/GridContainer"]
+layout_mode = 2
+text = "ITEM"
+script = ExtResource("3_7o6io")
+
+[node name="Run" type="Label" parent="Panel/GridContainer"]
+layout_mode = 2
+text = "RUN"
+script = ExtResource("3_7o6io")
+
+[node name="Panel2" type="Panel" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 370.0
+offset_top = 68.0
+offset_right = 689.0
+offset_bottom = 246.0
+theme = ExtResource("1_twjxi")
+
+[node name="GridContainer" type="GridContainer" parent="Panel2"]
+layout_mode = 0
+offset_left = 222.0
+offset_top = 13.0
+offset_right = 427.0
+offset_bottom = 63.0
+theme_override_constants/h_separation = 100
+columns = 2
+
+[node name="Attack" type="Label" parent="Panel2/GridContainer"]
+layout_mode = 2
+text = "ATTACK"
+script = ExtResource("3_7o6io")
+
+[node name="Spell" type="Label" parent="Panel2/GridContainer"]
+layout_mode = 2
+text = "SPELL"
+script = ExtResource("3_7o6io")
+
+[node name="Item" type="Label" parent="Panel2/GridContainer"]
+layout_mode = 2
+text = "ITEM"
+script = ExtResource("3_7o6io")
+
+[node name="Run" type="Label" parent="Panel2/GridContainer"]
+layout_mode = 2
+text = "RUN"
+script = ExtResource("3_7o6io")
+
+[node name="VSlider" type="VSlider" parent="Panel2"]
+layout_mode = 0
+offset_right = 16.0
+offset_bottom = 8.0
+
+[node name="MenuCursor" parent="." instance=ExtResource("3_y3s34")]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 15.0
+offset_right = 73.0
+offset_bottom = 27.0
+texture = ExtResource("5_7nnkj")
+expand_mode = 1
+menu_parent_path = NodePath("../Panel/GridContainer")
+cursor_offset = Vector2(10, 0)
+
+[node name="UnitCursor" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 451.0
+offset_top = 69.0
+offset_right = 465.0
+offset_bottom = 90.0
+rotation = 1.5708
+texture = ExtResource("5_7nnkj")
+script = ExtResource("6_sm4mi")
+
+[node name="unit_timer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="menu_timer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="cursor_selected" from="Panel/GridContainer/Attack" to="." method="_on_attack_cursor_selected"]
+[connection signal="cursor_selected" from="Panel2/GridContainer/Attack" to="." method="_on_attack_cursor_selected"]
+[connection signal="canceled" from="UnitCursor" to="." method="_on_unit_cursor_canceled"]
+[connection signal="selected" from="UnitCursor" to="." method="_on_unit_cursor_selected"]
+[connection signal="timeout" from="unit_timer" to="UnitCursor" method="_on_unit_timer_timeout"]
+[connection signal="timeout" from="menu_timer" to="MenuCursor" method="_on_menu_timer_timeout"]

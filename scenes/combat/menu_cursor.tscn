@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://c5e0w4cg1ke0m"]
+
+[ext_resource type="Script" path="res://scripts/menus/MenuCursor.gd" id="1_ax0w3"]
+
+[node name="menu_cursor" type="TextureRect"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_ax0w3")
