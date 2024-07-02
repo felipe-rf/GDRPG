@@ -14,6 +14,7 @@ var previous_parents: Array[Node]
 
 @export var cursor_offset : Vector2
 func _enable():
+	cursor_index = 0
 	menu_timer.start()
 func _process(delta):
 	if not disabled:

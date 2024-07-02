@@ -100,3 +100,8 @@ func _on_menu_cursor_cursor_moved(item):
 	if item is SpellLabel:
 		if not spell_panel.visible: spell_panel.visible = true
 		spell_label.text = item.spell.description
+
+
+func _on_defend_cursor_selected():
+	turn_queue.active_unit._defend()
+	menu_cursor._enable()

@@ -63,9 +63,9 @@ layout_mode = 2
 text = "ITEM"
 script = ExtResource("3_7o6io")
 
-[node name="Run" type="Label" parent="Panel/MainMenu"]
+[node name="Defend" type="Label" parent="Panel/MainMenu"]
 layout_mode = 2
-text = "RUN"
+text = "DEFEND"
 script = ExtResource("3_7o6io")
 
 [node name="SpellPanel" type="Panel" parent="."]
@@ -120,6 +120,7 @@ one_shot = true
 
 [connection signal="cursor_selected" from="Panel/MainMenu/Attack" to="." method="_on_attack_cursor_selected"]
 [connection signal="cursor_selected" from="Panel/MainMenu/Spell" to="." method="_on_spell_cursor_selected"]
+[connection signal="cursor_selected" from="Panel/MainMenu/Defend" to="." method="_on_defend_cursor_selected"]
 [connection signal="canceled" from="MenuCursor" to="." method="_on_menu_cursor_canceled"]
 [connection signal="cursor_moved" from="MenuCursor" to="." method="_on_menu_cursor_cursor_moved"]
 [connection signal="item_selected" from="MenuCursor" to="." method="_on_menu_cursor_item_selected"]

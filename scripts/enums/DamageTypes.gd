@@ -6,6 +6,7 @@ enum{
 	Piercing,
 	Ice,
 	Fire,
-	Shock,
-	Water
+	Shock
 }
+
+const damage_names:=["Slashing","Concussing","Piercing","Ice","Fire","Shock"]

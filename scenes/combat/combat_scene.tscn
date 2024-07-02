@@ -50,6 +50,8 @@ base_precision = 2
 base_magic = 3
 base_strenght = 3
 unit_name = "Enemy 1"
+weaknesses = Array[int]([3])
+resistances = Array[int]([0])
 
 [node name="EnemyUnit2" parent="TurnQueue" instance=ExtResource("4_ujdg3")]
 position = Vector2(437, 199)

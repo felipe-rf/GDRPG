@@ -11,7 +11,9 @@ class_name Unit
 @export var unit_name: String
 @export var spell_list: Array[Spell]
 
-
+@export var weaknesses: Array[int]
+@export var resistances: Array[int]
+@export var attack_type:int = 0
 
 var health: int
 var attack: int
@@ -34,6 +36,10 @@ enum UnitState{
 	Inactive,
 	Disabled
 }
+
+
+
+
 
 var allies_list:Array[Unit]
 var enemies_list:Array[Unit]
@@ -121,7 +127,7 @@ func _receive_healing(heal):
 
 
 func _aplly_stat_change(change: int, stat: int, time:int):
-	queued_stat_timer[stat] = time
+	stat_timer[stat] = time
 	match stat:
 		UnitStats.attack:
 			if attack == base_attack:
@@ -154,6 +160,7 @@ func _attack_unit(target: Unit):
 	elif(hit+precision<target.speed+target.defense):
 		_miss_attack()
 	elif(hit+precision>target.speed+target.defense):
+		dmg = target._aplly_weakness_and_resistance(dmg,attack_type)
 		print(unit_name + " attacked "+ target.unit_name + " for " + str(dmg)+ " damage.")
 		target._receive_damage(dmg)
 	_end_turn()
@@ -165,4 +172,18 @@ func _end_turn():
 func _use_spell(spell: Spell, target_list: Array[Unit]):
 	print(unit_name + " used " + spell.spell_name +".")
 	spell._spell_effect(self,target_list)
+	_end_turn()
+
+func _aplly_weakness_and_resistance(damage: int, type: int) -> int:
+	if weaknesses.has(type):
+		print("It's super effective against "+ unit_name +"!")
+		return damage * 2
+	elif resistances.has(type):
+		print("It's not that effective against "+ unit_name +"...")
+		return damage/2
+	else: return damage
+
+func _defend():
+	_aplly_stat_change(defense*2,UnitStats.defense,1)
+	print(unit_name + " defended.")
 	_end_turn()
