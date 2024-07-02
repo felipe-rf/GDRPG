@@ -1,0 +1,9 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://c40jvx4hn5c8n"]
+
+[ext_resource type="Script" path="res://scripts/spells/frost_ray.gd" id="1_qprwn"]
+
+[resource]
+script = ExtResource("1_qprwn")
+spell_name = "Ray of Frost"
+description = "Deals 1-10 damage and reduces target's speed for 2 turns."
+target_type = 1

@@ -4,7 +4,7 @@ class_name TurnQueue
 
 var active_unit
 var unit_list:Array[Unit]
-
+var unit_list_unsorted:Array[Unit]
 func _get_unit_list():
 	var prelist = get_children().filter(func(element): return element is Unit)
 	var list:Array[Unit]
@@ -15,6 +15,7 @@ func _get_unit_list():
 	
 func _refresh_unit_list(list: Array[Unit]):
 	list = list.filter(func(element):return element.state != 2)
+
 	return list
 	
 func _initialize():

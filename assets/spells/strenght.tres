@@ -1,0 +1,9 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://cl8qpl5vl6et6"]
+
+[ext_resource type="Script" path="res://scripts/spells/strenght_spell.gd" id="1_k2pv4"]
+
+[resource]
+script = ExtResource("1_k2pv4")
+spell_name = "Strenght"
+description = "Doubles the target's strenght for 2 rounds."
+target_type = 0

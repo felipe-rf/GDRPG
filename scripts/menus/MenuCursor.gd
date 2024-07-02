@@ -4,8 +4,13 @@ extends TextureRect
 @onready var menu_parent = get_node(menu_parent_path)
 @onready var menu_timer = $"../menu_timer"
 
+signal item_selected(item)
+signal canceled
+
 var disabled = false
 var cursor_index : int = 0
+var previous_parents: Array[Node]
+
 @export var cursor_offset : Vector2
 func _enable():
 	menu_timer.start()
@@ -35,7 +40,10 @@ func _process(delta):
 			
 			if current_menu_item != null:
 				if current_menu_item.has_method("cursor_select"):
-					current_menu_item.cursor_select()
+					emit_signal("item_selected",current_menu_item)
+		if Input.is_action_just_pressed("ui_cancel"):
+			emit_signal("canceled")
+			disabled = true
 	else:
 		self.visible = false
 func get_menu_item_at_index(index : int ) -> Control:
@@ -55,7 +63,10 @@ func set_cursor_from_index(index:int) -> void:
 	global_position = Vector2(menu_position.x, menu_position.y + (menu_size.y / 2.0)) - (size / 2.0) - cursor_offset
 	cursor_index = index
 
-
+func _set_parent(parent: Control)->void:
+	previous_parents.append(menu_parent)
+	menu_parent = parent
+	cursor_index = 0
 
 func _on_menu_timer_timeout():
 	disabled = false

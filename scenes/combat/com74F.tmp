@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://dxtkg3gd1p2fw"]
+
+[ext_resource type="PackedScene" uid="uid://b36ts5maohabp" path="res://scenes/combat/ActionMenu.tscn" id="1_40fe4"]
+[ext_resource type="PackedScene" uid="uid://b4jbsl1xp5ms2" path="res://scenes/combat/turn_queue.tscn" id="2_ouiy5"]
+[ext_resource type="PackedScene" uid="uid://6ab4sw7cvmq3" path="res://scenes/units/player_unit.tscn" id="3_44ysu"]
+[ext_resource type="PackedScene" uid="uid://boqnj0ivkh3g" path="res://scenes/units/enemy_unit.tscn" id="4_ujdg3"]
+
+[node name="CombatScene" type="Node2D"]
+
+[node name="ActionMenu" parent="." instance=ExtResource("1_40fe4")]
+
+[node name="TurnQueue" parent="." instance=ExtResource("2_ouiy5")]
+
+[node name="PlayerUnit2" parent="TurnQueue" instance=ExtResource("3_44ysu")]
+position = Vector2(101, 130)
+
+[node name="PlayerUnit" parent="TurnQueue" instance=ExtResource("3_44ysu")]
+position = Vector2(199, 205)
+
+[node name="EnemyUnit" parent="TurnQueue" instance=ExtResource("4_ujdg3")]
+position = Vector2(384, 125)
+
+[node name="EnemyUnit2" parent="TurnQueue" instance=ExtResource("4_ujdg3")]
+position = Vector2(437, 199)

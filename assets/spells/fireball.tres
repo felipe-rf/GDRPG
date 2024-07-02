@@ -1,0 +1,9 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://n7fkxajjv685"]
+
+[ext_resource type="Script" path="res://scripts/spells/fireball_spell.gd" id="1_vawwm"]
+
+[resource]
+script = ExtResource("1_vawwm")
+spell_name = "Fireball"
+description = "Causes 1-10 damage"
+target_type = 3

@@ -2,5 +2,11 @@ class_name UnitStats
 
 enum{
 	health,
-	speed
+	attack,
+	speed,
+	defense,
+	precision,
+	magic,
+	strenght
 }
+#Oh Hello
