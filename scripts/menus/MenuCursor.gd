@@ -6,6 +6,7 @@ extends TextureRect
 
 signal item_selected(item)
 signal canceled
+signal cursor_moved(item)
 
 var disabled = false
 var cursor_index : int = 0
@@ -62,6 +63,7 @@ func set_cursor_from_index(index:int) -> void:
 
 	global_position = Vector2(menu_position.x, menu_position.y + (menu_size.y / 2.0)) - (size / 2.0) - cursor_offset
 	cursor_index = index
+	emit_signal("cursor_moved",menu_item)
 
 func _set_parent(parent: Control)->void:
 	previous_parents.append(menu_parent)

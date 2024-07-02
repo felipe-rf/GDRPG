@@ -8,6 +8,11 @@ extends Control
 @onready var spell_menu = $Panel/SpellMenu
 @onready var panel = $Panel
 
+@onready var spell_panel = $SpellPanel
+@onready var spell_label = $SpellPanel/Label
+
+
+
 var current_round = 0
 
 enum cursorState{
@@ -67,6 +72,7 @@ func _on_spell_cursor_selected():
 
 func _on_menu_cursor_item_selected(item: MenuItem):
 	if(item is SpellLabel):
+		if spell_panel.visible: spell_panel.visible = false
 		if(turn_queue.active_unit.state == 0):
 			menu_cursor.disabled = true
 			state = cursorState.spell
@@ -84,6 +90,13 @@ func _set_visible(menu: Control):
 func _on_menu_cursor_canceled():
 	var parents = menu_cursor.previous_parents
 	if menu_cursor.menu_parent == spell_menu:
+		if spell_panel.visible: spell_panel.visible = false
 		_set_visible(main_menu)
 		menu_cursor._set_parent(main_menu)
 	menu_cursor._enable()
+
+
+func _on_menu_cursor_cursor_moved(item):
+	if item is SpellLabel:
+		if not spell_panel.visible: spell_panel.visible = true
+		spell_label.text = item.spell.description

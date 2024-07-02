@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://b36ts5maohabp"]
+[gd_scene load_steps=8 format=3 uid="uid://b36ts5maohabp"]
 
 [ext_resource type="Script" path="res://scripts/menus/ActionMenu.gd" id="1_dieak"]
 [ext_resource type="Theme" uid="uid://7f715063sed8" path="res://assets/sprites/gui/panel.tres" id="1_twjxi"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://c5e0w4cg1ke0m" path="res://scenes/combat/menu_cursor.tscn" id="3_y3s34"]
 [ext_resource type="Texture2D" uid="uid://cdnodtbv7hjs5" path="res://assets/sprites/gui/cursor.png" id="5_7nnkj"]
 [ext_resource type="Script" path="res://scripts/UnitCursor.gd" id="6_sm4mi"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_hxbrx"]
 
 [node name="ActionMenu" type="Control"]
 layout_mode = 3
@@ -68,6 +70,7 @@ script = ExtResource("3_7o6io")
 
 [node name="SpellPanel" type="Panel" parent="."]
 visible = false
+clip_contents = true
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 0
 offset_left = 421.0
@@ -75,6 +78,16 @@ offset_top = 96.0
 offset_right = 685.0
 offset_bottom = 267.0
 theme = ExtResource("1_twjxi")
+
+[node name="Label" type="Label" parent="SpellPanel"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 14.0
+offset_right = 252.0
+offset_bottom = 153.0
+label_settings = SubResource("LabelSettings_hxbrx")
+autowrap_mode = 3
+clip_text = true
 
 [node name="MenuCursor" parent="." instance=ExtResource("3_y3s34")]
 layout_mode = 0
@@ -108,6 +121,7 @@ one_shot = true
 [connection signal="cursor_selected" from="Panel/MainMenu/Attack" to="." method="_on_attack_cursor_selected"]
 [connection signal="cursor_selected" from="Panel/MainMenu/Spell" to="." method="_on_spell_cursor_selected"]
 [connection signal="canceled" from="MenuCursor" to="." method="_on_menu_cursor_canceled"]
+[connection signal="cursor_moved" from="MenuCursor" to="." method="_on_menu_cursor_cursor_moved"]
 [connection signal="item_selected" from="MenuCursor" to="." method="_on_menu_cursor_item_selected"]
 [connection signal="canceled" from="UnitCursor" to="." method="_on_unit_cursor_canceled"]
 [connection signal="selected" from="UnitCursor" to="." method="_on_unit_cursor_selected"]

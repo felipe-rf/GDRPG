@@ -12,6 +12,7 @@
 [node name="CombatScene" type="Node2D"]
 
 [node name="ActionMenu" parent="." instance=ExtResource("1_40fe4")]
+top_level = true
 
 [node name="TurnQueue" parent="." instance=ExtResource("2_ouiy5")]
 
