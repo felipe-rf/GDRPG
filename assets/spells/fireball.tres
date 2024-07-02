@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource("1_vawwm")
 spell_name = "Fireball"
-description = "Causes 1-10 damage"
+description = "Causes 1-10 damage to all enemies."
 target_type = 3
