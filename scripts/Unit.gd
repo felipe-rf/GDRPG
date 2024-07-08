@@ -15,6 +15,7 @@ class_name Unit
 @export var resistances: Array[int]
 @export var attack_type:int = 0
 
+@export var texture:Texture2D
 var health: int
 var attack: int
 var speed: int
@@ -25,9 +26,16 @@ var strenght: int
 
 var stat_timer: Array[int] = [0,0,0,0,0,0,0]
 var queued_stat_timer: Array[int] = [0,0,0,0,0,0,0]
+
 @onready var sprite = $Sprite2D
+@onready var animation_player = $AnimationPlayer
+@onready var damage_popup = $DamagePopup
+
+@export var animation_type: int
+
 
 signal turnEnded
+signal attackFinished
 
 var state
 var actions = 0
@@ -46,6 +54,7 @@ var enemies_list:Array[Unit]
 		
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	sprite.texture = texture
 	state = UnitState.Inactive
 	health = base_health
 	attack = base_attack
@@ -106,7 +115,12 @@ func _process(delta):
 		_deactivate()
 
 
+
+
 func _receive_damage(damage):
+	damage_popup.popup(str(damage),1)
+	animation_player.animation_set_next("Hurt","Idle")
+	animation_player.play("Hurt",-1,2)
 	health -= damage
 	if(health<=0):
 		health = 0
@@ -115,14 +129,16 @@ func _receive_damage(damage):
 func _die():
 	print(unit_name + " died!")
 	state = UnitState.Disabled
-	sprite.visible = false
+	animation_player.play("Dead")
 	
 func _receive_healing(heal):
 	if((health+heal)<=base_health):
 		health += heal
+		damage_popup.popup(str(heal),0)
 		print(unit_name + " was healed for " + str(heal) + " health points.")
 	else:
 		health += base_health -health
+		damage_popup.popup(str(base_health -health),0)
 		print(unit_name + " was healed for " + str(base_health -health) + " health points.")
 
 
@@ -149,10 +165,54 @@ func _aplly_stat_change(change: int, stat: int, time:int):
 				magic = change
 
 func _miss_attack():
+	damage_popup.popup("Missed",2)
 	print(unit_name + " missed.")
 	
+	
 func _attack_unit(target: Unit):
-	#Try to hit
+	match animation_type:
+		0:
+			_attack_animation_move(target)
+		1:
+			_attack_animation_ranged(target)
+	
+	
+func _attack_animation_move(target:Unit):
+	var original_position = global_position
+	var original_z = z_index
+	z_index = target.z_index+1
+	var move_tween = create_tween()
+	var target_size = target.sprite.get_rect().size
+	var target_offset = Vector2(target_size.x*1.5,0)
+	if self is EnemyUnit: target_offset = Vector2(-target_offset.x,target.sprite.offset.y)
+	move_tween.tween_property(self,"global_position",target.global_position-target_offset,1)
+	move_tween.tween_property(self,"global_position",original_position,0.5)
+	animation_player.play("Move")
+	await move_tween.step_finished
+	move_tween.pause()
+	animation_player.play("Attack")
+	await animation_player.attack_hit
+	_deal_attack_damage(target)
+	await animation_player.animation_finished
+	move_tween.play()
+	animation_player.play("Move")
+	await move_tween.finished
+	z_index = original_z
+	animation_player.play("Idle")
+	emit_signal("attackFinished")
+	_end_turn()
+
+
+func _attack_animation_ranged(target: Unit):
+	animation_player.animation_set_next("Attack","Idle")
+	animation_player.play("Attack")
+	await animation_player.attack_hit
+	_deal_attack_damage(target)
+	await animation_player.animation_changed
+	emit_signal("attackFinished")
+	_end_turn()
+	
+func _deal_attack_damage(target: Unit):
 	var hit = _rand20()
 	var dmg = randi_range(1,attack) + strenght
 	if(hit == 1):
@@ -163,16 +223,25 @@ func _attack_unit(target: Unit):
 		dmg = target._aplly_weakness_and_resistance(dmg,attack_type)
 		print(unit_name + " attacked "+ target.unit_name + " for " + str(dmg)+ " damage.")
 		target._receive_damage(dmg)
-	_end_turn()
-	
+
+func _play_turn():
+	return
+
 func _end_turn():
 	emit_signal("turnEnded")
 	_deactivate()
 
 func _use_spell(spell: Spell, target_list: Array[Unit]):
-	print(unit_name + " used " + spell.spell_name +".")
+	animation_player.animation_set_next("UseSpell","Idle")
+	animation_player.play("UseSpell")
+	await animation_player.attack_hit
 	spell._spell_effect(self,target_list)
+	await animation_player.animation_changed
+	print(unit_name + " used " + spell.spell_name +".")
+	emit_signal("attackFinished")
 	_end_turn()
+
+	
 
 func _aplly_weakness_and_resistance(damage: int, type: int) -> int:
 	if weaknesses.has(type):

@@ -1,5 +1,9 @@
+@tool
 extends Unit
 class_name PlayerUnit
+
+
+
 
 func _get_allies(list:Array[Unit]):
 	allies_list = list.filter(func(element):return element is PlayerUnit)

@@ -1,25 +1,156 @@
-[gd_scene load_steps=3 format=3 uid="uid://xarsl6qnswo"]
+[gd_scene load_steps=15 format=3 uid="uid://xarsl6qnswo"]
 
 [ext_resource type="Script" path="res://scripts/Unit.gd" id="1_2g0kb"]
+[ext_resource type="Shader" path="res://scenes/units/unit.gdshader" id="2_3kcva"]
+[ext_resource type="Texture2D" uid="uid://bsrf63wo3srd5" path="res://assets/sprites/units/frog.png" id="2_al148"]
+[ext_resource type="Script" path="res://scripts/unit/unit_animation.gd" id="3_qkl4w"]
+[ext_resource type="Script" path="res://scripts/unit/DamagePopup.gd" id="5_xuljl"]
+[ext_resource type="PackedScene" uid="uid://d063ijjrhlk7a" path="res://scenes/gui/floating_number.tscn" id="6_f7sqi"]
 
-[sub_resource type="GDScript" id="GDScript_1t2v4"]
-script/source = "extends Node2D
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8axfa"]
+shader = ExtResource("2_3kcva")
+shader_parameter/hit_opacity = 0.0
+shader_parameter/enabled = false
 
+[sub_resource type="Animation" id="Animation_pq781"]
+resource_name = "Attack"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [9, 10, 11, 12, 13, 13, 14, 15, 16, 17]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimationPlayer")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_attack_hit"
+}]
+}
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+[sub_resource type="Animation" id="Animation_aumm1"]
+resource_name = "Dead"
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [18]
+}
 
+[sub_resource type="Animation" id="Animation_h1ui0"]
+resource_name = "Hurt"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [19, 20, 19, 21, 19]
+}
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	for i in
-"
+[sub_resource type="Animation" id="Animation_q0vkh"]
+resource_name = "Idle"
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_54jkc"]
+resource_name = "Move"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [7, 6, 7, 8]
+}
+
+[sub_resource type="Animation" id="Animation_ghj8c"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_psv8u"]
+_data = {
+"Attack": SubResource("Animation_pq781"),
+"Dead": SubResource("Animation_aumm1"),
+"Hurt": SubResource("Animation_h1ui0"),
+"Idle": SubResource("Animation_q0vkh"),
+"Move": SubResource("Animation_54jkc"),
+"RESET": SubResource("Animation_ghj8c")
+}
 
 [node name="Unit" type="Node2D"]
 script = ExtResource("1_2g0kb")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_8axfa")
+position = Vector2(0, -9)
+texture = ExtResource("2_al148")
+hframes = 9
+vframes = 3
 
-[node name="StatTimer" type="Node2D" parent="."]
-script = SubResource("GDScript_1t2v4")
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_psv8u")
+}
+autoplay = "Idle"
+script = ExtResource("3_qkl4w")
+
+[node name="DamagePopup" type="Marker2D" parent="."]
+position = Vector2(0, -15)
+script = ExtResource("5_xuljl")
+damage_node = ExtResource("6_f7sqi")

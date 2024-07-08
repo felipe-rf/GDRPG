@@ -1,9 +1,11 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://xu4ndfhlojia"]
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://xu4ndfhlojia"]
 
 [ext_resource type="Script" path="res://scripts/spells/heal_spell.gd" id="1_1obx8"]
+[ext_resource type="PackedScene" uid="uid://dw2dmksxg415u" path="res://scenes/effects/heal_particles.tscn" id="1_sjnmy"]
 
 [resource]
 script = ExtResource("1_1obx8")
 spell_name = "Heal"
 description = "Heals 1-8 health points."
 target_type = 0
+particle = ExtResource("1_sjnmy")

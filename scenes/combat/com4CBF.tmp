@@ -1,61 +1,16 @@
-[gd_scene load_steps=16 format=3 uid="uid://dxtkg3gd1p2fw"]
+[gd_scene load_steps=10 format=3 uid="uid://dxtkg3gd1p2fw"]
 
 [ext_resource type="PackedScene" uid="uid://b36ts5maohabp" path="res://scenes/combat/ActionMenu.tscn" id="1_40fe4"]
-[ext_resource type="Shader" path="res://assets/shaders/crt.gdshader" id="1_lrmea"]
 [ext_resource type="PackedScene" uid="uid://b4jbsl1xp5ms2" path="res://scenes/combat/turn_queue.tscn" id="2_ouiy5"]
-[ext_resource type="Script" path="res://scenes/combat/ColorRect2.gd" id="2_yhjkf"]
 [ext_resource type="PackedScene" uid="uid://6ab4sw7cvmq3" path="res://scenes/units/player_unit.tscn" id="3_44ysu"]
 [ext_resource type="Resource" uid="uid://xu4ndfhlojia" path="res://assets/spells/heal.tres" id="4_kun8a"]
 [ext_resource type="PackedScene" uid="uid://boqnj0ivkh3g" path="res://scenes/units/enemy_unit.tscn" id="4_ujdg3"]
 [ext_resource type="Resource" uid="uid://n7fkxajjv685" path="res://assets/spells/fireball.tres" id="5_dpgeb"]
 [ext_resource type="Texture2D" uid="uid://btyyk54h4ohai" path="res://assets/sprites/units/cat-Sheet.png" id="5_jtaor"]
 [ext_resource type="Resource" uid="uid://c40jvx4hn5c8n" path="res://assets/spells/frostray.tres" id="6_plbfi"]
-[ext_resource type="Texture2D" uid="uid://bsrf63wo3srd5" path="res://assets/sprites/units/frog.png" id="6_ycofy"]
 [ext_resource type="Resource" uid="uid://cl8qpl5vl6et6" path="res://assets/spells/strenght.tres" id="7_w7nyp"]
-[ext_resource type="Shader" path="res://assets/shaders/color.gdshader" id="12_ea2cx"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_sm3kv"]
-shader = ExtResource("12_ea2cx")
-shader_parameter/zoom = 4.2
-shader_parameter/rotate_speed = 0.2
-shader_parameter/disp = Vector2(0.5, 0.5)
-shader_parameter/transparent = false
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ps8cn"]
-shader = ExtResource("1_lrmea")
-shader_parameter/resolution = Vector2(658, 370)
-shader_parameter/scan_line_amount = 1.0
-shader_parameter/warp_amount = 0.1
-shader_parameter/noise_amount = 0.03
-shader_parameter/interference_amount = 0.2
-shader_parameter/grille_amount = 0.1
-shader_parameter/grille_size = 1.0
-shader_parameter/vignette_amount = 0.6
-shader_parameter/vignette_intensity = 0.4
-shader_parameter/aberation_amount = 0.5
-shader_parameter/roll_line_amount = 0.3
-shader_parameter/roll_speed = 1.0
-shader_parameter/scan_line_strength = -8.0
-shader_parameter/pixel_strength = -2.0
 
 [node name="CombatScene" type="Node2D"]
-
-[node name="ColorRect2" type="ColorRect" parent="."]
-show_behind_parent = true
-z_index = -10
-material = SubResource("ShaderMaterial_sm3kv")
-offset_left = 2.0
-offset_top = -7.0
-offset_right = 656.0
-offset_bottom = 370.0
-script = ExtResource("2_yhjkf")
-
-[node name="ColorRect3" type="ColorRect" parent="."]
-visible = false
-modulate = Color(7.82125e-08, 0.124736, 0.124773, 1)
-show_behind_parent = true
-offset_right = 658.0
-offset_bottom = 370.0
 
 [node name="ActionMenu" parent="." instance=ExtResource("1_40fe4")]
 top_level = true
@@ -67,14 +22,15 @@ position = Vector2(82, 112)
 base_defense = 5
 unit_name = "Frog"
 spell_list = Array[Resource("res://scripts/resources/spell.gd")]([ExtResource("5_dpgeb"), ExtResource("7_w7nyp")])
-texture = ExtResource("6_ycofy")
 animation_type = 1
 
 [node name="PlayerUnit" parent="TurnQueue" instance=ExtResource("3_44ysu")]
 position = Vector2(134, 201)
+base_defense = 5
+base_precision = 0
+base_strenght = 0
 unit_name = "Cat"
 spell_list = Array[Resource("res://scripts/resources/spell.gd")]([ExtResource("4_kun8a"), ExtResource("6_plbfi")])
-texture = ExtResource("5_jtaor")
 
 [node name="Sprite2D" parent="TurnQueue/PlayerUnit" index="0"]
 position = Vector2(4.25, 3)
@@ -84,20 +40,12 @@ texture = ExtResource("5_jtaor")
 position = Vector2(554, 118)
 base_defense = 5
 unit_name = "Enemy1"
-texture = ExtResource("6_ycofy")
 animation_type = 1
 
 [node name="EnemyUnit2" parent="TurnQueue" instance=ExtResource("4_ujdg3")]
 position = Vector2(476, 210)
 base_defense = 5
 unit_name = "Enemy2"
-texture = ExtResource("5_jtaor")
-
-[node name="ColorRect" type="ColorRect" parent="."]
-top_level = true
-z_index = 10
-material = SubResource("ShaderMaterial_ps8cn")
-offset_right = 658.0
-offset_bottom = 370.0
+animation_type = 1
 
 [editable path="TurnQueue/PlayerUnit"]

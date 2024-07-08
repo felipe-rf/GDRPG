@@ -1,6 +1,9 @@
 extends Node2D
 
 class_name TurnQueue
+@onready var action_menu = $"../ActionMenu"
+
+
 
 var active_unit
 var unit_list:Array[Unit]
@@ -28,6 +31,8 @@ func _ready():
 
 func _play_turn():
 	active_unit._activate(unit_list)
+	active_unit._play_turn()
+	action_menu._initialize(active_unit)
 	await active_unit.turnEnded
 	active_unit._deactivate()
 	unit_list = _refresh_unit_list(unit_list)

@@ -16,6 +16,8 @@ func _enable(type: int, list: Array[Unit], current_unit: Unit):
 			unit_list = list.filter(func(element): return element is PlayerUnit)
 		EffectTargets.SINGLE_ENEMY:
 			unit_list = list.filter(func(element): return element is EnemyUnit)
+		EffectTargets.ALL_ENEMIES:
+			unit_list = list.filter(func(element): return element is EnemyUnit)
 		EffectTargets.SELF:
 			unit_list = [current_unit]
 

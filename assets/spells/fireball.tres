@@ -1,5 +1,6 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://n7fkxajjv685"]
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://n7fkxajjv685"]
 
+[ext_resource type="PackedScene" uid="uid://3f6t8w56mixc" path="res://scenes/effects/spell_particle.tscn" id="1_80h5u"]
 [ext_resource type="Script" path="res://scripts/spells/fireball_spell.gd" id="1_vawwm"]
 
 [resource]
@@ -7,3 +8,4 @@ script = ExtResource("1_vawwm")
 spell_name = "Fireball"
 description = "Causes 1-10 damage to all enemies."
 target_type = 3
+particle = ExtResource("1_80h5u")

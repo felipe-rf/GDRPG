@@ -23,11 +23,17 @@ enum cursorState{
 var current_spell: Spell
 var state = cursorState.idle
 
+func _initialize(unit:Unit):
+	if unit is PlayerUnit:
+		menu_cursor._enable()
+	if unit is EnemyUnit:
+		menu_cursor.disabled = true
 func _on_attack_cursor_selected():
 	if(turn_queue.active_unit.state == 0):
 		menu_cursor.disabled = true
 		state = cursorState.attack
 		unit_cursor._enable(1,turn_queue.unit_list,turn_queue.active_unit)
+
 
 func _set_spell_labels(spell_list: Array[Spell]):
 	for i in spell_menu.get_children():
@@ -40,11 +46,11 @@ func _set_spell_labels(spell_list: Array[Spell]):
 func _on_unit_cursor_selected(target_list:Array[Unit]):
 	if state == cursorState.attack:
 		turn_queue.active_unit._attack_unit(target_list[0])
-		menu_cursor._enable()
+		await turn_queue.active_unit.attackFinished
 		state = cursorState.idle
 	if state == cursorState.spell:
 		turn_queue.active_unit._use_spell(current_spell,target_list)
-		menu_cursor._enable()
+		await turn_queue.active_unit.attackFinished
 		menu_cursor._set_parent(main_menu)
 		state = cursorState.idle
 		_set_visible(main_menu)
