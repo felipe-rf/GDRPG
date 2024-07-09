@@ -1,6 +1,4 @@
-extends Unit
-
-class_name EnemyUnit
+extends EnemyUnit
 
 func _get_allies(list:Array[Unit]):
 	allies_list = list.filter(func(element):return element is EnemyUnit)

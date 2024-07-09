@@ -10,6 +10,7 @@ extends Control
 
 @onready var spell_panel = $SpellPanel
 @onready var spell_label = $SpellPanel/Label
+@onready var player_portraits = $PlayerPortraits
 
 
 
@@ -23,7 +24,18 @@ enum cursorState{
 var current_spell: Spell
 var state = cursorState.idle
 
+func _set_player_portraits():
+	var index = 0
+	for unit in turn_queue.unit_list.filter(func(element): return element is PlayerUnit):
+		var portrait = player_portraits.get_child(index)
+		index += 1
+		portrait.texture = unit.unit_portrait
+		var label: Label = portrait.get_child(0).get_child(0)
+		label.text = "HP:" + str(unit.health) +"/"+str(unit.base_health)
+		portrait.visible = true
+
 func _initialize(unit:Unit):
+	_set_player_portraits()
 	if unit is PlayerUnit:
 		menu_cursor._enable()
 	if unit is EnemyUnit:

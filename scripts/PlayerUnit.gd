@@ -2,7 +2,7 @@
 extends Unit
 class_name PlayerUnit
 
-
+@export var unit_portrait:Texture2D
 
 
 func _get_allies(list:Array[Unit]):

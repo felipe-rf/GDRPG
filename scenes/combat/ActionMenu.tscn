@@ -1,13 +1,21 @@
-[gd_scene load_steps=8 format=3 uid="uid://b36ts5maohabp"]
+[gd_scene load_steps=12 format=3 uid="uid://b36ts5maohabp"]
 
 [ext_resource type="Script" path="res://scripts/menus/ActionMenu.gd" id="1_dieak"]
 [ext_resource type="Theme" uid="uid://7f715063sed8" path="res://assets/sprites/gui/panel.tres" id="1_twjxi"]
 [ext_resource type="Script" path="res://scripts/menus/MenuItem.gd" id="3_7o6io"]
 [ext_resource type="PackedScene" uid="uid://c5e0w4cg1ke0m" path="res://scenes/combat/menu_cursor.tscn" id="3_y3s34"]
+[ext_resource type="Texture2D" uid="uid://d0owvcxd21pyy" path="res://assets/sprites/units/cat/cat-portrait.png" id="4_vhx02"]
 [ext_resource type="Texture2D" uid="uid://cdnodtbv7hjs5" path="res://assets/sprites/gui/cursor.png" id="5_7nnkj"]
 [ext_resource type="Script" path="res://scripts/UnitCursor.gd" id="6_sm4mi"]
+[ext_resource type="FontFile" uid="uid://d004rlbpn65jj" path="res://assets/rainyhearts.ttf" id="8_kn3sp"]
+[ext_resource type="Texture2D" uid="uid://symy6e2b3eds" path="res://assets/sprites/units/cat/frog-portrait.png" id="8_l1dmk"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_hxbrx"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_67yg8"]
+font = ExtResource("8_kn3sp")
+font_color = Color(0, 0, 0, 1)
+shadow_size = 0
 
 [node name="ActionMenu" type="Control"]
 layout_mode = 3
@@ -32,19 +40,19 @@ theme = ExtResource("1_twjxi")
 
 [node name="SpellMenu" type="GridContainer" parent="Panel"]
 layout_mode = 0
-offset_left = 222.0
+offset_left = 200.0
 offset_top = 13.0
-offset_right = 814.0
-offset_bottom = 117.0
+offset_right = 440.0
+offset_bottom = 73.0
 theme_override_constants/h_separation = 100
 columns = 2
 
 [node name="MainMenu" type="GridContainer" parent="Panel"]
 layout_mode = 0
-offset_left = 222.0
-offset_top = 13.0
-offset_right = 427.0
-offset_bottom = 63.0
+offset_left = 208.0
+offset_top = 17.0
+offset_right = 431.0
+offset_bottom = 67.0
 theme_override_constants/h_separation = 100
 columns = 2
 
@@ -117,6 +125,96 @@ one_shot = true
 [node name="menu_timer" type="Timer" parent="."]
 wait_time = 0.1
 one_shot = true
+
+[node name="PlayerPortraits" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 114.0
+offset_top = 14.0
+offset_right = 366.0
+offset_bottom = 38.0
+scale = Vector2(2, 2)
+
+[node name="Portrait1" type="TextureRect" parent="PlayerPortraits"]
+layout_mode = 2
+texture = ExtResource("4_vhx02")
+
+[node name="BoxContainer" type="BoxContainer" parent="PlayerPortraits/Portrait1"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 10.0
+offset_right = 91.0
+offset_bottom = 25.0
+scale = Vector2(0.5, 0.5)
+alignment = 1
+
+[node name="Label" type="Label" parent="PlayerPortraits/Portrait1/BoxContainer"]
+layout_mode = 2
+text = "HP: 10/100"
+label_settings = SubResource("LabelSettings_67yg8")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Portrait2" type="TextureRect" parent="PlayerPortraits"]
+layout_mode = 2
+texture = ExtResource("8_l1dmk")
+
+[node name="BoxContainer" type="BoxContainer" parent="PlayerPortraits/Portrait2"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 10.0
+offset_right = 91.0
+offset_bottom = 25.0
+scale = Vector2(0.5, 0.5)
+alignment = 1
+
+[node name="Label" type="Label" parent="PlayerPortraits/Portrait2/BoxContainer"]
+layout_mode = 2
+text = "HP: 10/100"
+label_settings = SubResource("LabelSettings_67yg8")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Portrait3" type="TextureRect" parent="PlayerPortraits"]
+visible = false
+layout_mode = 2
+texture = ExtResource("4_vhx02")
+
+[node name="BoxContainer" type="BoxContainer" parent="PlayerPortraits/Portrait3"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 10.0
+offset_right = 91.0
+offset_bottom = 25.0
+scale = Vector2(0.5, 0.5)
+alignment = 1
+
+[node name="Label" type="Label" parent="PlayerPortraits/Portrait3/BoxContainer"]
+layout_mode = 2
+text = "HP: 10/100"
+label_settings = SubResource("LabelSettings_67yg8")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Portrait4" type="TextureRect" parent="PlayerPortraits"]
+visible = false
+layout_mode = 2
+texture = ExtResource("4_vhx02")
+
+[node name="BoxContainer" type="BoxContainer" parent="PlayerPortraits/Portrait4"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 10.0
+offset_right = 91.0
+offset_bottom = 25.0
+scale = Vector2(0.5, 0.5)
+alignment = 1
+
+[node name="Label" type="Label" parent="PlayerPortraits/Portrait4/BoxContainer"]
+layout_mode = 2
+text = "HP: 10/100"
+label_settings = SubResource("LabelSettings_67yg8")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="cursor_selected" from="Panel/MainMenu/Attack" to="." method="_on_attack_cursor_selected"]
 [connection signal="cursor_selected" from="Panel/MainMenu/Spell" to="." method="_on_spell_cursor_selected"]

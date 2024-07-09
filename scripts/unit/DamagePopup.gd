@@ -20,7 +20,8 @@ func popup(dmg: String,type: int):
 						 "position",
 						 global_position + _get_direction(),
 						 0.75)
- 
+
+
 	get_tree().current_scene.add_child(damage)
  
 func _get_direction():

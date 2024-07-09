@@ -151,6 +151,11 @@ autoplay = "Idle"
 script = ExtResource("3_qkl4w")
 
 [node name="DamagePopup" type="Marker2D" parent="."]
-position = Vector2(0, -15)
+position = Vector2(12, -10)
+script = ExtResource("5_xuljl")
+damage_node = ExtResource("6_f7sqi")
+
+[node name="TextPopup" type="Marker2D" parent="."]
+position = Vector2(0, -17)
 script = ExtResource("5_xuljl")
 damage_node = ExtResource("6_f7sqi")

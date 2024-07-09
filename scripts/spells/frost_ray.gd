@@ -14,6 +14,7 @@ func _spell_effect(parent: Unit,target_list: Array[Unit]):
 		dmg = target._aplly_weakness_and_resistance(dmg,damage_type)
 		print(target.unit_name + " received " + str(dmg)+ " ice damage.")
 		target._receive_damage(dmg)
+		_spawn_particles(target)
 		target._aplly_stat_change(1,UnitStats.speed,2)
 
 

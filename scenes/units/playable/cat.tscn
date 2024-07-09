@@ -1,0 +1,65 @@
+[gd_scene load_steps=13 format=3 uid="uid://dnrvsqfcvtu5a"]
+
+[ext_resource type="Script" path="res://scripts/PlayerUnit.gd" id="1_e0o1r"]
+[ext_resource type="Texture2D" uid="uid://d0owvcxd21pyy" path="res://assets/sprites/units/cat/cat-portrait.png" id="2_wiwa5"]
+[ext_resource type="Resource" uid="uid://c40jvx4hn5c8n" path="res://resources/spells/frostray.tres" id="3_3xcyp"]
+[ext_resource type="Texture2D" uid="uid://btyyk54h4ohai" path="res://assets/sprites/units/cat-Sheet.png" id="3_jm4db"]
+[ext_resource type="Shader" path="res://scenes/units/unit.gdshader" id="4_exy8q"]
+[ext_resource type="Resource" uid="uid://xu4ndfhlojia" path="res://resources/spells/heal.tres" id="4_jxayx"]
+[ext_resource type="Texture2D" uid="uid://bgdc18gbooa77" path="res://assets/sprites/units/overlay.png" id="5_damb4"]
+[ext_resource type="Script" path="res://scripts/unit/unit_animation.gd" id="6_8f8tj"]
+[ext_resource type="AnimationLibrary" uid="uid://rkp51d82v2fo" path="res://resources/unit/unit_animations.res" id="6_y5kj3"]
+[ext_resource type="Script" path="res://scripts/unit/DamagePopup.gd" id="7_dp6js"]
+[ext_resource type="PackedScene" uid="uid://d063ijjrhlk7a" path="res://scenes/gui/floating_number.tscn" id="8_m3xrl"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_onn0q"]
+shader = ExtResource("4_exy8q")
+shader_parameter/hit_opacity = 0.0
+shader_parameter/enabled = false
+
+[node name="Cat" type="Node2D"]
+scale = Vector2(4, 4)
+script = ExtResource("1_e0o1r")
+unit_portrait = ExtResource("2_wiwa5")
+base_health = 20
+base_attack = 8
+base_speed = 10
+base_defense = 5
+base_precision = 4
+base_magic = 2
+base_strenght = 3
+unit_name = "Cat"
+spell_list = Array[Resource("res://scripts/resources/spell.gd")]([ExtResource("3_3xcyp"), ExtResource("4_jxayx")])
+texture = ExtResource("3_jm4db")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+clip_children = 2
+material = SubResource("ShaderMaterial_onn0q")
+texture = ExtResource("3_jm4db")
+offset = Vector2(0, -9)
+hframes = 9
+vframes = 3
+frame = 9
+
+[node name="Sprite2D2" type="Sprite2D" parent="Sprite2D"]
+visible = false
+texture = ExtResource("5_damb4")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"unit": ExtResource("6_y5kj3")
+}
+autoplay = "unit/Idle"
+script = ExtResource("6_8f8tj")
+
+[node name="DamagePopup" type="Marker2D" parent="."]
+z_index = 5
+position = Vector2(12, -10)
+script = ExtResource("7_dp6js")
+damage_node = ExtResource("8_m3xrl")
+
+[node name="TextPopup" type="Marker2D" parent="."]
+z_index = 5
+position = Vector2(0, -17)
+script = ExtResource("7_dp6js")
+damage_node = ExtResource("8_m3xrl")

@@ -1,17 +1,13 @@
-[gd_scene load_steps=16 format=3 uid="uid://dxtkg3gd1p2fw"]
+[gd_scene load_steps=12 format=3 uid="uid://dxtkg3gd1p2fw"]
 
 [ext_resource type="PackedScene" uid="uid://b36ts5maohabp" path="res://scenes/combat/ActionMenu.tscn" id="1_40fe4"]
+[ext_resource type="Script" path="res://scenes/combat/combat_scene.gd" id="1_evm76"]
 [ext_resource type="Shader" path="res://assets/shaders/crt.gdshader" id="1_lrmea"]
 [ext_resource type="PackedScene" uid="uid://b4jbsl1xp5ms2" path="res://scenes/combat/turn_queue.tscn" id="2_ouiy5"]
+[ext_resource type="PackedScene" uid="uid://dnrvsqfcvtu5a" path="res://scenes/units/playable/cat.tscn" id="2_qjnoj"]
 [ext_resource type="Script" path="res://scenes/combat/ColorRect2.gd" id="2_yhjkf"]
-[ext_resource type="PackedScene" uid="uid://6ab4sw7cvmq3" path="res://scenes/units/player_unit.tscn" id="3_44ysu"]
-[ext_resource type="Resource" uid="uid://xu4ndfhlojia" path="res://assets/spells/heal.tres" id="4_kun8a"]
-[ext_resource type="PackedScene" uid="uid://boqnj0ivkh3g" path="res://scenes/units/enemy_unit.tscn" id="4_ujdg3"]
-[ext_resource type="Resource" uid="uid://n7fkxajjv685" path="res://assets/spells/fireball.tres" id="5_dpgeb"]
-[ext_resource type="Texture2D" uid="uid://btyyk54h4ohai" path="res://assets/sprites/units/cat-Sheet.png" id="5_jtaor"]
-[ext_resource type="Resource" uid="uid://c40jvx4hn5c8n" path="res://assets/spells/frostray.tres" id="6_plbfi"]
-[ext_resource type="Texture2D" uid="uid://bsrf63wo3srd5" path="res://assets/sprites/units/frog.png" id="6_ycofy"]
-[ext_resource type="Resource" uid="uid://cl8qpl5vl6et6" path="res://assets/spells/strenght.tres" id="7_w7nyp"]
+[ext_resource type="PackedScene" uid="uid://b1odcwrf4mfpr" path="res://scenes/units/playable/frog.tscn" id="3_qj2aj"]
+[ext_resource type="PackedScene" uid="uid://crluy07384wg4" path="res://scenes/units/enemies/goblin.tscn" id="5_xygp7"]
 [ext_resource type="Shader" path="res://assets/shaders/color.gdshader" id="12_ea2cx"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sm3kv"]
@@ -39,65 +35,71 @@ shader_parameter/scan_line_strength = -8.0
 shader_parameter/pixel_strength = -2.0
 
 [node name="CombatScene" type="Node2D"]
+script = ExtResource("1_evm76")
+player_units = Array[PackedScene]([ExtResource("2_qjnoj"), ExtResource("3_qj2aj")])
+enemy_units = Array[PackedScene]([ExtResource("5_xygp7"), ExtResource("5_xygp7")])
 
 [node name="ColorRect2" type="ColorRect" parent="."]
+visible = false
 show_behind_parent = true
 z_index = -10
 material = SubResource("ShaderMaterial_sm3kv")
-offset_left = 2.0
-offset_top = -7.0
-offset_right = 656.0
-offset_bottom = 370.0
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 680.0
+offset_bottom = 400.0
 script = ExtResource("2_yhjkf")
-
-[node name="ColorRect3" type="ColorRect" parent="."]
-visible = false
-modulate = Color(7.82125e-08, 0.124736, 0.124773, 1)
-show_behind_parent = true
-offset_right = 658.0
-offset_bottom = 370.0
 
 [node name="ActionMenu" parent="." instance=ExtResource("1_40fe4")]
 top_level = true
 
 [node name="TurnQueue" parent="." instance=ExtResource("2_ouiy5")]
 
-[node name="PlayerUnit2" parent="TurnQueue" instance=ExtResource("3_44ysu")]
-position = Vector2(82, 112)
-base_defense = 5
-unit_name = "Frog"
-spell_list = Array[Resource("res://scripts/resources/spell.gd")]([ExtResource("5_dpgeb"), ExtResource("7_w7nyp")])
-texture = ExtResource("6_ycofy")
-animation_type = 1
-
-[node name="PlayerUnit" parent="TurnQueue" instance=ExtResource("3_44ysu")]
-position = Vector2(134, 201)
-unit_name = "Cat"
-spell_list = Array[Resource("res://scripts/resources/spell.gd")]([ExtResource("4_kun8a"), ExtResource("6_plbfi")])
-texture = ExtResource("5_jtaor")
-
-[node name="Sprite2D" parent="TurnQueue/PlayerUnit" index="0"]
-position = Vector2(4.25, 3)
-texture = ExtResource("5_jtaor")
-
-[node name="EnemyUnit" parent="TurnQueue" instance=ExtResource("4_ujdg3")]
-position = Vector2(554, 118)
-base_defense = 5
-unit_name = "Enemy1"
-texture = ExtResource("6_ycofy")
-animation_type = 1
-
-[node name="EnemyUnit2" parent="TurnQueue" instance=ExtResource("4_ujdg3")]
-position = Vector2(476, 210)
-base_defense = 5
-unit_name = "Enemy2"
-texture = ExtResource("5_jtaor")
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
 
 [node name="ColorRect" type="ColorRect" parent="."]
+visible = false
 top_level = true
 z_index = 10
 material = SubResource("ShaderMaterial_ps8cn")
 offset_right = 658.0
 offset_bottom = 370.0
+script = ExtResource("2_yhjkf")
 
-[editable path="TurnQueue/PlayerUnit"]
+[node name="PositionMarkers" type="Marker2D" parent="."]
+visible = false
+position = Vector2(64, 192)
+metadata/_edit_lock_ = true
+
+[node name="Players" type="Marker2D" parent="PositionMarkers"]
+
+[node name="Player1" type="Marker2D" parent="PositionMarkers/Players"]
+position = Vector2(0, -16)
+
+[node name="Player2" type="Marker2D" parent="PositionMarkers/Players"]
+position = Vector2(128, -16)
+
+[node name="Player3" type="Marker2D" parent="PositionMarkers/Players"]
+position = Vector2(64, 40)
+
+[node name="Player4" type="Marker2D" parent="PositionMarkers/Players"]
+position = Vector2(192, 40)
+
+[node name="Enemies" type="Marker2D" parent="PositionMarkers"]
+visible = false
+position = Vector2(512, 0)
+scale = Vector2(-1, 1)
+metadata/_edit_lock_ = true
+
+[node name="Enemy1" type="Marker2D" parent="PositionMarkers/Enemies"]
+position = Vector2(136, -16)
+
+[node name="Enemy2" type="Marker2D" parent="PositionMarkers/Enemies"]
+position = Vector2(0, -16)
+
+[node name="Enemy3" type="Marker2D" parent="PositionMarkers/Enemies"]
+position = Vector2(192, 40)
+
+[node name="Enemy4" type="Marker2D" parent="PositionMarkers/Enemies"]
+position = Vector2(64, 40)

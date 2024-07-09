@@ -1,0 +1,71 @@
+[gd_scene load_steps=14 format=3 uid="uid://b8qs0t2yiilgo"]
+
+[ext_resource type="Texture2D" uid="uid://bd5of5ejke0sx" path="res://assets/sprites/particle.png" id="1_7ym2j"]
+[ext_resource type="Script" path="res://scripts/resources/spell_particle.gd" id="2_vjm8l"]
+
+[sub_resource type="Curve" id="Curve_8c2ri"]
+_data = [Vector2(0, 0.0245441), 0.0, 0.0, 0, 0, Vector2(1, 0.0245441), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_v3bp1"]
+curve = SubResource("Curve_8c2ri")
+
+[sub_resource type="Gradient" id="Gradient_38kfg"]
+offsets = PackedFloat32Array(0, 0.421456, 0.747126, 1)
+colors = PackedColorArray(1.00593e-05, 0.194161, 0.57356, 1, 0.53788, 0.829319, 1, 1, 0.559554, 1, 0.992537, 1, 0.2, 0.188235, 0.2, 0.0470588)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_yqrh2"]
+gradient = SubResource("Gradient_38kfg")
+
+[sub_resource type="Curve" id="Curve_in11x"]
+_data = [Vector2(0.017301, 0.243338), 0.0, 0.0, 0, 0, Vector2(0.588235, 0), 0.0, 0.0, 0, 0, Vector2(0.768166, 0.936185), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_q4u3b"]
+curve = SubResource("Curve_in11x")
+
+[sub_resource type="Curve" id="Curve_fer61"]
+_data = [Vector2(0, 0.352735), 0.0, 0.0, 0, 0, Vector2(0.49481, 0.370968), 0.0, 0.0, 0, 0, Vector2(0.740484, 0.480365), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_wosdd"]
+curve = SubResource("Curve_fer61")
+
+[sub_resource type="Curve" id="Curve_8xt68"]
+max_value = 3.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_6ix32"]
+curve = SubResource("Curve_8xt68")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_2ime2"]
+lifetime_randomness = 1.0
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 10.86
+angle_min = -127.6
+angle_max = 355.5
+direction = Vector3(0, 0, 0)
+radial_velocity_max = 10.0
+gravity = Vector3(0, 0, 0)
+radial_accel_max = 24.05
+radial_accel_curve = SubResource("CurveTexture_q4u3b")
+scale_min = 4.0
+scale_max = 8.0
+scale_curve = SubResource("CurveTexture_wosdd")
+scale_over_velocity_curve = SubResource("CurveTexture_6ix32")
+color_ramp = SubResource("GradientTexture1D_yqrh2")
+alpha_curve = SubResource("CurveTexture_v3bp1")
+hue_variation_min = -0.11
+turbulence_noise_scale = 2.72
+
+[node name="SpellParticle" type="GPUParticles2D"]
+amount = 500
+process_material = SubResource("ParticleProcessMaterial_2ime2")
+texture = ExtResource("1_7ym2j")
+explosiveness = 1.0
+draw_order = 2
+script = ExtResource("2_vjm8l")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

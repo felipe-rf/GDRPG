@@ -1,0 +1,66 @@
+[gd_scene load_steps=14 format=3 uid="uid://b1odcwrf4mfpr"]
+
+[ext_resource type="Script" path="res://scripts/PlayerUnit.gd" id="1_gvcja"]
+[ext_resource type="Texture2D" uid="uid://symy6e2b3eds" path="res://assets/sprites/units/cat/frog-portrait.png" id="2_lm4bl"]
+[ext_resource type="Resource" uid="uid://n7fkxajjv685" path="res://resources/spells/fireball.tres" id="3_d7gxt"]
+[ext_resource type="Resource" uid="uid://cl8qpl5vl6et6" path="res://resources/spells/strenght.tres" id="4_4bbgl"]
+[ext_resource type="Texture2D" uid="uid://bsrf63wo3srd5" path="res://assets/sprites/units/frog.png" id="5_o4inw"]
+[ext_resource type="Shader" path="res://scenes/units/unit.gdshader" id="6_mr70p"]
+[ext_resource type="Texture2D" uid="uid://btyyk54h4ohai" path="res://assets/sprites/units/cat-Sheet.png" id="7_q0lef"]
+[ext_resource type="Texture2D" uid="uid://bgdc18gbooa77" path="res://assets/sprites/units/overlay.png" id="8_g1ewa"]
+[ext_resource type="AnimationLibrary" uid="uid://rkp51d82v2fo" path="res://resources/unit/unit_animations.res" id="9_bpjdf"]
+[ext_resource type="Script" path="res://scripts/unit/unit_animation.gd" id="10_xhn27"]
+[ext_resource type="Script" path="res://scripts/unit/DamagePopup.gd" id="11_37g74"]
+[ext_resource type="PackedScene" uid="uid://d063ijjrhlk7a" path="res://scenes/gui/floating_number.tscn" id="12_txms2"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_onn0q"]
+shader = ExtResource("6_mr70p")
+shader_parameter/hit_opacity = 0.0
+shader_parameter/enabled = false
+
+[node name="Frog" type="Node2D"]
+scale = Vector2(4, 4)
+script = ExtResource("1_gvcja")
+unit_portrait = ExtResource("2_lm4bl")
+base_health = 25
+base_attack = 8
+base_speed = 5
+base_defense = 10
+base_precision = 2
+base_strenght = 3
+unit_name = "Frog"
+spell_list = Array[Resource("res://scripts/resources/spell.gd")]([ExtResource("3_d7gxt"), ExtResource("4_4bbgl")])
+texture = ExtResource("5_o4inw")
+animation_type = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+clip_children = 2
+material = SubResource("ShaderMaterial_onn0q")
+texture = ExtResource("7_q0lef")
+offset = Vector2(0, -9)
+hframes = 9
+vframes = 3
+frame = 9
+
+[node name="Sprite2D2" type="Sprite2D" parent="Sprite2D"]
+visible = false
+texture = ExtResource("8_g1ewa")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"unit": ExtResource("9_bpjdf")
+}
+autoplay = "unit/Idle"
+script = ExtResource("10_xhn27")
+
+[node name="DamagePopup" type="Marker2D" parent="."]
+z_index = 5
+position = Vector2(12, -10)
+script = ExtResource("11_37g74")
+damage_node = ExtResource("12_txms2")
+
+[node name="TextPopup" type="Marker2D" parent="."]
+z_index = 5
+position = Vector2(0, -17)
+script = ExtResource("11_37g74")
+damage_node = ExtResource("12_txms2")
