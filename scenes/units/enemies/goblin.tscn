@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://crluy07384wg4"]
+[gd_scene load_steps=14 format=3 uid="uid://crluy07384wg4"]
 
 [ext_resource type="Script" path="res://scenes/units/enemies/goblin.gd" id="1_rbmir"]
 [ext_resource type="Texture2D" uid="uid://dppxdv118eeco" path="res://assets/sprites/units/enemies/goblin/goblin.png" id="2_0k83e"]
 [ext_resource type="Shader" path="res://scenes/units/unit.gdshader" id="3_ar0gy"]
+[ext_resource type="Texture2D" uid="uid://bgdc18gbooa77" path="res://assets/sprites/units/overlay.png" id="4_kvgre"]
 [ext_resource type="AnimationLibrary" uid="uid://rkp51d82v2fo" path="res://resources/unit/unit_animations.res" id="4_ym0u3"]
 [ext_resource type="Script" path="res://scripts/unit/unit_animation.gd" id="5_kyp7o"]
 [ext_resource type="Script" path="res://scripts/unit/DamagePopup.gd" id="6_gbqki"]
@@ -13,6 +14,72 @@ shader = ExtResource("3_ar0gy")
 shader_parameter/hit_opacity = 0.0
 shader_parameter/enabled = false
 
+[sub_resource type="Animation" id="Animation_oi6jd"]
+resource_name = "selected"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D/Sprite2D2:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D/Sprite2D2:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.556863), Color(1, 1, 1, 0), Color(1, 1, 1, 0.52549)]
+}
+
+[sub_resource type="Animation" id="Animation_srlld"]
+resource_name = "unselected"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D/Sprite2D2:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_evw66"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D/Sprite2D2:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_uwytu"]
+_data = {
+"RESET": SubResource("Animation_evw66"),
+"selected": SubResource("Animation_oi6jd"),
+"unselected": SubResource("Animation_srlld")
+}
+
 [node name="Goblin" type="Node2D"]
 scale = Vector2(3, 3)
 script = ExtResource("1_rbmir")
@@ -21,18 +88,31 @@ base_attack = 10
 base_speed = 2
 base_defense = 5
 base_precision = 2
+base_magic = null
 base_strenght = 3
 unit_name = "Goblin"
+spell_list = null
+weaknesses = null
+resistances = null
+attack_type = null
 texture = ExtResource("2_0k83e")
+animation_type = null
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+clip_children = 2
 material = SubResource("ShaderMaterial_5rjmu")
 texture = ExtResource("2_0k83e")
 offset = Vector2(0, -6)
 flip_h = true
 hframes = 9
 vframes = 3
-frame = 9
+frame = 18
+
+[node name="Sprite2D2" type="Sprite2D" parent="Sprite2D"]
+visible = false
+modulate = Color(1, 0.394545, 0.375615, 1)
+self_modulate = Color(1, 1, 1, 0.556863)
+texture = ExtResource("4_kvgre")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -52,3 +132,8 @@ z_index = 5
 position = Vector2(0, -17)
 script = ExtResource("6_gbqki")
 damage_node = ExtResource("7_oewqt")
+
+[node name="SelectedAnimation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_uwytu")
+}

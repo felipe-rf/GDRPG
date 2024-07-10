@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://dvjeu7a2cksqq"]
+
+[ext_resource type="PackedScene" uid="uid://dw2dmksxg415u" path="res://scenes/effects/heal_particles.tscn" id="1_2prua"]
+[ext_resource type="Script" path="res://scripts/spells/mega_heal.gd" id="2_sxvxq"]
+
+[resource]
+script = ExtResource("2_sxvxq")
+spell_name = "Mega Heal"
+description = "Heals 1-8 health points to all allies."
+target_type = 2
+particle = ExtResource("1_2prua")

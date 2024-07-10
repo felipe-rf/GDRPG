@@ -1,19 +1,20 @@
-[gd_scene load_steps=17 format=3 uid="uid://b1odcwrf4mfpr"]
+[gd_scene load_steps=18 format=3 uid="uid://bpvgnr53npypr"]
 
-[ext_resource type="Script" path="res://scripts/PlayerUnit.gd" id="1_gvcja"]
-[ext_resource type="Texture2D" uid="uid://symy6e2b3eds" path="res://assets/sprites/units/cat/frog-portrait.png" id="2_lm4bl"]
-[ext_resource type="Resource" uid="uid://n7fkxajjv685" path="res://resources/spells/fireball.tres" id="3_d7gxt"]
-[ext_resource type="Resource" uid="uid://cl8qpl5vl6et6" path="res://resources/spells/strenght.tres" id="4_4bbgl"]
-[ext_resource type="Texture2D" uid="uid://bsrf63wo3srd5" path="res://assets/sprites/units/frog.png" id="5_o4inw"]
-[ext_resource type="Shader" path="res://scenes/units/unit.gdshader" id="6_mr70p"]
-[ext_resource type="Texture2D" uid="uid://bgdc18gbooa77" path="res://assets/sprites/units/overlay.png" id="8_g1ewa"]
-[ext_resource type="AnimationLibrary" uid="uid://rkp51d82v2fo" path="res://resources/unit/unit_animations.res" id="9_bpjdf"]
-[ext_resource type="Script" path="res://scripts/unit/unit_animation.gd" id="10_xhn27"]
-[ext_resource type="Script" path="res://scripts/unit/DamagePopup.gd" id="11_37g74"]
-[ext_resource type="PackedScene" uid="uid://d063ijjrhlk7a" path="res://scenes/gui/floating_number.tscn" id="12_txms2"]
+[ext_resource type="Script" path="res://scripts/PlayerUnit.gd" id="1_67fo4"]
+[ext_resource type="Texture2D" uid="uid://cg1tpky0snp1p" path="res://assets/sprites/units/cat/bat-portrait.png" id="2_2b1ca"]
+[ext_resource type="Resource" uid="uid://dvjeu7a2cksqq" path="res://resources/spells/mega_heal.tres" id="3_srifb"]
+[ext_resource type="Resource" uid="uid://bcdpccwja0xdi" path="res://resources/spells/slow.tres" id="4_j5tng"]
+[ext_resource type="Resource" uid="uid://cnbwio1ogdcq" path="res://resources/spells/vampirism.tres" id="5_501mc"]
+[ext_resource type="Texture2D" uid="uid://dg5v25xgqcty8" path="res://assets/sprites/units/bat.png" id="5_e8wdl"]
+[ext_resource type="Shader" path="res://scenes/units/unit.gdshader" id="6_6p0ov"]
+[ext_resource type="Texture2D" uid="uid://bgdc18gbooa77" path="res://assets/sprites/units/overlay.png" id="7_m7sbn"]
+[ext_resource type="AnimationLibrary" uid="uid://rkp51d82v2fo" path="res://resources/unit/unit_animations.res" id="8_v4tb2"]
+[ext_resource type="Script" path="res://scripts/unit/unit_animation.gd" id="9_de2uh"]
+[ext_resource type="Script" path="res://scripts/unit/DamagePopup.gd" id="10_g3xqo"]
+[ext_resource type="PackedScene" uid="uid://d063ijjrhlk7a" path="res://scenes/gui/floating_number.tscn" id="11_66t70"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_onn0q"]
-shader = ExtResource("6_mr70p")
+shader = ExtResource("6_6p0ov")
 shader_parameter/hit_opacity = 0.0
 shader_parameter/enabled = false
 
@@ -83,52 +84,52 @@ _data = {
 "unselected": SubResource("Animation_srlld")
 }
 
-[node name="Frog" type="Node2D"]
+[node name="Bat" type="Node2D"]
 scale = Vector2(4, 4)
-script = ExtResource("1_gvcja")
-unit_portrait = ExtResource("2_lm4bl")
-base_health = 25
+script = ExtResource("1_67fo4")
+unit_portrait = ExtResource("2_2b1ca")
+base_health = 15
 base_attack = 8
 base_speed = 5
-base_defense = 10
+base_defense = 8
 base_precision = 2
 base_strenght = 3
-unit_name = "Frog"
-spell_list = Array[Resource("res://scripts/resources/spell.gd")]([ExtResource("3_d7gxt"), ExtResource("4_4bbgl")])
-texture = ExtResource("5_o4inw")
+unit_name = "Bat"
+spell_list = Array[Resource("res://scripts/resources/spell.gd")]([ExtResource("3_srifb"), ExtResource("4_j5tng"), ExtResource("5_501mc")])
+texture = ExtResource("5_e8wdl")
 animation_type = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 clip_children = 2
 material = SubResource("ShaderMaterial_onn0q")
-texture = ExtResource("5_o4inw")
+texture = ExtResource("5_e8wdl")
 offset = Vector2(0, -9)
 hframes = 9
 vframes = 3
-frame = 9
+frame = 8
 
 [node name="Sprite2D2" type="Sprite2D" parent="Sprite2D"]
 visible = false
-texture = ExtResource("8_g1ewa")
+texture = ExtResource("7_m7sbn")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"unit": ExtResource("9_bpjdf")
+"unit": ExtResource("8_v4tb2")
 }
 autoplay = "unit/Idle"
-script = ExtResource("10_xhn27")
+script = ExtResource("9_de2uh")
 
 [node name="DamagePopup" type="Marker2D" parent="."]
 z_index = 5
 position = Vector2(12, -10)
-script = ExtResource("11_37g74")
-damage_node = ExtResource("12_txms2")
+script = ExtResource("10_g3xqo")
+damage_node = ExtResource("11_66t70")
 
 [node name="TextPopup" type="Marker2D" parent="."]
 z_index = 5
 position = Vector2(0, -17)
-script = ExtResource("11_37g74")
-damage_node = ExtResource("12_txms2")
+script = ExtResource("10_g3xqo")
+damage_node = ExtResource("11_66t70")
 
 [node name="SelectedAnimation" type="AnimationPlayer" parent="."]
 libraries = {

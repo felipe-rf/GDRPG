@@ -18,6 +18,8 @@ func _enable(type: int, list: Array[Unit], current_unit: Unit):
 			unit_list = list.filter(func(element): return element is EnemyUnit)
 		EffectTargets.ALL_ENEMIES:
 			unit_list = list.filter(func(element): return element is EnemyUnit)
+		EffectTargets.ALL_ALLIES:
+			unit_list = list.filter(func(element): return element is PlayerUnit)
 		EffectTargets.SELF:
 			unit_list = [current_unit]
 
@@ -74,13 +76,19 @@ func single_target_select():
 
 func multiple_target_select():
 	set_cursor_from_index(0)
+	for unit in unit_list:
+		if(unit != null): unit._select_animation()
 	if Input.is_action_just_pressed("ui_select"):
 		var current_menu_item = unit_list
 		if current_menu_item != null:
+			for unit in unit_list:
+				unit._unselect_animation(false)
 			emit_signal("selected",current_menu_item)
 			disabled = true
 			
 	if Input.is_action_just_pressed("ui_cancel"):
+		for unit in unit_list:
+			if(unit != null): unit._unselect_animation(false)
 		emit_signal("canceled")
 		disabled = true
 		

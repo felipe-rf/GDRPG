@@ -1,0 +1,49 @@
+[gd_scene load_steps=10 format=3 uid="uid://b4lvbedsqorqh"]
+
+[ext_resource type="Texture2D" uid="uid://bd5of5ejke0sx" path="res://assets/sprites/particle.png" id="1_qvvp7"]
+[ext_resource type="Script" path="res://scripts/resources/spell_particle.gd" id="2_crb21"]
+
+[sub_resource type="Gradient" id="Gradient_mswmq"]
+offsets = PackedFloat32Array(0.00766284, 1)
+colors = PackedColorArray(0.546126, 0.00138399, 9.62615e-08, 1, 1, 0.745098, 0.411765, 0.682353)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_mws67"]
+gradient = SubResource("Gradient_mswmq")
+
+[sub_resource type="Curve" id="Curve_5omg6"]
+_data = [Vector2(0.103806, 0.225105), 0.0, 0.0, 0, 0, Vector2(0.231834, 0.64446), 0.0, 0.0, 0, 0, Vector2(0.643599, 0.352735), 0.0, 0.0, 0, 0, Vector2(0.99654, 0.863254), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_1rdss"]
+curve = SubResource("Curve_5omg6")
+
+[sub_resource type="Curve" id="Curve_1sgcn"]
+_data = [Vector2(0, 0.28892), 0.0, 0.0, 0, 0, Vector2(0.214533, 1), 0.0, 0.0, 0, 0, Vector2(0.484429, 1), 0.0, 0.0, 0, 0, Vector2(0.761246, 1), 0.0, 0.0, 0, 0, Vector2(0.986159, 0.18864), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="CurveTexture" id="CurveTexture_hdnb4"]
+curve = SubResource("Curve_1sgcn")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_i6qjh"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 7.48
+angle_max = 264.3
+spread = 91.709
+gravity = Vector3(0, -100, 0)
+scale_max = 1.5
+scale_curve = SubResource("CurveTexture_hdnb4")
+color_ramp = SubResource("GradientTexture1D_mws67")
+emission_curve = SubResource("CurveTexture_1rdss")
+
+[node name="SpellParticle" type="GPUParticles2D"]
+self_modulate = Color(1, 1, 1, 0.443137)
+amount = 500
+process_material = SubResource("ParticleProcessMaterial_i6qjh")
+texture = ExtResource("1_qvvp7")
+lifetime = 1.2
+explosiveness = 0.5
+draw_order = 2
+script = ExtResource("2_crb21")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dnrvsqfcvtu5a"]
+[gd_scene load_steps=19 format=3 uid="uid://dnrvsqfcvtu5a"]
 
 [ext_resource type="Script" path="res://scripts/PlayerUnit.gd" id="1_e0o1r"]
 [ext_resource type="Texture2D" uid="uid://d0owvcxd21pyy" path="res://assets/sprites/units/cat/cat-portrait.png" id="2_wiwa5"]
@@ -16,6 +16,104 @@
 shader = ExtResource("4_exy8q")
 shader_parameter/hit_opacity = 0.0
 shader_parameter/enabled = false
+
+[sub_resource type="Animation" id="Animation_phrxg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D/Sprite2D2:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D/Sprite2D2:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gmmra"]
+_data = {
+"RESET": SubResource("Animation_phrxg")
+}
+
+[sub_resource type="Animation" id="Animation_oi6jd"]
+resource_name = "selected"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D/Sprite2D2:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D/Sprite2D2:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.556863), Color(1, 1, 1, 0), Color(1, 1, 1, 0.52549)]
+}
+
+[sub_resource type="Animation" id="Animation_srlld"]
+resource_name = "unselected"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D/Sprite2D2:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_evw66"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D/Sprite2D2:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_uwytu"]
+_data = {
+"RESET": SubResource("Animation_evw66"),
+"selected": SubResource("Animation_oi6jd"),
+"unselected": SubResource("Animation_srlld")
+}
 
 [node name="Cat" type="Node2D"]
 scale = Vector2(4, 4)
@@ -39,14 +137,16 @@ texture = ExtResource("3_jm4db")
 offset = Vector2(0, -9)
 hframes = 9
 vframes = 3
-frame = 9
+frame = 1
 
 [node name="Sprite2D2" type="Sprite2D" parent="Sprite2D"]
 visible = false
+show_behind_parent = true
 texture = ExtResource("5_damb4")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
+"": SubResource("AnimationLibrary_gmmra"),
 "unit": ExtResource("6_y5kj3")
 }
 autoplay = "unit/Idle"
@@ -63,3 +163,8 @@ z_index = 5
 position = Vector2(0, -17)
 script = ExtResource("7_dp6js")
 damage_node = ExtResource("8_m3xrl")
+
+[node name="SelectedAnimation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_uwytu")
+}

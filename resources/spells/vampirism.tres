@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://cnbwio1ogdcq"]
+
+[ext_resource type="Script" path="res://scripts/spells/vampirism.gd" id="1_6m16a"]
+[ext_resource type="PackedScene" uid="uid://dw2dmksxg415u" path="res://scenes/effects/heal_particles.tscn" id="1_kocgn"]
+[ext_resource type="PackedScene" uid="uid://d4mluwip3e8kn" path="res://scenes/effects/vampirism.tscn" id="2_fv8nw"]
+
+[resource]
+script = ExtResource("1_6m16a")
+heal_particle = ExtResource("1_kocgn")
+spell_name = "Vampirism"
+description = "Deals 1-8 piercing damage to target, and heals user for that amount."
+target_type = 1
+particle = ExtResource("2_fv8nw")

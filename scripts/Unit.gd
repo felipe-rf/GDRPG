@@ -32,6 +32,7 @@ var queued_stat_timer: Array[int] = [0,0,0,0,0,0,0]
 @onready var animation_player = $AnimationPlayer
 @onready var damage_popup = $DamagePopup
 @onready var text_popup = $TextPopup
+@onready var selected_animation = $SelectedAnimation
 
 @export var animation_type: int
 
@@ -69,6 +70,7 @@ func _ready():
 
 
 func _activate(unit_list:Array[Unit]):
+	_select_animation()
 	actions = 1
 	_get_allies(unit_list)
 	_get_enemies(unit_list)
@@ -85,8 +87,8 @@ func _activate(unit_list:Array[Unit]):
 func _deactivate():
 	if(state == UnitState.Active):
 		state = UnitState.Inactive
-
 func _reset_stat(stat: int):
+	text_popup.popup(UnitStats.stat_names[stat].capitalize() + " resetted!",2)
 	match stat:
 		UnitStats.attack:
 			attack = base_attack
@@ -96,11 +98,18 @@ func _reset_stat(stat: int):
 			defense = base_defense
 		UnitStats.precision:
 			precision = base_precision
-		UnitStats.strenght:
+		UnitStats.strength:
 			strenght = base_strenght
 		UnitStats.magic:
 			magic = base_magic
 
+func _select_animation():
+	selected_animation.play("selected")
+func _unselect_animation(include_self:bool=true):
+	if not include_self:
+		if(self.state == UnitState.Active):
+			return
+	selected_animation.play("unselected")
 func _rand20():
 	randomize()
 	return(randi_range(1,20))
@@ -119,8 +128,8 @@ func _process(delta):
 
 
 
-func _receive_damage(damage):
-	damage_popup.popup(str(damage),1)
+func _receive_damage(damage: int, damage_type: int):
+	damage_popup.popup(str(damage),1,damage_type)
 	animation_player.animation_set_next("unit/Hurt","unit/Idle")
 	animation_player.play("unit/Hurt",-1,2)
 	health -= damage
@@ -148,31 +157,45 @@ func _aplly_stat_change(change: int, stat: int, time:int):
 	stat_timer[stat] = time
 	match stat:
 		UnitStats.attack:
-			if attack == base_attack:
-				attack = change
-		UnitStats.speed:
-			if speed == base_speed:
-				speed = change
-		UnitStats.defense:
-			if defense == base_defense:
-				defense = change
-		UnitStats.precision:
-			if precision == base_precision:
-				precision = change
-		UnitStats.strenght:
-			if strenght == base_strenght:
-				strenght = change
-		UnitStats.magic:
-			if magic == base_magic:
-				magic = change
-	
+			_stat_change_notify(change,base_attack,stat)
+			attack = clamp(change,base_attack/2,base_attack*2)
 
+		UnitStats.speed:
+			_stat_change_notify(change,base_speed,stat)
+			speed = clamp(change,base_speed/2,base_speed*2)
+				
+		UnitStats.defense:
+			_stat_change_notify(change,base_defense,stat)
+			defense = clamp(change,base_defense/2,base_defense*2)
+		UnitStats.precision:
+			_stat_change_notify(change,base_precision,stat)
+			precision = clamp(change,base_precision/2,base_precision*2)
+				
+		UnitStats.strength:
+			_stat_change_notify(change,base_strenght,stat)
+			strenght = clamp(change,base_strenght/2,base_strenght*2)
+				
+		UnitStats.magic:
+			_stat_change_notify(change,base_magic,stat)
+			magic = change
+		
+	
+func _stat_change_notify(change: int, stat_value: int, stat: int):
+	if(change>stat_value):
+		text_popup.popup(UnitStats.stat_names[stat].capitalize() + " increased!",2)
+	elif(change==stat_value):
+		text_popup.popup("Nothing happened!",2)
+	elif(change<stat_value):
+		text_popup.popup(UnitStats.stat_names[stat].capitalize() + " decreased!",2)
+
+	
 func _miss_attack():
 	text_popup.popup("Missed",2)
 	print(unit_name + " missed.")
 	
 	
 func _attack_unit(target: Unit):
+	_unselect_animation()
 	match animation_type:
 		0:
 			_attack_animation_move(target)
@@ -225,7 +248,7 @@ func _deal_attack_damage(target: Unit):
 	elif(hit+precision>target.speed+target.defense):
 		dmg = target._aplly_weakness_and_resistance(dmg,attack_type)
 		print(unit_name + " attacked "+ target.unit_name + " for " + str(dmg)+ " damage.")
-		target._receive_damage(dmg)
+		target._receive_damage(dmg,attack_type)
 
 func _play_turn():
 	return
@@ -233,8 +256,10 @@ func _play_turn():
 func _end_turn():
 	emit_signal("turnEnded")
 	_deactivate()
+	_unselect_animation()
 
 func _use_spell(spell: Spell, target_list: Array[Unit]):
+	_unselect_animation()
 	animation_player.animation_set_next("unit/UseSpell","unit/Idle")
 	animation_player.play("unit/UseSpell")
 	text_popup.popup("Used " + spell.spell_name,2)
@@ -257,6 +282,11 @@ func _aplly_weakness_and_resistance(damage: int, type: int) -> int:
 	else: return damage
 
 func _defend():
+	_unselect_animation()
 	_aplly_stat_change(defense*2,UnitStats.defense,1)
 	text_popup.popup("Defended",2)
+	_end_turn()
+	
+func _skip():
+	text_popup.popup("Skipped",2)
 	_end_turn()

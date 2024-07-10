@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dxtkg3gd1p2fw"]
+[gd_scene load_steps=14 format=3 uid="uid://dxtkg3gd1p2fw"]
 
 [ext_resource type="PackedScene" uid="uid://b36ts5maohabp" path="res://scenes/combat/ActionMenu.tscn" id="1_40fe4"]
 [ext_resource type="Script" path="res://scenes/combat/combat_scene.gd" id="1_evm76"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dnrvsqfcvtu5a" path="res://scenes/units/playable/cat.tscn" id="2_qjnoj"]
 [ext_resource type="Script" path="res://scenes/combat/ColorRect2.gd" id="2_yhjkf"]
 [ext_resource type="PackedScene" uid="uid://b1odcwrf4mfpr" path="res://scenes/units/playable/frog.tscn" id="3_qj2aj"]
+[ext_resource type="PackedScene" uid="uid://bpvgnr53npypr" path="res://scenes/units/playable/bat.tscn" id="4_pqxkj"]
 [ext_resource type="PackedScene" uid="uid://crluy07384wg4" path="res://scenes/units/enemies/goblin.tscn" id="5_xygp7"]
 [ext_resource type="Shader" path="res://assets/shaders/color.gdshader" id="12_ea2cx"]
 
@@ -19,25 +20,30 @@ shader_parameter/transparent = false
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ps8cn"]
 shader = ExtResource("1_lrmea")
-shader_parameter/resolution = Vector2(658, 370)
+shader_parameter/resolution = Vector2(640, 360)
 shader_parameter/scan_line_amount = 1.0
 shader_parameter/warp_amount = 0.1
-shader_parameter/noise_amount = 0.03
-shader_parameter/interference_amount = 0.2
+shader_parameter/noise_amount = 0.021
+shader_parameter/interference_amount = 0.099
 shader_parameter/grille_amount = 0.1
 shader_parameter/grille_size = 1.0
-shader_parameter/vignette_amount = 0.6
-shader_parameter/vignette_intensity = 0.4
-shader_parameter/aberation_amount = 0.5
+shader_parameter/vignette_amount = 0.505
+shader_parameter/vignette_intensity = 0.229
+shader_parameter/aberation_amount = 0.063
 shader_parameter/roll_line_amount = 0.3
 shader_parameter/roll_speed = 1.0
-shader_parameter/scan_line_strength = -8.0
+shader_parameter/scan_line_strength = -8.766
 shader_parameter/pixel_strength = -2.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_tulbw"]
+font_size = 50
+outline_size = 20
+outline_color = Color(0, 0, 0, 1)
 
 [node name="CombatScene" type="Node2D"]
 script = ExtResource("1_evm76")
-player_units = Array[PackedScene]([ExtResource("2_qjnoj"), ExtResource("3_qj2aj")])
-enemy_units = Array[PackedScene]([ExtResource("5_xygp7"), ExtResource("5_xygp7")])
+player_units = Array[PackedScene]([ExtResource("2_qjnoj"), ExtResource("3_qj2aj"), ExtResource("4_pqxkj")])
+enemy_units = Array[PackedScene]([ExtResource("5_xygp7"), ExtResource("5_xygp7"), ExtResource("5_xygp7")])
 
 [node name="ColorRect2" type="ColorRect" parent="."]
 visible = false
@@ -49,6 +55,7 @@ offset_top = -24.0
 offset_right = 680.0
 offset_bottom = 400.0
 script = ExtResource("2_yhjkf")
+id = null
 
 [node name="ActionMenu" parent="." instance=ExtResource("1_40fe4")]
 top_level = true
@@ -66,6 +73,7 @@ material = SubResource("ShaderMaterial_ps8cn")
 offset_right = 658.0
 offset_bottom = 370.0
 script = ExtResource("2_yhjkf")
+id = 1
 
 [node name="PositionMarkers" type="Marker2D" parent="."]
 visible = false
@@ -87,10 +95,8 @@ position = Vector2(64, 40)
 position = Vector2(192, 40)
 
 [node name="Enemies" type="Marker2D" parent="PositionMarkers"]
-visible = false
 position = Vector2(512, 0)
 scale = Vector2(-1, 1)
-metadata/_edit_lock_ = true
 
 [node name="Enemy1" type="Marker2D" parent="PositionMarkers/Enemies"]
 position = Vector2(136, -16)
@@ -99,7 +105,24 @@ position = Vector2(136, -16)
 position = Vector2(0, -16)
 
 [node name="Enemy3" type="Marker2D" parent="PositionMarkers/Enemies"]
-position = Vector2(192, 40)
+position = Vector2(64, 40)
 
 [node name="Enemy4" type="Marker2D" parent="PositionMarkers/Enemies"]
-position = Vector2(64, 40)
+position = Vector2(192, 40)
+
+[node name="Label" type="Label" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 200.0
+offset_top = 120.0
+offset_right = 458.0
+offset_bottom = 189.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+text = "YOU WON!"
+label_settings = SubResource("LabelSettings_tulbw")

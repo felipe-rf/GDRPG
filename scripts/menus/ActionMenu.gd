@@ -26,7 +26,7 @@ var state = cursorState.idle
 
 func _set_player_portraits():
 	var index = 0
-	for unit in turn_queue.unit_list.filter(func(element): return element is PlayerUnit):
+	for unit in turn_queue.player_list:
 		var portrait = player_portraits.get_child(index)
 		index += 1
 		portrait.texture = unit.unit_portrait
@@ -40,6 +40,7 @@ func _initialize(unit:Unit):
 		menu_cursor._enable()
 	if unit is EnemyUnit:
 		menu_cursor.disabled = true
+
 func _on_attack_cursor_selected():
 	if(turn_queue.active_unit.state == 0):
 		menu_cursor.disabled = true
@@ -121,5 +122,13 @@ func _on_menu_cursor_cursor_moved(item):
 
 
 func _on_defend_cursor_selected():
+	menu_cursor.disabled = true
 	turn_queue.active_unit._defend()
-	menu_cursor._enable()
+
+
+
+func _on_skip_cursor_selected():
+	menu_cursor.disabled = true
+	turn_queue.active_unit._skip()
+
+

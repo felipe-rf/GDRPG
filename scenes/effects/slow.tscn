@@ -1,0 +1,42 @@
+[gd_scene load_steps=8 format=3 uid="uid://d2avbbpja8po5"]
+
+[ext_resource type="Texture2D" uid="uid://bd5of5ejke0sx" path="res://assets/sprites/particle.png" id="1_2oakm"]
+[ext_resource type="Script" path="res://scripts/resources/spell_particle.gd" id="2_77q7y"]
+
+[sub_resource type="Gradient" id="Gradient_01076"]
+offsets = PackedFloat32Array(0.0114943, 1)
+colors = PackedColorArray(6.257e-06, 0.915803, 0.605623, 1, 1, 0.74564, 0.40358, 0.682353)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_teac3"]
+gradient = SubResource("Gradient_01076")
+
+[sub_resource type="Curve" id="Curve_hst58"]
+_data = [Vector2(0, 0.28892), 0.0, 0.0, 0, 0, Vector2(0.214533, 1), 0.0, 0.0, 0, 0, Vector2(0.484429, 1), 0.0, 0.0, 0, 0, Vector2(0.761246, 1), 0.0, 0.0, 0, 0, Vector2(0.986159, 0.18864), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="CurveTexture" id="CurveTexture_xcdpo"]
+curve = SubResource("Curve_hst58")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1n1p7"]
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(0, -4, 0)
+emission_shape = 1
+emission_sphere_radius = 7.48
+angle_max = 264.3
+spread = 91.709
+gravity = Vector3(0, 100, 0)
+scale_max = 1.5
+scale_curve = SubResource("CurveTexture_xcdpo")
+color_ramp = SubResource("GradientTexture1D_teac3")
+
+[node name="SpellParticle" type="GPUParticles2D"]
+self_modulate = Color(1, 1, 1, 0.443137)
+amount = 500
+process_material = SubResource("ParticleProcessMaterial_1n1p7")
+texture = ExtResource("1_2oakm")
+lifetime = 0.8
+explosiveness = 0.5
+draw_order = 2
+script = ExtResource("2_77q7y")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

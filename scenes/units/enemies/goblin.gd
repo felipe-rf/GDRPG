@@ -8,4 +8,5 @@ func _get_enemies(list:Array[Unit]):
 
 func _play_turn():
 	if state == UnitState.Active:
+		_unselect_animation()
 		_attack_unit(enemies_list.pick_random())

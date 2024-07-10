@@ -7,6 +7,7 @@ enum{
 	defense,
 	precision,
 	magic,
-	strenght
+	strength
 }
 #Oh Hello
+const stat_names:=["health","attack","speed","defense","precision","magic","strength"]
