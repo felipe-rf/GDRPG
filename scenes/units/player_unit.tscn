@@ -1,46 +1,119 @@
-[gd_scene load_steps=11 format=3 uid="uid://6ab4sw7cvmq3"]
+[gd_scene load_steps=16 format=3 uid="uid://bteksng1olqmq"]
 
 [ext_resource type="Script" path="res://scripts/PlayerUnit.gd" id="1_ms0ni"]
 [ext_resource type="Shader" path="res://scenes/units/unit.gdshader" id="2_b7q3s"]
 [ext_resource type="Texture2D" uid="uid://bsrf63wo3srd5" path="res://assets/sprites/units/frog.png" id="2_mui1j"]
-[ext_resource type="Texture2D" uid="uid://symy6e2b3eds" path="res://assets/sprites/units/cat/frog-portrait.png" id="2_oh2h8"]
+[ext_resource type="Shader" path="res://scenes/units/playable/bat.gdshader" id="2_uy4yr"]
 [ext_resource type="Script" path="res://scripts/unit/unit_animation.gd" id="3_c20o0"]
 [ext_resource type="Texture2D" uid="uid://bgdc18gbooa77" path="res://assets/sprites/units/overlay.png" id="4_dwkfi"]
 [ext_resource type="AnimationLibrary" uid="uid://rkp51d82v2fo" path="res://resources/unit/unit_animations.res" id="6_5har3"]
 [ext_resource type="Script" path="res://scripts/unit/DamagePopup.gd" id="6_pckf4"]
 [ext_resource type="PackedScene" uid="uid://d063ijjrhlk7a" path="res://scenes/gui/floating_number.tscn" id="7_i1q1x"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_onn0q"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e85bu"]
+shader = ExtResource("2_uy4yr")
+shader_parameter/look_right = true
+shader_parameter/color1 = Color(1, 1, 1, 1)
+shader_parameter/precision = 0.05
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8axfa"]
 shader = ExtResource("2_b7q3s")
 shader_parameter/hit_opacity = 0.0
 shader_parameter/enabled = false
 
-[node name="PlayerUnit" type="Node2D"]
-scale = Vector2(4, 4)
+[sub_resource type="Animation" id="Animation_evw66"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D/Sprite2D2:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_oi6jd"]
+resource_name = "selected"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D/Sprite2D2:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D/Sprite2D2:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.556863), Color(1, 1, 1, 0), Color(1, 1, 1, 0.52549)]
+}
+
+[sub_resource type="Animation" id="Animation_srlld"]
+resource_name = "unselected"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D/Sprite2D2:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_uwytu"]
+_data = {
+"RESET": SubResource("Animation_evw66"),
+"selected": SubResource("Animation_oi6jd"),
+"unselected": SubResource("Animation_srlld")
+}
+
+[node name="Unit" type="Node2D"]
 script = ExtResource("1_ms0ni")
-unit_portrait = ExtResource("2_oh2h8")
-base_health = 20
-base_attack = 8
-base_speed = 5
-base_defense = 10
-base_precision = 2
-base_magic = 3
-base_strenght = 3
-unit_name = "Default"
+
+[node name="Shadow" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_e85bu")
+position = Vector2(-3.25, 3)
+scale = Vector2(1.10156, 0.484375)
 texture = ExtResource("2_mui1j")
-animation_type = 1
+offset = Vector2(0, -9)
+hframes = 9
+vframes = 3
+frame = 7
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 clip_children = 2
-material = SubResource("ShaderMaterial_onn0q")
+material = SubResource("ShaderMaterial_8axfa")
+position = Vector2(0, -9)
 texture = ExtResource("2_mui1j")
-offset = Vector2(0, -9)
 hframes = 9
 vframes = 3
 frame = 9
 
 [node name="Sprite2D2" type="Sprite2D" parent="Sprite2D"]
 visible = false
+self_modulate = Color(1, 1, 1, 0.556863)
+show_behind_parent = true
+position = Vector2(0, 9)
 texture = ExtResource("4_dwkfi")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -51,15 +124,17 @@ autoplay = "unit/Idle"
 script = ExtResource("3_c20o0")
 
 [node name="DamagePopup" type="Marker2D" parent="."]
-top_level = true
-z_as_relative = false
 position = Vector2(12, -10)
 script = ExtResource("6_pckf4")
 damage_node = ExtResource("7_i1q1x")
 
 [node name="TextPopup" type="Marker2D" parent="."]
-top_level = true
-z_as_relative = false
 position = Vector2(0, -17)
 script = ExtResource("6_pckf4")
 damage_node = ExtResource("7_i1q1x")
+
+[node name="SelectedAnimation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_uwytu")
+}
+autoplay = "unselected"

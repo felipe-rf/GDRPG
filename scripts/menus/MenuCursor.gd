@@ -1,6 +1,6 @@
 extends TextureRect
 
-@export var menu_parent_path: NodePath
+@export var menu_parent_path: NodePath ##Parent node
 @onready var menu_parent = get_node(menu_parent_path)
 @onready var menu_timer = $"../menu_timer"
 
@@ -13,10 +13,14 @@ var cursor_index : int = 0
 var previous_parents: Array[Node]
 
 @export var cursor_offset : Vector2
-func _enable():
+func _enable() : ##Starts timer to enable cursor
 	cursor_index = 0
 	menu_timer.start()
-func _process(delta):
+
+func _disable(): ##Disables Cursor
+	disabled = true
+
+func _process(delta) -> void:
 	if not disabled:
 		if not self.visible: self.visible = true
 		var input := Vector2.ZERO
@@ -71,5 +75,5 @@ func _set_parent(parent: Control)->void:
 	menu_parent = parent
 	cursor_index = 0
 
-func _on_menu_timer_timeout():
+func _on_menu_timer_timeout() -> void:
 	disabled = false

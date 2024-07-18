@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="PlayerCharacter" load_steps=6 format=3 uid="uid://dkhckcctr3vu3"]
+
+[ext_resource type="Script" path="res://scripts/resources/player_character.gd" id="1_lm7jj"]
+[ext_resource type="Resource" uid="uid://c40jvx4hn5c8n" path="res://resources/spells/frostray.tres" id="2_21bpb"]
+[ext_resource type="Texture2D" uid="uid://btyyk54h4ohai" path="res://assets/sprites/units/cat-Sheet.png" id="2_uu41d"]
+[ext_resource type="Resource" uid="uid://dvjeu7a2cksqq" path="res://resources/spells/mega_heal.tres" id="3_l28j4"]
+[ext_resource type="Texture2D" uid="uid://d0owvcxd21pyy" path="res://assets/sprites/units/cat/cat-portrait.png" id="3_tw0cb"]
+
+[resource]
+script = ExtResource("1_lm7jj")
+unit_portrait = ExtResource("3_tw0cb")
+base_stats = Array[int]([25, 6, 7, 10, 3, 3, 1])
+spell_list = Array[Resource("res://scripts/resources/spell.gd")]([ExtResource("2_21bpb"), ExtResource("3_l28j4")])
+weaknesses = Array[int]([])
+resistances = Array[int]([])
+attack_type = 0
+texture = ExtResource("2_uu41d")
+animation_type = 0
+unit_name = "Cat"
+scale = 4

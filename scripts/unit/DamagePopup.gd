@@ -2,10 +2,11 @@ extends Marker2D
  
 @export var damage_node : PackedScene
 var i = 0 
-func _ready():
+
+func _ready() -> void:
 	randomize()
  
-func popup(dmg: String,type: int,damage_type:int=0):
+func popup(dmg: String,type: int,damage_type:int=0) -> void:
 	
 	var damage = damage_node.instantiate()
 	damage.get_node("Label").label_settings = LabelSettings.new()
@@ -42,7 +43,8 @@ func _get_color(damage_type:int) -> Color:
 		DamageTypes.Shock:
 			return Color.GREEN_YELLOW
 	return Color.WHITE
-func _get_direction():
+
+func _get_direction() -> Vector2:
 	randomize()
 	return Vector2(randf_range(-1,1), -randf()) * 16
  

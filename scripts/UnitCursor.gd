@@ -1,5 +1,7 @@
 extends TextureRect
 
+
+
 @onready var unit_timer = $"../unit_timer"
 
 signal selected(target_list: Array[Unit])
@@ -8,7 +10,11 @@ signal canceled
 var unit_list: Array[Unit]
 var disabled = true
 var target_type
-func _enable(type: int, list: Array[Unit], current_unit: Unit):
+var cursor_index : int = 0
+
+@export var cursor_offset : Vector2
+
+func _enable(type: int, list: Array[Unit], current_unit: Unit) -> void:
 	unit_timer.start()
 	target_type = type
 	match type:
@@ -23,9 +29,7 @@ func _enable(type: int, list: Array[Unit], current_unit: Unit):
 		EffectTargets.SELF:
 			unit_list = [current_unit]
 
-var cursor_index : int = 0
-@export var cursor_offset : Vector2
-func _process(delta):
+func _process(delta) -> void:
 	if not disabled:
 		if not self.visible: self.visible = true
 		if(target_type == EffectTargets.SINGLE_ALLY or target_type == EffectTargets.SINGLE_ENEMY):
@@ -35,23 +39,24 @@ func _process(delta):
 	else:
 		self.visible = false
 		cursor_index = 0
+
 func get_menu_item_at_index(index : int ) -> Unit:
 		if index >= unit_list.size() or index < 0:
 			return null
 		return unit_list[index]	
-	
+
 func set_cursor_from_index(index:int) -> void:
 
 	var menu_item = get_menu_item_at_index(index)
 	if menu_item == null: return
 	
 	var menu_position = menu_item.sprite.global_position
-	var menu_size = menu_item.sprite.get_rect().size*menu_item.scale
+	var menu_size = menu_item.sprite.get_rect().size*menu_item.unit_scale
 
 	global_position = Vector2(menu_position.x+10, menu_position.y-50) - cursor_offset
 	cursor_index = index
 
-func single_target_select():
+func single_target_select() -> void:
 	var input := Vector2.ZERO
 	if Input.is_action_just_pressed("ui_up"):
 		input.y -= 1
@@ -74,7 +79,7 @@ func single_target_select():
 		emit_signal("canceled")
 		disabled = true
 
-func multiple_target_select():
+func multiple_target_select() -> void:
 	set_cursor_from_index(0)
 	for unit in unit_list:
 		if(unit != null): unit._select_animation()
@@ -91,6 +96,6 @@ func multiple_target_select():
 			if(unit != null): unit._unselect_animation(false)
 		emit_signal("canceled")
 		disabled = true
-		
-func _on_unit_timer_timeout():
+
+func _on_unit_timer_timeout() -> void:
 	disabled = false

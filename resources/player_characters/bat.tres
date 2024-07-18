@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="PlayerCharacter" load_steps=7 format=3 uid="uid://b1ijclmc1g2kc"]
+
+[ext_resource type="Script" path="res://scripts/resources/player_character.gd" id="1_gn4y7"]
+[ext_resource type="Resource" uid="uid://bcdpccwja0xdi" path="res://resources/spells/slow.tres" id="2_32ehd"]
+[ext_resource type="Texture2D" uid="uid://dg5v25xgqcty8" path="res://assets/sprites/units/bat.png" id="2_lglpj"]
+[ext_resource type="Texture2D" uid="uid://cg1tpky0snp1p" path="res://assets/sprites/units/cat/bat-portrait.png" id="3_0ujd0"]
+[ext_resource type="Resource" uid="uid://dvjeu7a2cksqq" path="res://resources/spells/mega_heal.tres" id="3_87eiu"]
+[ext_resource type="Resource" uid="uid://cnbwio1ogdcq" path="res://resources/spells/vampirism.tres" id="4_nppmp"]
+
+[resource]
+script = ExtResource("1_gn4y7")
+unit_portrait = ExtResource("3_0ujd0")
+base_stats = Array[int]([16, 10, 6, 8, 2, 3, 3])
+spell_list = Array[Resource("res://scripts/resources/spell.gd")]([ExtResource("2_32ehd"), ExtResource("3_87eiu"), ExtResource("4_nppmp")])
+weaknesses = Array[int]([])
+resistances = Array[int]([])
+attack_type = 0
+texture = ExtResource("2_lglpj")
+animation_type = 0
+unit_name = "Bat"
+scale = 4

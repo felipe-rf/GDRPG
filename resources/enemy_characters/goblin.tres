@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="UnitCharacter" load_steps=3 format=3 uid="uid://mawuaeqornha"]
+
+[ext_resource type="Script" path="res://scripts/resources/unit_character.gd" id="1_85cdw"]
+[ext_resource type="Texture2D" uid="uid://dppxdv118eeco" path="res://assets/sprites/units/enemies/goblin/goblin.png" id="2_8i4mn"]
+
+[resource]
+script = ExtResource("1_85cdw")
+base_stats = Array[int]([20, 8, 5, 10, 5, 1, 3])
+spell_list = Array[Resource("res://scripts/resources/spell.gd")]([])
+weaknesses = Array[int]([])
+resistances = Array[int]([])
+attack_type = 0
+texture = ExtResource("2_8i4mn")
+animation_type = 0
+unit_name = "Goblin"
+scale = 3

@@ -1,10 +1,8 @@
-[gd_scene load_steps=17 format=3 uid="uid://b1odcwrf4mfpr"]
+[gd_scene load_steps=16 format=3 uid="uid://b1odcwrf4mfpr"]
 
 [ext_resource type="Script" path="res://scripts/PlayerUnit.gd" id="1_gvcja"]
-[ext_resource type="Texture2D" uid="uid://symy6e2b3eds" path="res://assets/sprites/units/cat/frog-portrait.png" id="2_lm4bl"]
-[ext_resource type="Resource" uid="uid://n7fkxajjv685" path="res://resources/spells/fireball.tres" id="3_d7gxt"]
-[ext_resource type="Resource" uid="uid://cl8qpl5vl6et6" path="res://resources/spells/strenght.tres" id="4_4bbgl"]
 [ext_resource type="Texture2D" uid="uid://bsrf63wo3srd5" path="res://assets/sprites/units/frog.png" id="5_o4inw"]
+[ext_resource type="Shader" path="res://scenes/units/playable/bat.gdshader" id="6_gtqdo"]
 [ext_resource type="Shader" path="res://scenes/units/unit.gdshader" id="6_mr70p"]
 [ext_resource type="Texture2D" uid="uid://bgdc18gbooa77" path="res://assets/sprites/units/overlay.png" id="8_g1ewa"]
 [ext_resource type="AnimationLibrary" uid="uid://rkp51d82v2fo" path="res://resources/unit/unit_animations.res" id="9_bpjdf"]
@@ -12,10 +10,31 @@
 [ext_resource type="Script" path="res://scripts/unit/DamagePopup.gd" id="11_37g74"]
 [ext_resource type="PackedScene" uid="uid://d063ijjrhlk7a" path="res://scenes/gui/floating_number.tscn" id="12_txms2"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pwpvq"]
+shader = ExtResource("6_gtqdo")
+shader_parameter/look_right = true
+shader_parameter/color1 = Color(1, 1, 1, 1)
+shader_parameter/precision = 0.05
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_onn0q"]
 shader = ExtResource("6_mr70p")
 shader_parameter/hit_opacity = 0.0
 shader_parameter/enabled = false
+
+[sub_resource type="Animation" id="Animation_evw66"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D/Sprite2D2:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_oi6jd"]
 resource_name = "selected"
@@ -61,21 +80,6 @@ tracks/0/keys = {
 "values": [false]
 }
 
-[sub_resource type="Animation" id="Animation_evw66"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D/Sprite2D2:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_uwytu"]
 _data = {
 "RESET": SubResource("Animation_evw66"),
@@ -86,17 +90,16 @@ _data = {
 [node name="Frog" type="Node2D"]
 scale = Vector2(4, 4)
 script = ExtResource("1_gvcja")
-unit_portrait = ExtResource("2_lm4bl")
-base_health = 25
-base_attack = 8
-base_speed = 5
-base_defense = 10
-base_precision = 2
-base_strenght = 3
-unit_name = "Frog"
-spell_list = Array[Resource("res://scripts/resources/spell.gd")]([ExtResource("3_d7gxt"), ExtResource("4_4bbgl")])
+
+[node name="Shadow" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_pwpvq")
+position = Vector2(-3.25, 3)
+scale = Vector2(1.10156, 0.484375)
 texture = ExtResource("5_o4inw")
-animation_type = 1
+offset = Vector2(0, -9)
+hframes = 9
+vframes = 3
+frame = 7
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 clip_children = 2
@@ -105,7 +108,7 @@ texture = ExtResource("5_o4inw")
 offset = Vector2(0, -9)
 hframes = 9
 vframes = 3
-frame = 9
+frame = 7
 
 [node name="Sprite2D2" type="Sprite2D" parent="Sprite2D"]
 visible = false

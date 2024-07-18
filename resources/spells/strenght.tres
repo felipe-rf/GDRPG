@@ -1,6 +1,6 @@
 [gd_resource type="Resource" load_steps=3 format=3 uid="uid://cl8qpl5vl6et6"]
 
-[ext_resource type="Script" path="res://scripts/spells/strenght_spell.gd" id="1_k2pv4"]
+[ext_resource type="Script" path="res://scripts/spells/strength_spell.gd" id="1_k2pv4"]
 [ext_resource type="PackedScene" uid="uid://b4lvbedsqorqh" path="res://scenes/effects/strenght.tscn" id="1_tcphy"]
 
 [resource]

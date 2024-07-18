@@ -1,18 +1,11 @@
 extends Spell
 
-
-
-func _spell_effect(parent: Unit,target_list: Array[Unit]):
-	var hit = parent._rand20()
+func _spell_effect(parent: Unit,target_list: Array[Unit]) -> void:
 	var damage_type = DamageTypes.Fire
 	for target in target_list:
 		randomize()
-		var dmg = randi_range(1,4) + parent.magic
-		if(hit == 1):
-			parent._miss_attack()
-		elif(hit+parent.precision<target.speed):
-			parent._miss_attack()
-		elif(hit+parent.precision>target.speed):
+		var dmg = randi_range(1,4) + parent.stats[UnitStats.magic]
+		if(parent._calc_spell_hit(target)):
 			dmg = target._aplly_weakness_and_resistance(dmg,damage_type)
 			print(target.unit_name + " was burned for " + str(dmg)+ " damage.")
 			_spawn_particles(target)

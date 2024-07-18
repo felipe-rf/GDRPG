@@ -1,14 +1,16 @@
-[gd_scene load_steps=14 format=3 uid="uid://dxtkg3gd1p2fw"]
+[gd_scene load_steps=16 format=3 uid="uid://dxtkg3gd1p2fw"]
 
 [ext_resource type="PackedScene" uid="uid://b36ts5maohabp" path="res://scenes/combat/ActionMenu.tscn" id="1_40fe4"]
-[ext_resource type="Script" path="res://scenes/combat/combat_scene.gd" id="1_evm76"]
+[ext_resource type="Script" path="res://scripts/combat/combat_scene.gd" id="1_evm76"]
 [ext_resource type="Shader" path="res://assets/shaders/crt.gdshader" id="1_lrmea"]
+[ext_resource type="Resource" uid="uid://dkhckcctr3vu3" path="res://resources/player_characters/cat.tres" id="2_7fv0l"]
 [ext_resource type="PackedScene" uid="uid://b4jbsl1xp5ms2" path="res://scenes/combat/turn_queue.tscn" id="2_ouiy5"]
-[ext_resource type="PackedScene" uid="uid://dnrvsqfcvtu5a" path="res://scenes/units/playable/cat.tscn" id="2_qjnoj"]
-[ext_resource type="Script" path="res://scenes/combat/ColorRect2.gd" id="2_yhjkf"]
-[ext_resource type="PackedScene" uid="uid://b1odcwrf4mfpr" path="res://scenes/units/playable/frog.tscn" id="3_qj2aj"]
-[ext_resource type="PackedScene" uid="uid://bpvgnr53npypr" path="res://scenes/units/playable/bat.tscn" id="4_pqxkj"]
-[ext_resource type="PackedScene" uid="uid://crluy07384wg4" path="res://scenes/units/enemies/goblin.tscn" id="5_xygp7"]
+[ext_resource type="Script" path="res://scripts/combat/ColorRect2.gd" id="2_yhjkf"]
+[ext_resource type="Resource" uid="uid://b0mkhembsijr6" path="res://resources/player_characters/frog.tres" id="3_w2vqn"]
+[ext_resource type="Resource" uid="uid://b1ijclmc1g2kc" path="res://resources/player_characters/bat.tres" id="4_77kn4"]
+[ext_resource type="Resource" uid="uid://mawuaeqornha" path="res://resources/enemy_characters/goblin.tres" id="5_gukur"]
+[ext_resource type="PackedScene" uid="uid://htxpo46yqo0i" path="res://scenes/units/enemy_unit.tscn" id="6_2p1nc"]
+[ext_resource type="PackedScene" uid="uid://bteksng1olqmq" path="res://scenes/units/player_unit.tscn" id="7_5ql6i"]
 [ext_resource type="Shader" path="res://assets/shaders/color.gdshader" id="12_ea2cx"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sm3kv"]
@@ -42,8 +44,10 @@ outline_color = Color(0, 0, 0, 1)
 
 [node name="CombatScene" type="Node2D"]
 script = ExtResource("1_evm76")
-player_units = Array[PackedScene]([ExtResource("2_qjnoj"), ExtResource("3_qj2aj"), ExtResource("4_pqxkj")])
-enemy_units = Array[PackedScene]([ExtResource("5_xygp7"), ExtResource("5_xygp7"), ExtResource("5_xygp7")])
+player_units = Array[Resource("res://scripts/resources/player_character.gd")]([ExtResource("2_7fv0l"), ExtResource("3_w2vqn"), ExtResource("4_77kn4")])
+enemy_units = Array[Resource("res://scripts/resources/unit_character.gd")]([ExtResource("5_gukur"), ExtResource("5_gukur"), ExtResource("5_gukur")])
+enemy_scene = ExtResource("6_2p1nc")
+player_scene = ExtResource("7_5ql6i")
 
 [node name="ColorRect2" type="ColorRect" parent="."]
 visible = false
@@ -55,7 +59,6 @@ offset_top = -24.0
 offset_right = 680.0
 offset_bottom = 400.0
 script = ExtResource("2_yhjkf")
-id = null
 
 [node name="ActionMenu" parent="." instance=ExtResource("1_40fe4")]
 top_level = true
@@ -66,7 +69,6 @@ top_level = true
 anchor_mode = 0
 
 [node name="ColorRect" type="ColorRect" parent="."]
-visible = false
 top_level = true
 z_index = 10
 material = SubResource("ShaderMaterial_ps8cn")
