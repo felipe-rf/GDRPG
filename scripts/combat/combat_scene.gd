@@ -5,6 +5,8 @@ extends Node2D
 
 @export var enemy_scene: PackedScene
 @export var player_scene: PackedScene
+
+@export var player_inventory: PlayerInventory
 @onready var turn_queue = $TurnQueue
 
 @onready var players = $PositionMarkers/Players

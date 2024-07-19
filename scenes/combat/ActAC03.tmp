@@ -2,7 +2,8 @@
 
 [ext_resource type="Script" path="res://scripts/menus/ActionMenu.gd" id="1_dieak"]
 [ext_resource type="Theme" uid="uid://7f715063sed8" path="res://assets/sprites/gui/panel.tres" id="1_twjxi"]
-[ext_resource type="Script" path="res://scripts/menus/ActionButton.gd" id="3_t3x8c"]
+[ext_resource type="Script" path="res://scripts/menus/MenuItem.gd" id="3_7o6io"]
+[ext_resource type="PackedScene" uid="uid://c5e0w4cg1ke0m" path="res://scenes/combat/menu_cursor.tscn" id="3_y3s34"]
 [ext_resource type="Texture2D" uid="uid://d0owvcxd21pyy" path="res://assets/sprites/units/cat/cat-portrait.png" id="4_vhx02"]
 [ext_resource type="Texture2D" uid="uid://cdnodtbv7hjs5" path="res://assets/sprites/gui/cursor.png" id="5_7nnkj"]
 [ext_resource type="Script" path="res://scripts/UnitCursor.gd" id="6_sm4mi"]
@@ -16,8 +17,6 @@ font = ExtResource("8_kn3sp")
 font_color = Color(0, 0, 0, 1)
 shadow_size = 0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_wgbid"]
-
 [node name="ActionMenu" type="Control"]
 clip_contents = true
 layout_mode = 3
@@ -26,7 +25,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_twjxi")
 script = ExtResource("1_dieak")
 
 [node name="Panel" type="Panel" parent="."]
@@ -62,29 +60,41 @@ columns = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Panel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.189
-anchor_top = 0.226
-anchor_right = 0.811
-anchor_bottom = 0.755
-offset_left = -19.984
-offset_top = -15.956
-offset_right = 19.9839
-offset_bottom = 7.96999
-grow_horizontal = 2
-grow_vertical = 2
+visible = false
+layout_mode = 2
+offset_left = 32.0
+offset_top = 32.0
+offset_right = 624.0
+offset_bottom = 82.0
 follow_focus = true
 horizontal_scroll_mode = 3
 
 [node name="ItemMenu" type="GridContainer" parent="Panel/ScrollContainer"]
+visible = false
+clip_contents = true
 layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 4
-size_flags_stretch_ratio = 0.51
 theme_override_constants/h_separation = 100
 columns = 2
-metadata/_edit_use_anchors_ = true
+
+[node name="Attack" type="Label" parent="Panel/ScrollContainer/ItemMenu"]
+layout_mode = 2
+text = "ATTACK"
+script = ExtResource("3_7o6io")
+
+[node name="Spell" type="Label" parent="Panel/ScrollContainer/ItemMenu"]
+layout_mode = 2
+text = "SPELL"
+script = ExtResource("3_7o6io")
+
+[node name="Item" type="Label" parent="Panel/ScrollContainer/ItemMenu"]
+layout_mode = 2
+text = "ITEM"
+script = ExtResource("3_7o6io")
+
+[node name="Defend" type="Label" parent="Panel/ScrollContainer/ItemMenu"]
+layout_mode = 2
+text = "DEFEND"
+script = ExtResource("3_7o6io")
 
 [node name="MainMenu" type="GridContainer" parent="Panel"]
 layout_mode = 1
@@ -108,7 +118,6 @@ theme = ExtResource("1_twjxi")
 text = "ATTACK"
 flat = true
 alignment = 0
-script = ExtResource("3_t3x8c")
 
 [node name="Spell" type="Button" parent="Panel/MainMenu"]
 layout_mode = 2
@@ -116,7 +125,6 @@ theme = ExtResource("1_twjxi")
 text = "SPELL
 "
 flat = true
-script = ExtResource("3_t3x8c")
 
 [node name="Item" type="Button" parent="Panel/MainMenu"]
 layout_mode = 2
@@ -124,7 +132,6 @@ theme = ExtResource("1_twjxi")
 text = "ITEM
 "
 flat = true
-script = ExtResource("3_t3x8c")
 
 [node name="Defend" type="Button" parent="Panel/MainMenu"]
 layout_mode = 2
@@ -132,17 +139,16 @@ theme = ExtResource("1_twjxi")
 text = "DEFEND
 "
 flat = true
-script = ExtResource("3_t3x8c")
 
 [node name="SpellPanel" type="Panel" parent="."]
 visible = false
 clip_contents = true
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 0
-offset_left = 392.0
-offset_top = 88.0
-offset_right = 656.0
-offset_bottom = 259.0
+offset_left = 421.0
+offset_top = 96.0
+offset_right = 685.0
+offset_bottom = 267.0
 theme = ExtResource("1_twjxi")
 
 [node name="Label" type="Label" parent="SpellPanel"]
@@ -154,6 +160,17 @@ offset_bottom = 153.0
 label_settings = SubResource("LabelSettings_hxbrx")
 autowrap_mode = 3
 clip_text = true
+
+[node name="MenuCursor" parent="." instance=ExtResource("3_y3s34")]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 15.0
+offset_right = 73.0
+offset_bottom = 27.0
+texture = ExtResource("5_7nnkj")
+expand_mode = 1
+menu_parent_path = NodePath("../Panel/MainMenu")
+cursor_offset = Vector2(10, 0)
 
 [node name="UnitCursor" type="TextureRect" parent="."]
 layout_mode = 0
@@ -266,15 +283,18 @@ label_settings = SubResource("LabelSettings_67yg8")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Area2D" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("RectangleShape2D_wgbid")
-
+[connection signal="cursor_selected" from="Panel/ScrollContainer/ItemMenu/Attack" to="." method="_on_attack_cursor_selected"]
+[connection signal="cursor_selected" from="Panel/ScrollContainer/ItemMenu/Spell" to="." method="_on_spell_cursor_selected"]
+[connection signal="cursor_selected" from="Panel/ScrollContainer/ItemMenu/Item" to="." method="_on_item_cursor_selected"]
+[connection signal="cursor_selected" from="Panel/ScrollContainer/ItemMenu/Defend" to="." method="_on_defend_cursor_selected"]
 [connection signal="pressed" from="Panel/MainMenu/Attack" to="." method="_on_attack_cursor_selected"]
 [connection signal="pressed" from="Panel/MainMenu/Spell" to="." method="_on_spell_cursor_selected"]
 [connection signal="pressed" from="Panel/MainMenu/Item" to="." method="_on_item_cursor_selected"]
 [connection signal="pressed" from="Panel/MainMenu/Defend" to="." method="_on_defend_cursor_selected"]
+[connection signal="canceled" from="MenuCursor" to="." method="_on_menu_cursor_canceled"]
+[connection signal="cursor_moved" from="MenuCursor" to="." method="_on_menu_cursor_cursor_moved"]
+[connection signal="item_selected" from="MenuCursor" to="." method="_on_menu_cursor_item_selected"]
 [connection signal="canceled" from="UnitCursor" to="." method="_on_unit_cursor_canceled"]
 [connection signal="selected" from="UnitCursor" to="." method="_on_unit_cursor_selected"]
 [connection signal="timeout" from="unit_timer" to="UnitCursor" method="_on_unit_timer_timeout"]
+[connection signal="timeout" from="menu_timer" to="MenuCursor" method="_on_menu_timer_timeout"]

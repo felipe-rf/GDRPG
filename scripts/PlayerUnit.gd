@@ -13,10 +13,15 @@ func _initialize(player_character: UnitCharacter) -> void:
 	unit_portrait = player_character.unit_portrait as Texture2D
 	unit_name = player_character.unit_name
 	unit_scale = player_character.scale
+	if(player_character.stats.is_empty()): 
+		stats = player_character.base_stats.duplicate()
+	else:
+		stats = player_character.stats
+	
 
 	sprite.texture = texture
 	state = UnitState.Inactive
-	stats = base_stats.duplicate()
+
 	scale = scale * unit_scale
 
 func _get_allies(list:Array[Unit]) -> Array[Unit]:

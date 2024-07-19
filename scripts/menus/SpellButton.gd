@@ -1,5 +1,5 @@
-extends MenuItem
-class_name SpellLabel
+extends ActionButton
+class_name SpellButton
 
 @export var spell: Spell
 

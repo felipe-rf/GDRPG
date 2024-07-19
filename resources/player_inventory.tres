@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="PlayerInventory" load_steps=3 format=3 uid="uid://cvum6wdne2fjv"]
+
+[ext_resource type="Resource" uid="uid://cap0t4tlkugyb" path="res://resources/items/potion.tres" id="1_mx5k0"]
+[ext_resource type="Script" path="res://scripts/resources/player_inventory.gd" id="1_rrqmu"]
+
+[resource]
+script = ExtResource("1_rrqmu")
+inventory = Array[Resource("res://scripts/resources/item.gd")]([ExtResource("1_mx5k0"), ExtResource("1_mx5k0"), ExtResource("1_mx5k0"), ExtResource("1_mx5k0"), ExtResource("1_mx5k0")])

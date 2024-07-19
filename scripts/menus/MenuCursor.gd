@@ -8,7 +8,7 @@ signal item_selected(item)
 signal canceled
 signal cursor_moved(item)
 
-var disabled = false
+var disabled = true
 var cursor_index : int = 0
 var previous_parents: Array[Node]
 
@@ -24,7 +24,7 @@ func _process(delta) -> void:
 	if not disabled:
 		if not self.visible: self.visible = true
 		var input := Vector2.ZERO
-		
+		InputEventMouseMotion
 		if Input.is_action_just_pressed("ui_up"):
 			input.y -= 1
 		if Input.is_action_just_pressed("ui_down"):
@@ -45,8 +45,8 @@ func _process(delta) -> void:
 			var current_menu_item := get_menu_item_at_index(cursor_index)
 			
 			if current_menu_item != null:
-				if current_menu_item.has_method("cursor_select"):
-					emit_signal("item_selected",current_menu_item)
+				if current_menu_item.has_method("pressed"):
+					emit_signal("pressed",current_menu_item)
 		if Input.is_action_just_pressed("ui_cancel"):
 			emit_signal("canceled")
 			disabled = true
@@ -65,7 +65,6 @@ func set_cursor_from_index(index:int) -> void:
 	
 	var menu_position = menu_item.global_position
 	var menu_size = menu_item.size
-
 	global_position = Vector2(menu_position.x, menu_position.y + (menu_size.y / 2.0)) - (size / 2.0) - cursor_offset
 	cursor_index = index
 	emit_signal("cursor_moved",menu_item)

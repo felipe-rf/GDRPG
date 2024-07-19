@@ -222,6 +222,21 @@ func _use_spell(spell: Spell, target_list: Array[Unit]) -> void: ##Casts the spe
 	emit_signal("attackFinished")
 	_end_turn()
 
+
+func _use_item(item: Item, target_list: Array[Unit], inventory: PlayerInventory) -> void: ##Casts the spell on target(s)
+	_unselect_animation()
+	animation_player.animation_set_next("unit/UseSpell","unit/Idle")
+	animation_player.play("unit/UseSpell")
+	text_popup.popup("Used " + item.item_name,2)
+	await animation_player.attack_hit
+	item._item_effect(self,target_list)
+	inventory._use_item(item)
+	await animation_player.animation_changed
+	print(unit_name + " used " + item.item_name +".")
+	emit_signal("attackFinished")
+	_end_turn()
+
+
 func _calc_spell_hit(target: Unit) -> bool: ##Returns whether the spell hit or not
 	var hit = _rand20()
 	if(hit == 1):

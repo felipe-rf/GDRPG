@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dxtkg3gd1p2fw"]
+[gd_scene load_steps=17 format=3 uid="uid://dxtkg3gd1p2fw"]
 
 [ext_resource type="PackedScene" uid="uid://b36ts5maohabp" path="res://scenes/combat/ActionMenu.tscn" id="1_40fe4"]
 [ext_resource type="Script" path="res://scripts/combat/combat_scene.gd" id="1_evm76"]
@@ -11,6 +11,7 @@
 [ext_resource type="Resource" uid="uid://mawuaeqornha" path="res://resources/enemy_characters/goblin.tres" id="5_gukur"]
 [ext_resource type="PackedScene" uid="uid://htxpo46yqo0i" path="res://scenes/units/enemy_unit.tscn" id="6_2p1nc"]
 [ext_resource type="PackedScene" uid="uid://bteksng1olqmq" path="res://scenes/units/player_unit.tscn" id="7_5ql6i"]
+[ext_resource type="Resource" uid="uid://cvum6wdne2fjv" path="res://resources/player_inventory.tres" id="8_j2og8"]
 [ext_resource type="Shader" path="res://assets/shaders/color.gdshader" id="12_ea2cx"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sm3kv"]
@@ -48,9 +49,9 @@ player_units = Array[Resource("res://scripts/resources/player_character.gd")]([E
 enemy_units = Array[Resource("res://scripts/resources/unit_character.gd")]([ExtResource("5_gukur"), ExtResource("5_gukur"), ExtResource("5_gukur")])
 enemy_scene = ExtResource("6_2p1nc")
 player_scene = ExtResource("7_5ql6i")
+player_inventory = ExtResource("8_j2og8")
 
 [node name="ColorRect2" type="ColorRect" parent="."]
-visible = false
 show_behind_parent = true
 z_index = -10
 material = SubResource("ShaderMaterial_sm3kv")
@@ -74,6 +75,7 @@ z_index = 10
 material = SubResource("ShaderMaterial_ps8cn")
 offset_right = 658.0
 offset_bottom = 370.0
+mouse_filter = 2
 script = ExtResource("2_yhjkf")
 id = 1
 
