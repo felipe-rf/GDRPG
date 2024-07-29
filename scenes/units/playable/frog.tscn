@@ -1,7 +1,7 @@
 [gd_scene load_steps=16 format=3 uid="uid://b1odcwrf4mfpr"]
 
 [ext_resource type="Script" path="res://scripts/PlayerUnit.gd" id="1_gvcja"]
-[ext_resource type="Texture2D" uid="uid://bsrf63wo3srd5" path="res://assets/sprites/units/frog.png" id="5_o4inw"]
+[ext_resource type="Texture2D" uid="uid://bsrf63wo3srd5" path="res://assets/sprites/units/player/frog/frog.png" id="5_o4inw"]
 [ext_resource type="Shader" path="res://scenes/units/playable/bat.gdshader" id="6_gtqdo"]
 [ext_resource type="Shader" path="res://scenes/units/unit.gdshader" id="6_mr70p"]
 [ext_resource type="Texture2D" uid="uid://bgdc18gbooa77" path="res://assets/sprites/units/overlay.png" id="8_g1ewa"]

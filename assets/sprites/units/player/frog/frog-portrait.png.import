@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cg1tpky0snp1p"
-path="res://.godot/imported/bat-portrait.png-cd7927ab69396a4339a62e5f4bf02461.ctex"
+uid="uid://symy6e2b3eds"
+path="res://.godot/imported/frog-portrait.png-8c7f1ee167d95e05b30adbda061282ff.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/units/cat/bat-portrait.png"
-dest_files=["res://.godot/imported/bat-portrait.png-cd7927ab69396a4339a62e5f4bf02461.ctex"]
+source_file="res://assets/sprites/units/player/frog/frog-portrait.png"
+dest_files=["res://.godot/imported/frog-portrait.png-8c7f1ee167d95e05b30adbda061282ff.ctex"]
 
 [params]
 

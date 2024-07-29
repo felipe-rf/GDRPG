@@ -13,6 +13,8 @@ var stats: Array[int] ##Unit stats during combat
 var unit_name
 var unit_scale: int=1
 
+var exp = 0
+
 var stat_timer: Array[int] = [0,0,0,0,0,0,0] ##Timer for each one of the unit's stats
 var queued_stat_timer: Array[int] = [0,0,0,0,0,0,0] ##Used for starting stat_timer only on unit's turn
 
@@ -54,6 +56,7 @@ func _initialize(unit_character: UnitCharacter) -> void: ##Initializes unit base
 	state = UnitState.Inactive
 	stats = base_stats.duplicate()
 	scale = scale*unit_scale
+	exp = unit_character.exp
 
 
 func _activate(unit_list:Array[Unit]) -> void: ##Activates unit in its turn.
@@ -119,6 +122,8 @@ func _receive_damage(damage: int, damage_type: int) -> void: ##Receives damage a
 func _die() -> void: ##Disables the unit
 	print(unit_name + " died!")
 	state = UnitState.Disabled
+	if self is EnemyUnit:
+		get_parent()._add_exp(exp)
 	animation_player.play("unit/Dead")
 	
 func _receive_healing(heal) -> void: ##Adds healing to health
@@ -194,9 +199,9 @@ func _deal_attack_damage(target: Unit) -> void: ##Calculates and deals the attac
 	var hit = _rand20()
 	var dmg = randi_range(1,stats[UnitStats.attack]) + stats[UnitStats.strength]
 	if(hit == 1):
-		_miss_attack()
+		target._miss_attack()
 	elif(hit+stats[UnitStats.precision]<target.stats[UnitStats.speed]+target.stats[UnitStats.defense]):
-		_miss_attack()
+		target._miss_attack()
 	elif(hit+stats[UnitStats.precision]>target.stats[UnitStats.speed]+target.stats[UnitStats.defense]):
 		dmg = target._aplly_weakness_and_resistance(dmg,attack_type)
 		print(unit_name + " attacked "+ target.unit_name + " for " + str(dmg)+ " damage.")
@@ -240,10 +245,10 @@ func _use_item(item: Item, target_list: Array[Unit], inventory: PlayerInventory)
 func _calc_spell_hit(target: Unit) -> bool: ##Returns whether the spell hit or not
 	var hit = _rand20()
 	if(hit == 1):
-		_miss_attack()
+		target._miss_attack()
 		return false
 	elif(hit+stats[UnitStats.precision]<target.stats[UnitStats.speed]):
-		_miss_attack()
+		target._miss_attack()
 		return false
 	elif(hit+stats[UnitStats.precision]>target.stats[UnitStats.speed]):
 		return true

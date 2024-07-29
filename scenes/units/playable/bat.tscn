@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" path="res://scripts/PlayerUnit.gd" id="1_67fo4"]
 [ext_resource type="Shader" path="res://scenes/units/playable/bat.gdshader" id="1_c3rea"]
-[ext_resource type="Texture2D" uid="uid://dg5v25xgqcty8" path="res://assets/sprites/units/bat.png" id="5_e8wdl"]
+[ext_resource type="Texture2D" uid="uid://dg5v25xgqcty8" path="res://assets/sprites/units/player/bat/bat.png" id="5_e8wdl"]
 [ext_resource type="Shader" path="res://scenes/units/unit.gdshader" id="6_6p0ov"]
 [ext_resource type="Texture2D" uid="uid://bgdc18gbooa77" path="res://assets/sprites/units/overlay.png" id="7_m7sbn"]
-[ext_resource type="Texture2D" uid="uid://bsrf63wo3srd5" path="res://assets/sprites/units/frog.png" id="8_1isdc"]
+[ext_resource type="Texture2D" uid="uid://bsrf63wo3srd5" path="res://assets/sprites/units/player/frog/frog.png" id="8_1isdc"]
 [ext_resource type="AnimationLibrary" uid="uid://rkp51d82v2fo" path="res://resources/unit/unit_animations.res" id="8_v4tb2"]
 [ext_resource type="Script" path="res://scripts/unit/unit_animation.gd" id="9_de2uh"]
 [ext_resource type="Script" path="res://scripts/unit/DamagePopup.gd" id="10_g3xqo"]

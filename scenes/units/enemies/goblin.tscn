@@ -5,7 +5,7 @@
 [ext_resource type="Shader" path="res://scenes/units/unit.gdshader" id="3_ar0gy"]
 [ext_resource type="Shader" path="res://scenes/units/playable/bat.gdshader" id="3_uc5xm"]
 [ext_resource type="Texture2D" uid="uid://bgdc18gbooa77" path="res://assets/sprites/units/overlay.png" id="4_kvgre"]
-[ext_resource type="Texture2D" uid="uid://bsrf63wo3srd5" path="res://assets/sprites/units/frog.png" id="4_ub73l"]
+[ext_resource type="Texture2D" uid="uid://bsrf63wo3srd5" path="res://assets/sprites/units/player/frog/frog.png" id="4_ub73l"]
 [ext_resource type="AnimationLibrary" uid="uid://rkp51d82v2fo" path="res://resources/unit/unit_animations.res" id="4_ym0u3"]
 [ext_resource type="Script" path="res://scripts/unit/unit_animation.gd" id="5_kyp7o"]
 [ext_resource type="Script" path="res://scripts/unit/DamagePopup.gd" id="6_gbqki"]

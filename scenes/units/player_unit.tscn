@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://scripts/PlayerUnit.gd" id="1_ms0ni"]
 [ext_resource type="Shader" path="res://scenes/units/unit.gdshader" id="2_b7q3s"]
-[ext_resource type="Texture2D" uid="uid://bsrf63wo3srd5" path="res://assets/sprites/units/frog.png" id="2_mui1j"]
 [ext_resource type="Shader" path="res://scenes/units/playable/bat.gdshader" id="2_uy4yr"]
+[ext_resource type="Texture2D" uid="uid://bsrf63wo3srd5" path="res://assets/sprites/units/player/frog/frog.png" id="3_5svsa"]
 [ext_resource type="Script" path="res://scripts/unit/unit_animation.gd" id="3_c20o0"]
 [ext_resource type="Texture2D" uid="uid://bgdc18gbooa77" path="res://assets/sprites/units/overlay.png" id="4_dwkfi"]
 [ext_resource type="AnimationLibrary" uid="uid://rkp51d82v2fo" path="res://resources/unit/unit_animations.res" id="6_5har3"]
@@ -94,7 +94,7 @@ script = ExtResource("1_ms0ni")
 material = SubResource("ShaderMaterial_e85bu")
 position = Vector2(-3.25, 3)
 scale = Vector2(1.10156, 0.484375)
-texture = ExtResource("2_mui1j")
+texture = ExtResource("3_5svsa")
 offset = Vector2(0, -9)
 hframes = 9
 vframes = 3
@@ -104,7 +104,7 @@ frame = 7
 clip_children = 2
 material = SubResource("ShaderMaterial_8axfa")
 position = Vector2(0, -9)
-texture = ExtResource("2_mui1j")
+texture = ExtResource("3_5svsa")
 hframes = 9
 vframes = 3
 frame = 9
@@ -124,11 +124,13 @@ autoplay = "unit/Idle"
 script = ExtResource("3_c20o0")
 
 [node name="DamagePopup" type="Marker2D" parent="."]
+top_level = true
 position = Vector2(12, -10)
 script = ExtResource("6_pckf4")
 damage_node = ExtResource("7_i1q1x")
 
 [node name="TextPopup" type="Marker2D" parent="."]
+top_level = true
 position = Vector2(0, -17)
 script = ExtResource("6_pckf4")
 damage_node = ExtResource("7_i1q1x")

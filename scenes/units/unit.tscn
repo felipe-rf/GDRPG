@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/Unit.gd" id="1_2g0kb"]
 [ext_resource type="Shader" path="res://scenes/units/unit.gdshader" id="2_3kcva"]
-[ext_resource type="Texture2D" uid="uid://bsrf63wo3srd5" path="res://assets/sprites/units/frog.png" id="2_al148"]
+[ext_resource type="Texture2D" uid="uid://bsrf63wo3srd5" path="res://assets/sprites/units/player/frog/frog.png" id="2_al148"]
 [ext_resource type="Shader" path="res://scenes/units/playable/bat.gdshader" id="2_green"]
 [ext_resource type="Script" path="res://scripts/unit/unit_animation.gd" id="3_qkl4w"]
 [ext_resource type="Texture2D" uid="uid://bgdc18gbooa77" path="res://assets/sprites/units/overlay.png" id="5_8oj0c"]

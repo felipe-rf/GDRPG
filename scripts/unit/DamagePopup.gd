@@ -30,8 +30,8 @@ func popup(dmg: String,type: int,damage_type:int=0) -> void:
 						 global_position + _get_direction(),
 						 0.75)
 
-
-	get_tree().current_scene.add_child(damage)
+	damage.scale = Vector2(0.5,0.5)
+	get_parent().add_child(damage)
 	i += 1
  
 func _get_color(damage_type:int) -> Color:

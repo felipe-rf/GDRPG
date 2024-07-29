@@ -4,6 +4,8 @@ class_name TurnQueue
 
 @onready var action_menu = $"../ActionMenu"
 @onready var label = $"../Label"
+@onready var combat_scene = $".."
+
 
 var active_unit ##Current unit in queue
 
@@ -29,6 +31,7 @@ func _initialize() -> void: ##Initializes lists
 	unit_list = _get_unit_list()
 	player_list = _get_unit_list().filter(func(element): return element is PlayerUnit)
 	active_unit = unit_list_sorted[0]
+	action_menu._set_player_portraits()
 
 func _start() -> void: ##Starts combat
 	_initialize()
@@ -51,10 +54,13 @@ func _play_turn() -> void:
 		return
 	##Win
 	if(unit_list.filter(func(element): return element is EnemyUnit).size() == 0): 
-		label.visible = true
-		print("You Won")
+		combat_scene._finish(player_list)
 		return
 	##Get next unit and moves on to next turn
 	var new_index : int = (unit_list_sorted.find(active_unit)+1) % unit_list_sorted.size()
 	active_unit = unit_list_sorted[new_index]
 	_play_turn()
+
+
+func _add_exp(exp:int):
+	combat_scene.exp_gained += exp

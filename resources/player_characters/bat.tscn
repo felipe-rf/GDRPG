@@ -1,0 +1,24 @@
+[gd_scene load_steps=9 format=3 uid="uid://84enhdtlpebe"]
+
+[ext_resource type="Script" path="res://scripts/resources/player_character.gd" id="1_x3wkx"]
+[ext_resource type="Texture2D" uid="uid://cg1tpky0snp1p" path="res://assets/sprites/units/player/bat/bat-portrait.png" id="2_r7tcv"]
+[ext_resource type="Texture2D" uid="uid://dk3chv12jy6jb" path="res://assets/sprites/units/player/bat/bat-picture.png" id="3_wrctn"]
+[ext_resource type="Resource" uid="uid://bcdpccwja0xdi" path="res://resources/spells/slow.tres" id="4_r4gjb"]
+[ext_resource type="Resource" uid="uid://dvjeu7a2cksqq" path="res://resources/spells/mega_heal.tres" id="5_osj3b"]
+[ext_resource type="Resource" uid="uid://cnbwio1ogdcq" path="res://resources/spells/vampirism.tres" id="6_1mrs5"]
+[ext_resource type="Texture2D" uid="uid://dg5v25xgqcty8" path="res://assets/sprites/units/player/bat/bat.png" id="7_f36ms"]
+[ext_resource type="Script" path="res://addons/thoth/thoth_serializable.gd" id="8_6krba"]
+
+[node name="Bat" type="Node"]
+script = ExtResource("1_x3wkx")
+unit_portrait = ExtResource("2_r7tcv")
+unit_picture = ExtResource("3_wrctn")
+base_stats = Array[int]([16, 10, 6, 8, 2, 3, 3])
+spell_list = Array[Resource("res://scripts/resources/spell.gd")]([ExtResource("4_r4gjb"), ExtResource("5_osj3b"), ExtResource("6_1mrs5")])
+texture = ExtResource("7_f36ms")
+unit_name = "Bat"
+scale = 4
+
+[node name="Serializable" type="Node" parent="."]
+script = ExtResource("8_6krba")
+variables = Array[String](["base_stats", "stats", "level", "experience", "spell_list"])

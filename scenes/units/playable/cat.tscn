@@ -1,13 +1,13 @@
 [gd_scene load_steps=19 format=3 uid="uid://dnrvsqfcvtu5a"]
 
 [ext_resource type="Script" path="res://scripts/PlayerUnit.gd" id="1_e0o1r"]
-[ext_resource type="Texture2D" uid="uid://btyyk54h4ohai" path="res://assets/sprites/units/cat-Sheet.png" id="3_jm4db"]
+[ext_resource type="Texture2D" uid="uid://btyyk54h4ohai" path="res://assets/sprites/units/player/cat/cat-Sheet.png" id="3_jm4db"]
 [ext_resource type="Shader" path="res://scenes/units/unit.gdshader" id="4_exy8q"]
 [ext_resource type="Texture2D" uid="uid://bgdc18gbooa77" path="res://assets/sprites/units/overlay.png" id="5_damb4"]
 [ext_resource type="Shader" path="res://scenes/units/playable/bat.gdshader" id="6_5d14s"]
 [ext_resource type="Script" path="res://scripts/unit/unit_animation.gd" id="6_8f8tj"]
 [ext_resource type="AnimationLibrary" uid="uid://rkp51d82v2fo" path="res://resources/unit/unit_animations.res" id="6_y5kj3"]
-[ext_resource type="Texture2D" uid="uid://bsrf63wo3srd5" path="res://assets/sprites/units/frog.png" id="7_7bup2"]
+[ext_resource type="Texture2D" uid="uid://bsrf63wo3srd5" path="res://assets/sprites/units/player/frog/frog.png" id="7_7bup2"]
 [ext_resource type="Script" path="res://scripts/unit/DamagePopup.gd" id="7_dp6js"]
 [ext_resource type="PackedScene" uid="uid://d063ijjrhlk7a" path="res://scenes/gui/floating_number.tscn" id="8_m3xrl"]
 

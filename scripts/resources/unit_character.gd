@@ -1,4 +1,4 @@
-extends Resource
+extends Node
 class_name UnitCharacter
 
 @export var base_stats: Array[int] ##Default stats for unit
@@ -10,3 +10,4 @@ class_name UnitCharacter
 @export var animation_type: int ##0 for melee attack, 1 for ranged
 @export var unit_name: String
 @export var scale:int=1
+@export var exp = 0

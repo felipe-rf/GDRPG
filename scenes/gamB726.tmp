@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://clx4gyxn4uye6"]
+
+[ext_resource type="Script" path="res://scripts/GameScene.gd" id="1_eqko8"]
+[ext_resource type="PackedScene" uid="uid://d1lm052a2kmeq" path="res://scenes/combat/combat_finished.tscn" id="2_qlkpw"]
+[ext_resource type="PackedScene" uid="uid://dxtkg3gd1p2fw" path="res://scenes/combat/combat_scene.tscn" id="3_737jx"]
+[ext_resource type="PackedScene" uid="uid://cf6b0ev26yqi1" path="res://scenes/off_combat/dungeon_map.tscn" id="4_20dj1"]
+
+[node name="GameScene" type="Node2D"]
+script = ExtResource("1_eqko8")
+
+[node name="CombatFinished" parent="." instance=ExtResource("2_qlkpw")]
+visible = false
+
+[node name="CombatScene" parent="." instance=ExtResource("3_737jx")]
+process_mode = 4
+visible = false
+
+[node name="dungeon_map" parent="." instance=ExtResource("4_20dj1")]
+process_mode = 4
+visible = false

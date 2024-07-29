@@ -2,16 +2,11 @@
 
 [ext_resource type="PackedScene" uid="uid://b36ts5maohabp" path="res://scenes/combat/ActionMenu.tscn" id="1_40fe4"]
 [ext_resource type="Script" path="res://scripts/combat/combat_scene.gd" id="1_evm76"]
-[ext_resource type="Shader" path="res://assets/shaders/crt.gdshader" id="1_lrmea"]
-[ext_resource type="Resource" uid="uid://dkhckcctr3vu3" path="res://resources/player_characters/cat.tres" id="2_7fv0l"]
 [ext_resource type="PackedScene" uid="uid://b4jbsl1xp5ms2" path="res://scenes/combat/turn_queue.tscn" id="2_ouiy5"]
 [ext_resource type="Script" path="res://scripts/combat/ColorRect2.gd" id="2_yhjkf"]
-[ext_resource type="Resource" uid="uid://b0mkhembsijr6" path="res://resources/player_characters/frog.tres" id="3_w2vqn"]
-[ext_resource type="Resource" uid="uid://b1ijclmc1g2kc" path="res://resources/player_characters/bat.tres" id="4_77kn4"]
-[ext_resource type="Resource" uid="uid://mawuaeqornha" path="res://resources/enemy_characters/goblin.tres" id="5_gukur"]
 [ext_resource type="PackedScene" uid="uid://htxpo46yqo0i" path="res://scenes/units/enemy_unit.tscn" id="6_2p1nc"]
 [ext_resource type="PackedScene" uid="uid://bteksng1olqmq" path="res://scenes/units/player_unit.tscn" id="7_5ql6i"]
-[ext_resource type="Resource" uid="uid://cvum6wdne2fjv" path="res://resources/player_inventory.tres" id="8_j2og8"]
+[ext_resource type="PackedScene" uid="uid://d1lm052a2kmeq" path="res://scenes/combat/combat_finished.tscn" id="8_10pfd"]
 [ext_resource type="Shader" path="res://assets/shaders/color.gdshader" id="12_ea2cx"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sm3kv"]
@@ -21,35 +16,144 @@ shader_parameter/rotate_speed = 0.2
 shader_parameter/disp = Vector2(0.5, 0.5)
 shader_parameter/transparent = false
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ps8cn"]
-shader = ExtResource("1_lrmea")
-shader_parameter/resolution = Vector2(640, 360)
-shader_parameter/scan_line_amount = 1.0
-shader_parameter/warp_amount = 0.1
-shader_parameter/noise_amount = 0.021
-shader_parameter/interference_amount = 0.099
-shader_parameter/grille_amount = 0.1
-shader_parameter/grille_size = 1.0
-shader_parameter/vignette_amount = 0.505
-shader_parameter/vignette_intensity = 0.229
-shader_parameter/aberation_amount = 0.063
-shader_parameter/roll_line_amount = 0.3
-shader_parameter/roll_speed = 1.0
-shader_parameter/scan_line_strength = -8.766
-shader_parameter/pixel_strength = -2.0
-
 [sub_resource type="LabelSettings" id="LabelSettings_tulbw"]
 font_size = 50
 outline_size = 20
 outline_color = Color(0, 0, 0, 1)
 
+[sub_resource type="Animation" id="Animation_md34j"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-1, -1)]
+}
+
+[sub_resource type="Animation" id="Animation_f0vmt"]
+resource_name = "Transition_in"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-1, -1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../TurnQueue:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_7b51u"]
+resource_name = "Transition_out"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(2),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5oyxs"]
+_data = {
+"RESET": SubResource("Animation_md34j"),
+"Transition_in": SubResource("Animation_f0vmt"),
+"Transition_out": SubResource("Animation_7b51u")
+}
+
+[sub_resource type="Shader" id="Shader_s37mu"]
+code = "shader_type canvas_item;
+
+// Ranges from 0 to 1 over the course of the transition.
+// We use this to actually animate the shader.
+uniform float progress : hint_range(0, 1);
+
+// Size of each diamond, in pixels.
+uniform float diamondPixelSize = 10.0;
+
+void fragment() {
+	float xFraction = fract(FRAGCOORD.x / diamondPixelSize);
+	float yFraction = fract(FRAGCOORD.y / diamondPixelSize);
+	float xDistance = abs(xFraction - 0.5);
+	float yDistance = abs(yFraction - 0.5);
+	if (xDistance + yDistance + UV.x + UV.y > progress * 4.0) {
+		discard;
+	}
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_48b0r"]
+shader = SubResource("Shader_s37mu")
+shader_parameter/progress = 1.0
+shader_parameter/diamondPixelSize = 50.0
+
 [node name="CombatScene" type="Node2D"]
 script = ExtResource("1_evm76")
-player_units = Array[Resource("res://scripts/resources/player_character.gd")]([ExtResource("2_7fv0l"), ExtResource("3_w2vqn"), ExtResource("4_77kn4")])
-enemy_units = Array[Resource("res://scripts/resources/unit_character.gd")]([ExtResource("5_gukur"), ExtResource("5_gukur"), ExtResource("5_gukur")])
 enemy_scene = ExtResource("6_2p1nc")
 player_scene = ExtResource("7_5ql6i")
-player_inventory = ExtResource("8_j2og8")
+finish_screen = ExtResource("8_10pfd")
 
 [node name="ColorRect2" type="ColorRect" parent="."]
 show_behind_parent = true
@@ -68,16 +172,6 @@ top_level = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
-
-[node name="ColorRect" type="ColorRect" parent="."]
-top_level = true
-z_index = 10
-material = SubResource("ShaderMaterial_ps8cn")
-offset_right = 658.0
-offset_bottom = 370.0
-mouse_filter = 2
-script = ExtResource("2_yhjkf")
-id = 1
 
 [node name="PositionMarkers" type="Marker2D" parent="."]
 visible = false
@@ -130,3 +224,20 @@ grow_vertical = 2
 size_flags_horizontal = 4
 text = "YOU WON!"
 label_settings = SubResource("LabelSettings_tulbw")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Transition")
+libraries = {
+"": SubResource("AnimationLibrary_5oyxs")
+}
+autoplay = "Transition_in"
+
+[node name="Transition" type="ColorRect" parent="."]
+top_level = true
+material = SubResource("ShaderMaterial_48b0r")
+offset_right = 664.0
+offset_bottom = 376.0
+scale = Vector2(-1, -1)
+pivot_offset = Vector2(332, 188)
+mouse_filter = 2
+color = Color(0, 0, 0, 1)

@@ -11,15 +11,23 @@ config_version=5
 [application]
 
 config/name="GDRPG"
-run/main_scene="res://scenes/combat/combat_scene.tscn"
+run/main_scene="res://scenes/game_scene.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://icon.svg"
+
+[autoload]
+
+SceneSwitcher="*res://scripts/global/scene_switcher.gd"
 
 [display]
 
 window/size/viewport_width=658
 window/size/viewport_height=370
 window/stretch/mode="canvas_items"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/thoth/plugin.cfg")
 
 [input]
 
@@ -36,6 +44,11 @@ ui_cancel={
 ]
 }
 
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
+pointing/emulate_mouse_from_touch=false
+
 [physics]
 
 3d/physics_engine="GodotPhysics3D"
@@ -43,4 +56,3 @@ ui_cancel={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
-renderer/rendering_method="mobile"

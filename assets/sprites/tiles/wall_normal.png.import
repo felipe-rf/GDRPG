@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://symy6e2b3eds"
-path="res://.godot/imported/frog-portrait.png-c1699cd1a80e15954b2855ef91dc4dd0.ctex"
+uid="uid://cnoo6mq50y8mt"
+path="res://.godot/imported/wall_normal.png-a3af6bca2bd7e2b8bd5c84709e947930.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/units/cat/frog-portrait.png"
-dest_files=["res://.godot/imported/frog-portrait.png-c1699cd1a80e15954b2855ef91dc4dd0.ctex"]
+source_file="res://assets/sprites/tiles/wall_normal.png"
+dest_files=["res://.godot/imported/wall_normal.png-a3af6bca2bd7e2b8bd5c84709e947930.ctex"]
 
 [params]
 

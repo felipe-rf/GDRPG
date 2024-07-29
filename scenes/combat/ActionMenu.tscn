@@ -3,11 +3,11 @@
 [ext_resource type="Script" path="res://scripts/menus/ActionMenu.gd" id="1_dieak"]
 [ext_resource type="Theme" uid="uid://7f715063sed8" path="res://assets/sprites/gui/panel.tres" id="1_twjxi"]
 [ext_resource type="Script" path="res://scripts/menus/ActionButton.gd" id="3_t3x8c"]
-[ext_resource type="Texture2D" uid="uid://d0owvcxd21pyy" path="res://assets/sprites/units/cat/cat-portrait.png" id="4_vhx02"]
+[ext_resource type="Texture2D" uid="uid://d0owvcxd21pyy" path="res://assets/sprites/units/player/cat/cat-portrait.png" id="4_vhx02"]
 [ext_resource type="Texture2D" uid="uid://cdnodtbv7hjs5" path="res://assets/sprites/gui/cursor.png" id="5_7nnkj"]
 [ext_resource type="Script" path="res://scripts/UnitCursor.gd" id="6_sm4mi"]
 [ext_resource type="FontFile" uid="uid://d004rlbpn65jj" path="res://assets/rainyhearts.ttf" id="8_kn3sp"]
-[ext_resource type="Texture2D" uid="uid://symy6e2b3eds" path="res://assets/sprites/units/cat/frog-portrait.png" id="8_l1dmk"]
+[ext_resource type="Texture2D" uid="uid://symy6e2b3eds" path="res://assets/sprites/units/player/frog/frog-portrait.png" id="8_l1dmk"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_hxbrx"]
 

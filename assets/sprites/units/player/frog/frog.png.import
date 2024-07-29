@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d0owvcxd21pyy"
-path="res://.godot/imported/cat-portrait.png-342613b999ff544b8b37aa392964e9f6.ctex"
+uid="uid://bsrf63wo3srd5"
+path="res://.godot/imported/frog.png-41e74c20e4540d324423b0f978cd71ae.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/units/cat/cat-portrait.png"
-dest_files=["res://.godot/imported/cat-portrait.png-342613b999ff544b8b37aa392964e9f6.ctex"]
+source_file="res://assets/sprites/units/player/frog/frog.png"
+dest_files=["res://.godot/imported/frog.png-41e74c20e4540d324423b0f978cd71ae.ctex"]
 
 [params]
 

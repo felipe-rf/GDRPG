@@ -1,8 +1,10 @@
 extends Unit
 class_name PlayerUnit
 var unit_portrait:Texture2D
+var character: PlayerCharacter
 
 func _initialize(player_character: UnitCharacter) -> void:
+	character = player_character
 	base_stats = player_character.base_stats
 	spell_list = player_character.spell_list
 	weaknesses = player_character.weaknesses
@@ -16,9 +18,8 @@ func _initialize(player_character: UnitCharacter) -> void:
 	if(player_character.stats.is_empty()): 
 		stats = player_character.base_stats.duplicate()
 	else:
-		stats = player_character.stats
-	
-
+		stats = player_character.base_stats.duplicate()
+		stats[0] = player_character.stats[0]
 	sprite.texture = texture
 	state = UnitState.Inactive
 
