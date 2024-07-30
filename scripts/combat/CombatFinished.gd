@@ -31,7 +31,6 @@ func _ready():
 		initialize_panel(i,player_list[i].experience,player_list[i].exp_required)
 		player_list[i].connect("experience_gained",Callable(self,"_on_character_exp_gained"))
 		player_list[i].connect("leveled_up",Callable(self,"_on_character_leveled_up"))
-	var player = player_list[0]
 	
 	await animation_player.animation_finished
 	animation_player.play("Start")
@@ -54,6 +53,7 @@ func _ready():
 			hide_panel()
 	continue_button.visible = true
 	continue_button.disabled = false
+	continue_button.grab_focus()
 func choose_stat(stat: int):
 	chosen_stat = stat
 	var player_stat = player_list[current_player].base_stats[stat]
@@ -88,8 +88,7 @@ func initialize_panel(index: int,current:int,maximum: int):
 	progress_bar.value = current
 
 
-func _on_character_leveled_up(level,next_level,next_health,player):
-	var index = player_list.find(player)
+func _on_character_leveled_up(_level,next_level,next_health,player):
 	players_leveling.append([player_list.find(player),next_level,next_health])
 
 func _on_character_exp_gained(growth_data,player):

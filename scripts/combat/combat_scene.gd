@@ -19,11 +19,13 @@ class_name CombatScene
 @onready var animation_player = $AnimationPlayer
 
 var exp_gained = 0
-func _initialize(players: Array[PlayerCharacter],enemies: Array[PackedScene]):
-	player_units = players
-	enemy_units = enemies
+func _initialize(_players: Array[PlayerCharacter],_enemies: Array[PackedScene]):
+	player_units = _players
+	enemy_units = _enemies
+	
 
 func _ready() -> void: ##Initializes units and starts turn queue
+	player_inventory = get_parent().get_node("PlayerInventory")
 	for i in player_units.size():
 		var unit = player_scene.instantiate()
 		turn_queue.add_child(unit)

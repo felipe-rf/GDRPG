@@ -1,25 +1,10 @@
-[gd_scene load_steps=17 format=3 uid="uid://dxtkg3gd1p2fw"]
+[gd_scene load_steps=10 format=3 uid="uid://bdehpcj38tf3u"]
 
-[ext_resource type="PackedScene" uid="uid://b36ts5maohabp" path="res://scenes/combat/ActionMenu.tscn" id="1_40fe4"]
-[ext_resource type="Script" path="res://scripts/combat/combat_scene.gd" id="1_evm76"]
-[ext_resource type="PackedScene" uid="uid://b4jbsl1xp5ms2" path="res://scenes/combat/turn_queue.tscn" id="2_ouiy5"]
-[ext_resource type="Script" path="res://scripts/combat/ColorRect2.gd" id="2_yhjkf"]
-[ext_resource type="PackedScene" uid="uid://htxpo46yqo0i" path="res://scenes/units/enemy_unit.tscn" id="6_2p1nc"]
-[ext_resource type="PackedScene" uid="uid://bteksng1olqmq" path="res://scenes/units/player_unit.tscn" id="7_5ql6i"]
-[ext_resource type="PackedScene" uid="uid://d1lm052a2kmeq" path="res://scenes/combat/combat_finished.tscn" id="8_10pfd"]
-[ext_resource type="Shader" path="res://assets/shaders/color.gdshader" id="12_ea2cx"]
+[ext_resource type="Script" path="res://scripts/ui/title.gd" id="1_hdrx5"]
+[ext_resource type="Script" path="res://addons/thoth/thoth_gamestate.gd" id="2_j5v30"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_sm3kv"]
-shader = ExtResource("12_ea2cx")
-shader_parameter/zoom = 4.2
-shader_parameter/rotate_speed = 0.2
-shader_parameter/disp = Vector2(0.5, 0.5)
-shader_parameter/transparent = false
-
-[sub_resource type="LabelSettings" id="LabelSettings_tulbw"]
+[sub_resource type="LabelSettings" id="LabelSettings_603sk"]
 font_size = 50
-outline_size = 20
-outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="Animation" id="Animation_md34j"]
 length = 0.001
@@ -123,7 +108,7 @@ _data = {
 "Transition_out": SubResource("Animation_7b51u")
 }
 
-[sub_resource type="Shader" id="Shader_vt8t6"]
+[sub_resource type="Shader" id="Shader_s37mu"]
 code = "shader_type canvas_item;
 
 // Ranges from 0 to 1 over the course of the transition.
@@ -144,100 +129,82 @@ void fragment() {
 }
 "
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_48b0r"]
-shader = SubResource("Shader_vt8t6")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ma3xi"]
+shader = SubResource("Shader_s37mu")
 shader_parameter/progress = 0.0
 shader_parameter/diamondPixelSize = 50.0
 
-[node name="CombatScene" type="Node2D"]
-script = ExtResource("1_evm76")
-enemy_scene = ExtResource("6_2p1nc")
-player_scene = ExtResource("7_5ql6i")
-finish_screen = ExtResource("8_10pfd")
-
-[node name="ColorRect2" type="ColorRect" parent="."]
-show_behind_parent = true
-z_index = -10
-material = SubResource("ShaderMaterial_sm3kv")
-offset_left = -24.0
-offset_top = -24.0
-offset_right = 680.0
-offset_bottom = 400.0
-script = ExtResource("2_yhjkf")
-
-[node name="ActionMenu" parent="." instance=ExtResource("1_40fe4")]
-top_level = true
-
-[node name="TurnQueue" parent="." instance=ExtResource("2_ouiy5")]
-
-[node name="Camera2D" type="Camera2D" parent="."]
-anchor_mode = 0
-
-[node name="PositionMarkers" type="Marker2D" parent="."]
-visible = false
-position = Vector2(64, 192)
-metadata/_edit_lock_ = true
-
-[node name="Players" type="Marker2D" parent="PositionMarkers"]
-
-[node name="Player1" type="Marker2D" parent="PositionMarkers/Players"]
-position = Vector2(0, -16)
-
-[node name="Player2" type="Marker2D" parent="PositionMarkers/Players"]
-position = Vector2(128, -16)
-
-[node name="Player3" type="Marker2D" parent="PositionMarkers/Players"]
-position = Vector2(64, 40)
-
-[node name="Player4" type="Marker2D" parent="PositionMarkers/Players"]
-position = Vector2(192, 40)
-
-[node name="Enemies" type="Marker2D" parent="PositionMarkers"]
-position = Vector2(512, 0)
-scale = Vector2(-1, 1)
-
-[node name="Enemy1" type="Marker2D" parent="PositionMarkers/Enemies"]
-position = Vector2(136, -16)
-
-[node name="Enemy2" type="Marker2D" parent="PositionMarkers/Enemies"]
-position = Vector2(0, -16)
-
-[node name="Enemy3" type="Marker2D" parent="PositionMarkers/Enemies"]
-position = Vector2(64, 40)
-
-[node name="Enemy4" type="Marker2D" parent="PositionMarkers/Enemies"]
-position = Vector2(192, 40)
-
-[node name="Label" type="Label" parent="."]
-visible = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 200.0
-offset_top = 120.0
-offset_right = 458.0
-offset_bottom = 189.0
+[node name="Title" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 4
-text = "YOU WON!"
-label_settings = SubResource("LabelSettings_tulbw")
+script = ExtResource("1_hdrx5")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 644.0
+offset_bottom = 360.0
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -137.0
+offset_right = 137.0
+offset_bottom = 190.0
+grow_horizontal = 2
+text = "OFFICE CAT"
+label_settings = SubResource("LabelSettings_603sk")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 184.0
+offset_top = 174.0
+offset_right = 455.0
+offset_bottom = 350.0
+
+[node name="Start" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "NEW GAME"
+
+[node name="Start2" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "LOAD GAME"
+
+[node name="Button2" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "SETTINGS"
+
+[node name="Button3" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "QUIT"
+
+[node name="Savestate" type="Node" parent="."]
+script = ExtResource("2_j5v30")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Transition")
 libraries = {
 "": SubResource("AnimationLibrary_5oyxs")
 }
-autoplay = "Transition_in"
 
 [node name="Transition" type="ColorRect" parent="."]
 top_level = true
-material = SubResource("ShaderMaterial_48b0r")
+material = SubResource("ShaderMaterial_ma3xi")
+layout_mode = 0
 offset_right = 664.0
 offset_bottom = 376.0
 scale = Vector2(-1, -1)
 pivot_offset = Vector2(332, 188)
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
+
+[connection signal="pressed" from="VBoxContainer/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="VBoxContainer/Start2" to="." method="_on_start_2_pressed"]

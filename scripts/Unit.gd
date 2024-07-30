@@ -13,7 +13,7 @@ var stats: Array[int] ##Unit stats during combat
 var unit_name
 var unit_scale: int=1
 
-var exp = 0
+var _exp = 0
 
 var stat_timer: Array[int] = [0,0,0,0,0,0,0] ##Timer for each one of the unit's stats
 var queued_stat_timer: Array[int] = [0,0,0,0,0,0,0] ##Used for starting stat_timer only on unit's turn
@@ -56,7 +56,7 @@ func _initialize(unit_character: UnitCharacter) -> void: ##Initializes unit base
 	state = UnitState.Inactive
 	stats = base_stats.duplicate()
 	scale = scale*unit_scale
-	exp = unit_character.exp
+	_exp = unit_character._exp
 
 
 func _activate(unit_list:Array[Unit]) -> void: ##Activates unit in its turn.
@@ -96,15 +96,15 @@ func _rand20() -> int: ##Generates number between 1 and 20
 	randomize()
 	return(randi_range(1,20))
 	
-func _get_allies(unit_list:Array[Unit]) -> Array[Unit]: ##Returns all of unit's allies
+func _get_allies(_unit_list:Array[Unit]) -> Array[Unit]: ##Returns all of unit's allies
 	print("This shouldn't happen ;-; ")
 	return []
 	
-func _get_enemies(unit_list:Array[Unit]) -> Array[Unit]: ##Return all of unit's enemies
+func _get_enemies(_unit_list:Array[Unit]) -> Array[Unit]: ##Return all of unit's enemies
 	print("This shouldn't happen ;-; ")
 	return []
 	
-func _process(delta) -> void: ## Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(_delta) -> void: ## Called every frame. 'delta' is the elapsed time since the previous frame.
 	shadow.texture = sprite.texture 
 	shadow.frame = sprite.frame
 	if(actions<=0):
@@ -123,7 +123,7 @@ func _die() -> void: ##Disables the unit
 	print(unit_name + " died!")
 	state = UnitState.Disabled
 	if self is EnemyUnit:
-		get_parent()._add_exp(exp)
+		get_parent()._add_exp(_exp)
 	animation_player.play("unit/Dead")
 	
 func _receive_healing(heal) -> void: ##Adds healing to health

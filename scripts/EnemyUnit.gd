@@ -10,5 +10,6 @@ func _get_enemies(list:Array[Unit]) -> Array[Unit]:
 
 func _play_turn() -> void: ##Plays enemy's turn
 	if state == UnitState.Active:
+		randomize()
 		_attack_unit(enemies_list.pick_random())
 

@@ -7,7 +7,7 @@ class_name Spell
 @export var target_type: int
 @export var particle: PackedScene
 
-func _spell_effect(parent: Unit,target_list: Array[Unit]) -> void: ##Executes the spell's effect
+func _spell_effect(_parent: Unit,_target_list: Array[Unit]) -> void: ##Executes the spell's effect
 	print("this shouldn't happen ;-;")
 
 func _spawn_particles(target: Unit) -> void: ##Spawns particles on target

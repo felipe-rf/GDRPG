@@ -49,13 +49,13 @@ func save_game_state(game_version = "default"):
 	_save_save_data()
 
 func _load_save_data():
-	var file = FileAccess.open_encrypted_with_pass("user://" + save_filename, FileAccess.READ,"YOULLNEVERTAKEMEALIVE")
+	var file = FileAccess.open("user://" + save_filename, FileAccess.READ)
 	var json_conv = JSON.new()
 	json_conv.parse(file.get_line())
 	save_data = json_conv.get_data()
 	file.close()
 
 func _save_save_data():
-	var file = FileAccess.open_encrypted_with_pass("user://" + save_filename, FileAccess.WRITE,"YOULLNEVERTAKEMEALIVE")
+	var file = FileAccess.open("user://" + save_filename, FileAccess.WRITE)
 	file.store_line(JSON.new().stringify(save_data))
 	file.close()

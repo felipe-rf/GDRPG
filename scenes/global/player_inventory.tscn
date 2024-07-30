@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://dd268st74qlkj"]
+
+[ext_resource type="Script" path="res://scripts/resources/player_inventory.gd" id="1_gpmaa"]
+[ext_resource type="Resource" uid="uid://cap0t4tlkugyb" path="res://resources/items/potion.tres" id="2_jt45d"]
+
+[node name="PlayerInventory" type="Node"]
+script = ExtResource("1_gpmaa")
+inventory = Array[Resource("res://scripts/resources/item.gd")]([ExtResource("2_jt45d")])

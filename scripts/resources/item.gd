@@ -8,7 +8,7 @@ class_name Item
 @export var particle: PackedScene
 @export var quantity: int = 1
 
-func _item_effect(parent: Unit,target_list: Array[Unit])-> void: ##Executes the item effect
+func _item_effect(_parent: Unit,_target_list: Array[Unit])-> void: ##Executes the item effect
 	print("this shouldn't happen ;-;")
 
 func _spawn_particles(target: Unit) -> void: ##Spawns particles on target

@@ -41,7 +41,7 @@ func _input(event):
 
 func _initialize(unit:Unit) -> void: ##Updates GUI and activates cursor
 	_set_player_portraits()
-	if spell_panel.visible: spell_panel.visible = false
+	spell_panel.visible = false
 	if unit is PlayerUnit:
 		current_container = main_menu
 		_enable_buttons(main_menu)
@@ -70,7 +70,7 @@ func _on_spell_cursor_selected() -> void: ##Activates the spell menu for spell s
 	_set_spell_labels(spell_list)
 	_set_visible(spell_menu)
 	_enable_buttons(spell_menu)
-	#spell_menu.get_child(0).grab_focus()
+	spell_menu.get_child(0).grab_focus()
 
 func _on_item_cursor_selected(): ##Activates the item menu for item selection
 	var item_list = combat_scene.player_inventory.inventory
@@ -170,12 +170,16 @@ func _on_unit_cursor_selected(target_list:Array[Unit]) -> void: ##Execute action
 		turn_queue.active_unit._use_spell(current_spell,target_list)
 		await turn_queue.active_unit.attackFinished
 		_enable_buttons(current_container)
+		for i in spell_menu.get_children():
+			i.queue_free()
 		state = cursorState.idle
 		_set_visible(main_menu)
 	if state == cursorState.item:
 		turn_queue.active_unit._use_item(current_item,target_list,combat_scene.player_inventory)
 		await turn_queue.active_unit.attackFinished
 		_enable_buttons(current_container)
+		for i in item_menu.get_children():
+			i.queue_free()
 		state = cursorState.idle
 		_set_visible(main_menu)
 

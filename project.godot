@@ -18,11 +18,13 @@ config/icon="res://icon.svg"
 [autoload]
 
 SceneSwitcher="*res://scripts/global/scene_switcher.gd"
+Globals="*res://scripts/globals.gd"
+PlayerUnits="*res://scenes/global/player_units.tscn"
 
 [display]
 
-window/size/viewport_width=658
-window/size/viewport_height=370
+window/size/viewport_width=640
+window/size/viewport_height=360
 window/stretch/mode="canvas_items"
 
 [editor_plugins]

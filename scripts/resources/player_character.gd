@@ -14,19 +14,21 @@ var experience_total: int
 
 var exp_required: int = get_required_exp(level+1)
 
-func update(exp: int, _stats: Array[int]) -> void:
-	new_exp = exp
+func update(_exp: int, _stats: Array[int]) -> void:
+	new_exp = _exp
 	stats = _stats.duplicate()
+	if stats[0] <= 0:
+		stats[0] = 1
 
 func add_spell(spell: Spell) -> void:
 	spell_list.append(spell)
 
-func get_required_exp(level: int):
-	return round(pow(level,1.8) + level * 4)
+func get_required_exp(_level: int):
+	return round(pow(_level,1.8) + _level * 4)
 
-func gain_experience(exp: int= 100) -> void:
-	experience_total += exp
-	experience += exp
+func gain_experience(_exp: int= 100) -> void:
+	experience_total += _exp
+	experience += _exp
 	var growth_data = []
 	while experience >= exp_required:
 		experience -= exp_required

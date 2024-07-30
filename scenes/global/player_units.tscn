@@ -1,0 +1,15 @@
+[gd_scene load_steps=5 format=3 uid="uid://cib5dbbx08j2o"]
+
+[ext_resource type="Script" path="res://scripts/global/player_units.gd" id="1_v0l8k"]
+[ext_resource type="PackedScene" uid="uid://c3qd84yi7btpu" path="res://resources/player_characters/cat.res" id="1_ypwsr"]
+[ext_resource type="PackedScene" uid="uid://di4gye2kuvi6p" path="res://resources/player_characters/bat.res" id="2_xpjv8"]
+[ext_resource type="PackedScene" uid="uid://blsfiqjhff8qj" path="res://resources/player_characters/frog.res" id="3_ocbl8"]
+
+[node name="PlayerUnits" type="Node"]
+script = ExtResource("1_v0l8k")
+
+[node name="Cat" parent="." instance=ExtResource("1_ypwsr")]
+
+[node name="Bat" parent="." instance=ExtResource("2_xpjv8")]
+
+[node name="Frog" parent="." instance=ExtResource("3_ocbl8")]

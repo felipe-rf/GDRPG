@@ -16,7 +16,7 @@ var control = true
 @onready var sprite_2d = $Sprite2D
 var follower_list: Array[PlayerFollower]
 func _ready():
-	var player_list = get_parent().get_parent().get_node("PlayerUnits").get_children()
+	var player_list = PlayerUnits.get_children()
 	get_parent().get_parent().connect("finished",Callable(self,"_reactivate"))
 	control = true
 	line_2d.add_point(global_position)

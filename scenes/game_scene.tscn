@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://clx4gyxn4uye6"]
+[gd_scene load_steps=10 format=3 uid="uid://clx4gyxn4uye6"]
 
 [ext_resource type="Script" path="res://scripts/GameScene.gd" id="1_eqko8"]
 [ext_resource type="PackedScene" uid="uid://d1lm052a2kmeq" path="res://scenes/combat/combat_finished.tscn" id="2_qlkpw"]
@@ -8,9 +8,6 @@
 [ext_resource type="Script" path="res://addons/thoth/thoth_gamestate.gd" id="6_nqcb4"]
 [ext_resource type="Shader" path="res://assets/shaders/crt.gdshader" id="7_xevpy"]
 [ext_resource type="Script" path="res://scripts/combat/ColorRect2.gd" id="8_j4axk"]
-[ext_resource type="PackedScene" uid="uid://c3qd84yi7btpu" path="res://resources/player_characters/cat.res" id="9_nw3du"]
-[ext_resource type="PackedScene" uid="uid://di4gye2kuvi6p" path="res://resources/player_characters/bat.res" id="10_hj0jj"]
-[ext_resource type="PackedScene" uid="uid://blsfiqjhff8qj" path="res://resources/player_characters/frog.res" id="11_g8yva"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kfr7n"]
 shader = ExtResource("7_xevpy")
@@ -44,7 +41,7 @@ transform = false
 [node name="Savestate" type="Node" parent="."]
 script = ExtResource("6_nqcb4")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="CRT" type="ColorRect" parent="."]
 top_level = true
 z_index = 10
 material = SubResource("ShaderMaterial_kfr7n")
@@ -54,11 +51,3 @@ mouse_filter = 2
 script = ExtResource("8_j4axk")
 id = 1
 metadata/_edit_lock_ = true
-
-[node name="PlayerUnits" type="Node" parent="."]
-
-[node name="Cat" parent="PlayerUnits" instance=ExtResource("9_nw3du")]
-
-[node name="Bat" parent="PlayerUnits" instance=ExtResource("10_hj0jj")]
-
-[node name="Frog" parent="PlayerUnits" instance=ExtResource("11_g8yva")]
