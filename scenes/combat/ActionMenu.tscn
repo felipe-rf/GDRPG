@@ -275,6 +275,4 @@ shape = SubResource("RectangleShape2D_wgbid")
 [connection signal="pressed" from="Panel/MainMenu/Spell" to="." method="_on_spell_cursor_selected"]
 [connection signal="pressed" from="Panel/MainMenu/Item" to="." method="_on_item_cursor_selected"]
 [connection signal="pressed" from="Panel/MainMenu/Defend" to="." method="_on_defend_cursor_selected"]
-[connection signal="canceled" from="UnitCursor" to="." method="_on_unit_cursor_canceled"]
-[connection signal="selected" from="UnitCursor" to="." method="_on_unit_cursor_selected"]
 [connection signal="timeout" from="unit_timer" to="UnitCursor" method="_on_unit_timer_timeout"]

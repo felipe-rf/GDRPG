@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://cf6b0ev26yqi1"]
+[gd_scene load_steps=30 format=3 uid="uid://cf6b0ev26yqi1"]
 
 [ext_resource type="Texture2D" uid="uid://cx0arg7a7mlcq" path="res://assets/ground.png" id="1_ai3ns"]
 [ext_resource type="Script" path="res://scenes/off_combat/dungeon_map.gd" id="1_kicmi"]
@@ -6,9 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://cg3ekyqeev0es" path="res://assets/new_canvas_texture.tres" id="2_egtno"]
 [ext_resource type="PackedScene" uid="uid://bofccnxvb7mti" path="res://scenes/off_combat/player/player.tscn" id="2_n7qw5"]
 [ext_resource type="PackedScene" uid="uid://b8eyclsrcw48v" path="res://scenes/off_combat/Torch.tscn" id="7_wsjvn"]
-[ext_resource type="Shader" path="res://scenes/shaders/diamond_transition.gdshader" id="9_2b74r"]
 [ext_resource type="Script" path="res://addons/thoth/thoth_serializable.gd" id="9_eufik"]
 [ext_resource type="PackedScene" uid="uid://62d6cnbv386f" path="res://resources/enemy_characters/goblin.res" id="10_666nn"]
+[ext_resource type="PackedScene" uid="uid://83owpdjy74ac" path="res://scenes/off_combat/phone.tscn" id="10_fq12f"]
 [ext_resource type="PackedScene" uid="uid://clec2qqrb2a8d" path="res://scenes/off_combat/enemy.tscn" id="11_cr23j"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3dbqx"]
@@ -604,101 +604,6 @@ fill = 1
 fill_from = Vector2(0.504274, 0.487179)
 fill_to = Vector2(0.863248, 0.106838)
 
-[sub_resource type="Animation" id="Animation_md34j"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:material:shader_parameter/progress")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [1.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-1, -1)]
-}
-
-[sub_resource type="Animation" id="Animation_f0vmt"]
-resource_name = "Transition_in"
-length = 2.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:material:shader_parameter/progress")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 0.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-1, -1)]
-}
-
-[sub_resource type="Animation" id="Animation_7b51u"]
-resource_name = "Transition_out"
-length = 2.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:material:shader_parameter/progress")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 1.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(2),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_5oyxs"]
-_data = {
-"RESET": SubResource("Animation_md34j"),
-"Transition_in": SubResource("Animation_f0vmt"),
-"Transition_out": SubResource("Animation_7b51u")
-}
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_806jm"]
-shader = ExtResource("9_2b74r")
-shader_parameter/progress = 1.0
-shader_parameter/diamondPixelSize = 50.0
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4hi7s"]
 size = Vector2(26, 27)
 
@@ -730,7 +635,7 @@ layer_0/y_sort_enabled = true
 layer_0/tile_data = PackedInt32Array(2, 65536, 0, 3, 65536, 0, 4, 65536, 0, 5, 65536, 0, 6, 65536, 0, 7, 65536, 0, 8, 65536, 0, 1, 65536, 0, 0, 0, 0, 65536, 0, 1, 131072, 0, 1, 196608, 0, 1, 262144, 0, 1, 327680, 0, 1, 393216, 0, 1, 458752, 0, 1, 524288, 0, 1, 589824, 0, 2, 589825, 65536, 2, 589826, 65536, 2, 589827, 65536, 2, 589828, 65536, 2, 589829, 65536, 2, 589830, 65536, 2, 589831, 65536, 2, 589832, 65536, 2, 589833, 65536, 2, 589834, 65536, 2, 589835, 65536, 2, 589836, 65536, 2, 524300, 65536, 0, 524299, 65536, 0, 524298, 65536, 0, 524297, 65536, 0, 524296, 65536, 0, 524295, 65536, 0, 524294, 65536, 0, 524293, 65536, 0, 524292, 65536, 0, 524291, 65536, 0, 524290, 327680, 2, 524289, 65536, 1, 458753, 65536, 1, 393217, 65536, 1, 327681, 65536, 1, 262145, 65536, 1, 196609, 65536, 1, 131073, 65536, 1, 65537, 65536, 1, 65538, 65536, 1, 131074, 327680, 1, 196610, 131072, 1, 262146, 131072, 1, 327682, 131072, 1, 393218, 131072, 1, 458754, 131072, 1, 131075, 65536, 2, 131076, 65536, 2, 131077, 65536, 2, 131078, 65536, 2, 131079, 131072, 4, 131080, 65536, 2, 131081, 65536, 2, 131082, 65536, 2, 65546, 65536, 1, 65545, 65536, 1, 65544, 65536, 1, 65543, 65536, 1, 65542, 65536, 1, 65541, 65536, 1, 65540, 65536, 1, 65539, 65536, 1, 9, 65536, 0, 10, 65536, 0, 11, 65536, 0, 12, 65536, 0, 65548, 65536, 1, 65547, 65536, 1, 131083, 393216, 1, 196619, 0, 2, 131084, 65536, 1, 131085, 65536, 1, 65549, 65536, 1, 196621, 393216, 1, 196620, 65536, 2, 196622, 131072, 1, 131086, 131072, 1, 65550, 131072, 1, 14, 131072, 0, 13, 65536, 0, 262157, 0, 1, 262158, 131072, 1, 327694, 131072, 1, 393230, 131072, 1, 393229, 0, 1, 458765, 0, 1, 524301, 393216, 2, 589837, 65536, 2, 327693, 0, 1, 458766, 131072, 1, 524302, 131072, 1, 589838, 131072, 2)
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("2_n7qw5")]
-position = Vector2(233, 148)
+position = Vector2(248, 125)
 max_speed = 80
 acc = 600
 fric = 800
@@ -743,12 +648,12 @@ limit_top = 0
 limit_smoothed = true
 
 [node name="PointLight2D" type="PointLight2D" parent="CharacterBody2D"]
-visible = false
 position = Vector2(1.66893e-06, -9.53674e-07)
 scale = Vector2(0.852113, 0.852113)
 range_item_cull_mask = 3
 texture = SubResource("GradientTexture2D_6b0ce")
 texture_scale = 0.71
+metadata/_edit_lock_ = true
 
 [node name="Serializable" type="Node" parent="CharacterBody2D"]
 script = ExtResource("9_eufik")
@@ -760,10 +665,10 @@ color = Color(0.466181, 0.466181, 0.466181, 1)
 position = Vector2(130, 82)
 
 [node name="Torch4" parent="." instance=ExtResource("7_wsjvn")]
-position = Vector2(296, 80)
+position = Vector2(296, 82)
 
 [node name="Torch2" parent="." instance=ExtResource("7_wsjvn")]
-position = Vector2(191, 82)
+position = Vector2(185, 82)
 
 [node name="Node2D" type="Node2D" parent="."]
 
@@ -773,29 +678,12 @@ position = Vector2(130, -50)
 energy = 0.26
 range_item_cull_mask = 0
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-root_node = NodePath("../Transition")
-libraries = {
-"": SubResource("AnimationLibrary_5oyxs")
-}
-
-[node name="Transition" type="ColorRect" parent="."]
-visible = false
-top_level = true
-material = SubResource("ShaderMaterial_806jm")
-offset_right = 664.0
-offset_bottom = 376.0
-scale = Vector2(-1, -1)
-pivot_offset = Vector2(332, 188)
-mouse_filter = 2
-color = Color(0, 0, 0, 1)
-
 [node name="Enemy" parent="." instance=ExtResource("11_cr23j")]
-position = Vector2(344, 136)
+position = Vector2(185, 123)
 unit_list = Array[PackedScene]([ExtResource("10_666nn")])
 
 [node name="Enemy2" parent="." instance=ExtResource("11_cr23j")]
-position = Vector2(368, 184)
+position = Vector2(152, 202)
 unit_list = Array[PackedScene]([ExtResource("10_666nn")])
 
 [node name="Serializable" type="Node" parent="."]
@@ -828,6 +716,9 @@ shape = SubResource("RectangleShape2D_4hi7s")
 
 [node name="Timer" type="Timer" parent="Area2D"]
 one_shot = true
+
+[node name="Phone" parent="." instance=ExtResource("10_fq12f")]
+position = Vector2(311, 149)
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="Button2" to="." method="_on_button_2_pressed"]

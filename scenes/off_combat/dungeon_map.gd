@@ -2,18 +2,21 @@ extends Node2D
 
 @onready var camera_2d = $CharacterBody2D/Camera2D
 @onready var tile_map = $TileMap
-@onready var transition = $Transition
+@onready var transition = $"../CanvasLayer/Transition"
+
 @onready var area_timer = $Area2D/Timer
 var can_switch = false
-@onready var animation_player = $AnimationPlayer
+@onready var animation_player = $"../AnimationPlayer"
+
 @export var combat_scene: PackedScene
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	transition.visible = true
+#	transition.visible = true
 	var tile_limit = tile_map.get_used_rect().end * 32
 	camera_2d.limit_right = tile_limit.x
 	camera_2d.limit_bottom = tile_limit.y
 	area_timer.start()
+	can_switch = false
 
 	
 @onready var savestate = $"../Savestate"
@@ -55,11 +58,9 @@ func _on_button_2_pressed():
 
 func _on_area_2d_body_entered(body):
 	if body is PlayerDungeon:
-		print("ENTERED")
+		print("ENTERED" + str(can_switch))
 		area_timer.paused = true
 		if can_switch:
-			animation_player.play("Transition_out")
-			await animation_player.animation_finished
 			get_parent()._switch_scene()
 
 

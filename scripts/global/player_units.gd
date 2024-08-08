@@ -1,11 +1,8 @@
 extends Node
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+func get_player_list() -> Array[PlayerCharacter]:
+	var list = get_children().filter(func(element): return element is PlayerCharacter)
+	var _list: Array[PlayerCharacter]
+	_list.assign(list)
+	return _list 

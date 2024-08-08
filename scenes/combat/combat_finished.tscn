@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://d1lm052a2kmeq"]
+[gd_scene load_steps=20 format=3 uid="uid://d1lm052a2kmeq"]
 
 [ext_resource type="Script" path="res://scripts/combat/CombatFinished.gd" id="1_cort1"]
 [ext_resource type="Theme" uid="uid://7f715063sed8" path="res://assets/sprites/gui/panel.tres" id="2_5hj6y"]
@@ -7,7 +7,6 @@
 [ext_resource type="Script" path="res://scripts/menus/StatCheckBox.gd" id="7_41vfw"]
 [ext_resource type="Shader" path="res://assets/shaders/color.gdshader" id="8_6fdij"]
 [ext_resource type="Script" path="res://scripts/combat/ColorRect2.gd" id="9_tfqr4"]
-[ext_resource type="Shader" path="res://scenes/shaders/diamond_transition.gdshader" id="12_ml5mc"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_62din"]
 shader = ExtResource("8_6fdij")
@@ -121,38 +120,14 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Transition:material:shader_parameter/progress")
+tracks/4/path = NodePath("Control:visible")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("Control:visible")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("Transition:scale")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-1, -1)]
 }
 
 [sub_resource type="Animation" id="Animation_a62d3"]
@@ -213,67 +188,19 @@ length = 2.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Transition:material:shader_parameter/progress")
+tracks/0/path = NodePath("Control:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 0.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Control:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
 }
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Transition:scale")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-1, -1)]
-}
 
 [sub_resource type="Animation" id="Animation_mqpdk"]
 resource_name = "Transition_out"
 length = 2.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Transition:material:shader_parameter/progress")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 1.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Transition:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
-}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_20sq0"]
 _data = {
@@ -283,11 +210,6 @@ _data = {
 "Transition_in": SubResource("Animation_s4xod"),
 "Transition_out": SubResource("Animation_mqpdk")
 }
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_4a17e"]
-shader = ExtResource("12_ml5mc")
-shader_parameter/progress = 0.0
-shader_parameter/diamondPixelSize = 50.0
 
 [node name="CombatFinished" type="Node2D"]
 script = ExtResource("1_cort1")
@@ -742,16 +664,6 @@ autoplay = "Transition_in"
 
 [node name="UpdateTimer" type="Timer" parent="."]
 one_shot = true
-
-[node name="Transition" type="ColorRect" parent="."]
-top_level = true
-material = SubResource("ShaderMaterial_4a17e")
-offset_right = 664.0
-offset_bottom = 376.0
-scale = Vector2(-1, -1)
-pivot_offset = Vector2(332, 188)
-mouse_filter = 2
-color = Color(0, 0, 0, 1)
 
 [connection signal="pressed" from="Control/Panel/ConfirmButton" to="." method="_on_confirm_button_pressed"]
 [connection signal="pressed" from="Control/ContinueButton" to="." method="_on_continue_button_pressed"]

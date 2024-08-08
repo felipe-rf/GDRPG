@@ -16,7 +16,8 @@ class_name CombatScene
 
 @onready var players = $PositionMarkers/Players
 @onready var enemies = $PositionMarkers/Enemies
-@onready var animation_player = $AnimationPlayer
+@onready var animation_player = $"../AnimationPlayer"
+
 
 var exp_gained = 0
 func _initialize(_players: Array[PlayerCharacter],_enemies: Array[PackedScene]):

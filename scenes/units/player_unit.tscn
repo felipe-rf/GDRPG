@@ -125,13 +125,13 @@ script = ExtResource("3_c20o0")
 
 [node name="DamagePopup" type="Marker2D" parent="."]
 top_level = true
-position = Vector2(12, -10)
+position = Vector2(-15, -12)
 script = ExtResource("6_pckf4")
 damage_node = ExtResource("7_i1q1x")
 
 [node name="TextPopup" type="Marker2D" parent="."]
 top_level = true
-position = Vector2(0, -17)
+position = Vector2(0, -22)
 script = ExtResource("6_pckf4")
 damage_node = ExtResource("7_i1q1x")
 

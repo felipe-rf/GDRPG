@@ -1,0 +1,105 @@
+[gd_scene load_steps=9 format=3 uid="uid://cgiw78buo50ji"]
+
+[ext_resource type="Script" path="res://scripts/gui/manual_save_screen.gd" id="1_iw3a3"]
+[ext_resource type="Shader" path="res://scenes/shaders/blur.gdshader" id="2_dnhif"]
+[ext_resource type="PackedScene" uid="uid://dpc5o0e4222av" path="res://scenes/gui/save_button.tscn" id="2_hthb4"]
+[ext_resource type="Script" path="res://addons/thoth/thoth_gamestate.gd" id="3_tyfd7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uc8jx"]
+shader = ExtResource("2_dnhif")
+shader_parameter/lod = 1.0
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_o47gc"]
+allow_unpress = true
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_bkt84"]
+allow_unpress = true
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_pqaew"]
+allow_unpress = true
+
+[node name="ManualSaveScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_iw3a3")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_uc8jx")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 49.0
+offset_bottom = -96.0
+grow_horizontal = 2
+grow_vertical = 2
+follow_focus = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="SaveButton" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_hthb4")]
+layout_mode = 2
+button_group = SubResource("ButtonGroup_o47gc")
+text = "NEW SAVE"
+save = "manual_save_0.sav"
+
+[node name="SaveButton2" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_hthb4")]
+layout_mode = 2
+button_group = SubResource("ButtonGroup_bkt84")
+text = "NEW SAVE"
+save = "manual_save_1.sav"
+save_number = 1
+
+[node name="SaveButton3" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2_hthb4")]
+layout_mode = 2
+button_group = SubResource("ButtonGroup_pqaew")
+text = "NEW SAVE"
+save = "manual_save_2.sav"
+save_number = 2
+
+[node name="Savestate" type="Node" parent="."]
+script = ExtResource("3_tyfd7")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -62.0
+offset_top = -86.0
+offset_right = 63.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "SAVE"
+
+[node name="ConfirmationDialog" type="ConfirmationDialog" parent="."]
+initial_position = 1
+size = Vector2i(388, 100)
+borderless = true
+dialog_text = "Save already exists, do you want to overwrite it?"
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.8
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="confirmed" from="ConfirmationDialog" to="." method="_on_confirmation_dialog_confirmed"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

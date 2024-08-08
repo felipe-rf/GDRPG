@@ -11,7 +11,7 @@ func popup(dmg: String,type: int,damage_type:int=0) -> void:
 	var damage = damage_node.instantiate()
 	damage.get_node("Label").label_settings = LabelSettings.new()
 	if(i == 1):
-		damage.position = global_position - Vector2(0,30)
+		damage.position = global_position - Vector2(0,10)
 		i = -1
 	else: damage.position = global_position
 	match type:

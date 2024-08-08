@@ -1,0 +1,65 @@
+[gd_scene load_steps=5 format=3 uid="uid://bglr0k8mmge53"]
+
+[ext_resource type="Script" path="res://scripts/gui/new_save_screen.gd" id="1_v0y87"]
+[ext_resource type="Shader" path="res://scenes/shaders/blur.gdshader" id="2_cdsdc"]
+[ext_resource type="Script" path="res://addons/thoth/thoth_gamestate.gd" id="3_lc7mt"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uc8jx"]
+shader = ExtResource("2_cdsdc")
+shader_parameter/lod = 1.0
+
+[node name="NewSaveScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_v0y87")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_uc8jx")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Savestate" type="Node" parent="."]
+script = ExtResource("3_lc7mt")
+
+[node name="LineEdit" type="LineEdit" parent="."]
+layout_mode = 0
+offset_left = 134.0
+offset_top = 118.0
+offset_right = 521.0
+offset_bottom = 149.0
+caret_blink = true
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 246.0
+offset_top = 84.0
+offset_right = 400.0
+offset_bottom = 107.0
+text = "ENTER YOUR NAME:"
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -64.0
+offset_top = -89.0
+offset_right = 64.0
+offset_bottom = -54.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "START"
+
+[connection signal="text_changed" from="LineEdit" to="." method="_on_line_edit_text_changed"]
+[connection signal="text_submitted" from="LineEdit" to="." method="_on_line_edit_text_submitted"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

@@ -4,27 +4,40 @@ extends Node2D
 @export var combat_scene: PackedScene
 @onready var dungeon_map = $dungeon_map
 @onready var player_units = PlayerUnits
-var players: Array[PlayerCharacter]
 @onready var savestate = $Savestate
 @export var next_scene: Resource
 signal finished
+@onready var animation_player = $AnimationPlayer
+
+@onready var gui_manager = $GUIManager
+
+
 
 func _ready():
-	savestate.load_game_state()
-	savestate.unpack_level(self)
-	savestate.get_game_variables(PlayerUnits)
-	Globals.current_level = scene_file_path
-	var player_list = SceneSwitcher.get_param("player_list")
-	if player_list != null:
-		for i in player_units.get_children():
-			i.queue_free()
-		for i in player_list:
-			player_units.add_child(i.instantiate())
+	if SaveManager.was_level_visited(savestate,self):
+		SaveManager.scene_load_last_save(savestate,self)
+
+	SaveManager.last_visited_scene = scene_file_path
+	Dialogic.signal_event.connect(dialogic_signal)
 	_enable_scene(dungeon_map)
-	for i in player_units.get_children():
-		if i is PlayerCharacter:
-			players.append(i)
-# Called when the node enters the scene tree for the first time.
+	await animation_player.animation_finished
+	Globals.has_control = true
+			
+
+func dialogic_signal(arg: String):
+	if arg == "save_game":
+		_pause_scene(dungeon_map)
+		gui_manager.save_game()
+
+func return_to_game():
+	_unpause_scene(dungeon_map)
+	
+func _unpause_scene(scene: Node2D):
+	scene.process_mode = Node.PROCESS_MODE_INHERIT
+func _pause_scene(scene: Node2D):
+		scene.process_mode = Node.PROCESS_MODE_DISABLED
+
+
 func _enable_scene(scene: Node2D):
 		scene.process_mode = Node.PROCESS_MODE_INHERIT
 		scene.visible = true
@@ -37,25 +50,30 @@ func _disable_scene(scene: Node2D):
 
 func _start_combat(enemy_units: Array[PackedScene]):
 	var new_scene: CombatScene = combat_scene.instantiate()
-	new_scene._initialize(players,enemy_units)
+	new_scene._initialize(player_units.get_player_list(),enemy_units)
 	_disable_scene(dungeon_map)
 	add_child(new_scene)
+	animation_player.play("Transition_in")
+	
 
 func _end_combat(_player_units: Array[PlayerCharacter], _exp: int, current_scene):
 	var new_scene: FinishedScreen = combat_finished.instantiate()
 	new_scene._initialize(_player_units,_exp)
 	add_child(new_scene)
+	animation_player.play("Transition_in")
 	current_scene.queue_free()
 
 func _return_to_dungeon(player_units: Array[PlayerCharacter],current_scene):
 	_enable_scene(dungeon_map)
-	emit_signal("finished")
 	current_scene.queue_free()
+	animation_player.play("Transition_in")
+	await animation_player.animation_finished
+	emit_signal("finished")
+
 
 func _switch_scene():
-	savestate.load_game_state()
-	savestate.pack_level(self)
-	savestate.save_game_state()
-	savestate.set_game_variables(Globals)
-	savestate.set_game_variables(PlayerUnits)
+	Globals.has_control = false
+	animation_player.play("Transition_out")
+	await animation_player.animation_finished
+	SaveManager.scene_save_autosave(savestate,self)
 	get_tree().change_scene_to_file("res://scenes/game_scene.tscn")

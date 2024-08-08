@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://dpc5o0e4222av"]
+
+[ext_resource type="Script" path="res://scenes/gui/save_button.gd" id="1_vt4kl"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_hs51w"]
+allow_unpress = true
+
+[node name="SaveButton" type="Button"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -110.5
+offset_top = -22.5
+offset_right = 110.5
+offset_bottom = 22.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+toggle_mode = true
+action_mode = 0
+button_group = SubResource("ButtonGroup_hs51w")
+text = "SAVEDATA 1 - auto_save
+10/20/24 16:06:15"
+script = ExtResource("1_vt4kl")

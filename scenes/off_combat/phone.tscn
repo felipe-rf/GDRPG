@@ -1,0 +1,34 @@
+[gd_scene load_steps=7 format=3 uid="uid://83owpdjy74ac"]
+
+[ext_resource type="Script" path="res://scripts/dungeon/objects/phone.gd" id="1_5jwru"]
+[ext_resource type="Texture2D" uid="uid://7g5dgjg8mo27" path="res://assets/sprites/tiles/phone.png" id="1_y216w"]
+[ext_resource type="Texture2D" uid="uid://d2jbul4rdwc1c" path="res://assets/sprites/tiles/phone_normal.png" id="3_hplav"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_g0570"]
+diffuse_texture = ExtResource("1_y216w")
+normal_texture = ExtResource("3_hplav")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_euq2l"]
+size = Vector2(39, 26)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4oox7"]
+size = Vector2(45, 23)
+
+[node name="Phone" type="StaticBody2D"]
+collision_layer = 3
+script = ExtResource("1_5jwru")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("CanvasTexture_g0570")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-0.5, 3)
+shape = SubResource("RectangleShape2D_euq2l")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, -2.5)
+shape = SubResource("RectangleShape2D_4oox7")

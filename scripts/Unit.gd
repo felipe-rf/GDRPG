@@ -198,11 +198,11 @@ func _attack_animation_ranged(target: Unit) -> void: ##Animation for ranged atta
 func _deal_attack_damage(target: Unit) -> void: ##Calculates and deals the attack damage to target
 	var hit = _rand20()
 	var dmg = randi_range(1,stats[UnitStats.attack]) + stats[UnitStats.strength]
-	if(hit == 1):
+	if(hit <= 1):
 		target._miss_attack()
 	elif(hit+stats[UnitStats.precision]<target.stats[UnitStats.speed]+target.stats[UnitStats.defense]):
 		target._miss_attack()
-	elif(hit+stats[UnitStats.precision]>target.stats[UnitStats.speed]+target.stats[UnitStats.defense]):
+	elif(hit+stats[UnitStats.precision]>=target.stats[UnitStats.speed]+target.stats[UnitStats.defense]):
 		dmg = target._aplly_weakness_and_resistance(dmg,attack_type)
 		print(unit_name + " attacked "+ target.unit_name + " for " + str(dmg)+ " damage.")
 		target._receive_damage(dmg,attack_type)

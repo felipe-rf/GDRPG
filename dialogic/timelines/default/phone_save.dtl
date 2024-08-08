@@ -1,0 +1,7 @@
+do Globals.set_control(false)
+phone (New portrait): Do you want to save your game?
+- YES
+	[signal arg="save_game"]
+- NO
+do Globals.set_control(true)
+[end_timeline]

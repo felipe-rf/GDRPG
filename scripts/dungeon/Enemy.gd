@@ -11,9 +11,9 @@ var dead: bool = false
 
 
 func _on_area_2d_body_entered(body):
-	if body is PlayerDungeon and body.control:
+	if body is PlayerDungeon and Globals.has_control:
 		if not unit_list.is_empty():
-			body.control = false
+			Globals.has_control = false
 			get_parent()._start_combat(unit_list)
 			dead = true
 			get_parent().get_parent().connect("finished",Callable(self,"_on_defeated"))

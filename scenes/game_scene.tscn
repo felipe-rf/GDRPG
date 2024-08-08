@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://clx4gyxn4uye6"]
+[gd_scene load_steps=18 format=3 uid="uid://clx4gyxn4uye6"]
 
 [ext_resource type="Script" path="res://scripts/GameScene.gd" id="1_eqko8"]
 [ext_resource type="PackedScene" uid="uid://d1lm052a2kmeq" path="res://scenes/combat/combat_finished.tscn" id="2_qlkpw"]
@@ -8,6 +8,124 @@
 [ext_resource type="Script" path="res://addons/thoth/thoth_gamestate.gd" id="6_nqcb4"]
 [ext_resource type="Shader" path="res://assets/shaders/crt.gdshader" id="7_xevpy"]
 [ext_resource type="Script" path="res://scripts/combat/ColorRect2.gd" id="8_j4axk"]
+[ext_resource type="Script" path="res://scripts/gui/GUIManager.gd" id="9_0q65h"]
+[ext_resource type="PackedScene" uid="uid://cgiw78buo50ji" path="res://scenes/gui/manual_save_screen.tscn" id="10_mbq6k"]
+
+[sub_resource type="Animation" id="Animation_md34j"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_f0vmt"]
+resource_name = "Transition_in"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-1, -1)]
+}
+
+[sub_resource type="Animation" id="Animation_7b51u"]
+resource_name = "Transition_out"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5oyxs"]
+_data = {
+"RESET": SubResource("Animation_md34j"),
+"Transition_in": SubResource("Animation_f0vmt"),
+"Transition_out": SubResource("Animation_7b51u")
+}
+
+[sub_resource type="Shader" id="Shader_vt8t6"]
+code = "shader_type canvas_item;
+
+// Ranges from 0 to 1 over the course of the transition.
+// We use this to actually animate the shader.
+uniform float progress : hint_range(0, 1);
+
+// Size of each diamond, in pixels.
+uniform float diamondPixelSize = 10.0;
+
+void fragment() {
+	float xFraction = fract(FRAGCOORD.x / diamondPixelSize);
+	float yFraction = fract(FRAGCOORD.y / diamondPixelSize);
+	float xDistance = abs(xFraction - 0.5);
+	float yDistance = abs(yFraction - 0.5);
+	if (xDistance + yDistance + UV.x + UV.y > progress * 4.0) {
+		discard;
+	}
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_max87"]
+shader = SubResource("Shader_vt8t6")
+shader_parameter/progress = 0.0
+shader_parameter/diamondPixelSize = 50.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kfr7n"]
 shader = ExtResource("7_xevpy")
@@ -41,13 +159,35 @@ transform = false
 [node name="Savestate" type="Node" parent="."]
 script = ExtResource("6_nqcb4")
 
-[node name="CRT" type="ColorRect" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../CanvasLayer/Transition")
+libraries = {
+"": SubResource("AnimationLibrary_5oyxs")
+}
+autoplay = "Transition_in"
+
+[node name="GUIManager" type="CanvasLayer" parent="."]
+script = ExtResource("9_0q65h")
+save_screen = ExtResource("10_mbq6k")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Transition" type="ColorRect" parent="CanvasLayer"]
+top_level = true
+material = SubResource("ShaderMaterial_max87")
+offset_right = 640.0
+offset_bottom = 360.0
+pivot_offset = Vector2(320, 180)
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="CRT" type="ColorRect" parent="CanvasLayer"]
+visible = false
 top_level = true
 z_index = 10
 material = SubResource("ShaderMaterial_kfr7n")
-offset_right = 658.0
-offset_bottom = 370.0
+offset_right = 640.0
+offset_bottom = 360.0
 mouse_filter = 2
 script = ExtResource("8_j4axk")
 id = 1
-metadata/_edit_lock_ = true

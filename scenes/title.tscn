@@ -1,6 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://bdehpcj38tf3u"]
+[gd_scene load_steps=12 format=3 uid="uid://bdehpcj38tf3u"]
 
 [ext_resource type="Script" path="res://scripts/ui/title.gd" id="1_hdrx5"]
+[ext_resource type="PackedScene" uid="uid://cd18365ogyou6" path="res://scenes/gui/load_save_screen.tscn" id="2_3t1ey"]
+[ext_resource type="PackedScene" uid="uid://bglr0k8mmge53" path="res://scenes/gui/new_save_screen.tscn" id="2_e2yxj"]
 [ext_resource type="Script" path="res://addons/thoth/thoth_gamestate.gd" id="2_j5v30"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_603sk"]
@@ -142,20 +144,27 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_hdrx5")
+new_game_screen = ExtResource("2_e2yxj")
+load_screen = ExtResource("2_3t1ey")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="MainScreen" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="MainScreen"]
 layout_mode = 0
 offset_right = 644.0
 offset_bottom = 360.0
 color = Color(0, 0, 0, 1)
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="MainScreen"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -137.0
-offset_right = 137.0
+offset_left = 163.0
+offset_right = 437.0
 offset_bottom = 190.0
 grow_horizontal = 2
 text = "OFFICE CAT"
@@ -163,31 +172,32 @@ label_settings = SubResource("LabelSettings_603sk")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="MainScreen"]
 layout_mode = 0
 offset_left = 184.0
 offset_top = 174.0
 offset_right = 455.0
 offset_bottom = 350.0
 
-[node name="Start" type="Button" parent="VBoxContainer"]
+[node name="Start" type="Button" parent="MainScreen/VBoxContainer"]
 layout_mode = 2
 text = "NEW GAME"
 
-[node name="Start2" type="Button" parent="VBoxContainer"]
+[node name="Start2" type="Button" parent="MainScreen/VBoxContainer"]
 layout_mode = 2
 text = "LOAD GAME"
 
-[node name="Button2" type="Button" parent="VBoxContainer"]
+[node name="Button2" type="Button" parent="MainScreen/VBoxContainer"]
 layout_mode = 2
 text = "SETTINGS"
 
-[node name="Button3" type="Button" parent="VBoxContainer"]
+[node name="Button3" type="Button" parent="MainScreen/VBoxContainer"]
 layout_mode = 2
 text = "QUIT"
 
 [node name="Savestate" type="Node" parent="."]
 script = ExtResource("2_j5v30")
+save_filename = "savegame1.sav"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Transition")
@@ -206,5 +216,5 @@ pivot_offset = Vector2(332, 188)
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
-[connection signal="pressed" from="VBoxContainer/Start" to="." method="_on_start_pressed"]
-[connection signal="pressed" from="VBoxContainer/Start2" to="." method="_on_start_2_pressed"]
+[connection signal="pressed" from="MainScreen/VBoxContainer/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="MainScreen/VBoxContainer/Start2" to="." method="_on_start_2_pressed"]

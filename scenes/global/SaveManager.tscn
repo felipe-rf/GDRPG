@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://7se3db3ffo6v"]
+
+[ext_resource type="Script" path="res://scripts/global/savemanager.gd" id="1_gwrrm"]
+[ext_resource type="Script" path="res://addons/thoth/thoth_serializable.gd" id="2_nusec"]
+
+[node name="SaveManager" type="Node"]
+script = ExtResource("1_gwrrm")
+
+[node name="Serializable" type="Node" parent="."]
+script = ExtResource("2_nusec")
+transform = false
+children = false
+variables = Array[String](["last_save_file", "last_visited_scene", "save_time", "auto_save", "player_name", "current_save"])

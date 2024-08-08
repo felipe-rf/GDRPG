@@ -13,6 +13,7 @@ signal update_finished
 var players_leveling: Array
 @onready var panel = $Control/Panel
 @onready var animation_player = $AnimationPlayer
+@onready var transition_animation = $"../AnimationPlayer"
 @onready var confirm_button = $Control/Panel/ConfirmButton
 @onready var update_timer = $UpdateTimer
 @onready var continue_button = $Control/ContinueButton
@@ -31,8 +32,8 @@ func _ready():
 		initialize_panel(i,player_list[i].experience,player_list[i].exp_required)
 		player_list[i].connect("experience_gained",Callable(self,"_on_character_exp_gained"))
 		player_list[i].connect("leveled_up",Callable(self,"_on_character_leveled_up"))
-	
-	await animation_player.animation_finished
+		
+	await transition_animation.animation_finished
 	animation_player.play("Start")
 	await animation_player.animation_finished
 	for i in player_list:
@@ -120,8 +121,8 @@ func _on_confirm_button_pressed():
 
 
 func _on_continue_button_pressed():
-	animation_player.play("Transition_out")
-	await animation_player.animation_finished
+	transition_animation.play("Transition_out")
+	await transition_animation.animation_finished
 	get_parent()._return_to_dungeon(player_list,self)
 
 
